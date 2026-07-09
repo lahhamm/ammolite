@@ -1,0 +1,86 @@
+.movement {
+  position: relative;
+  min-height: 100svh;
+  background: var(--bg-alt);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 0 clamp(20px, 5vw, 64px);
+  overflow: hidden;
+}
+
+.movement-copy {
+  position: relative;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.movement-eyebrow {
+  position: absolute;
+  top: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--gold-bright);
+}
+
+.movement-line {
+  position: absolute;
+  left: 0;
+  top: 28px;
+  max-width: 420px;
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.flip-stage {
+  perspective: 1400px;
+  display: flex;
+  justify-content: center;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55));
+}
+
+.flip-inner {
+  position: relative;
+  width: clamp(280px, 30vw, 420px);
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+@media (max-width: 860px) {
+  .movement {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner {
+    transform: none !important;
+  }
+  .flip-back {
+    display: none;
+  }
+  .movement-line,
+  .movement-eyebrow {
+    position: static;
+    opacity: 1 !important;
+    margin-bottom: 12px;
+  }
+}

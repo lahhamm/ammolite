@@ -1,0 +1,28 @@
+# ignore everything at root by default
+/*
+
+# track only the ammolite sites (monorepo scope)
+!/ivy-landing/
+!/luxury-watch-landing/
+!/.gitignore
+
+# roofer-demo-site and new-look-barbershop-demo-site are excluded for now:
+# every file in both is currently unreadable in this environment (OS-level
+# read failures, not a git issue) — add them back once that's resolved
+
+# but never track generated/heavy stuff inside them
+**/node_modules/
+**/dist/
+**/.vite/
+**/*.log
+**/.DS_Store
+**/.env
+**/.env.*
+**/.claude/
+**/.agents/
+**/skills-lock.json
+
+# these two files stall the filesystem on read in this environment;
+# their content is standard Vite boilerplate already covered above
+/roofer-demo-site/.gitignore
+/new-look-barbershop-demo-site/.gitignore
