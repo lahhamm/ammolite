@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ironvein Plumbing &amp; Mechanical — Licensed 24/7 Emergency Plumbers</title>
+<meta name="description" content="Ironvein Plumbing &amp; Mechanical. Licensed, bonded &amp; insured residential and commercial plumbers. 24/7 emergency service, leak detection, water heaters, repiping. Same-day arrival." />
+<meta name="theme-color" content="#141b23" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Ironvein Plumbing &amp; Mechanical — Licensed 24/7 Emergency Plumbers" />
+<meta property="og:description" content="Master-licensed Twin Cities plumbers. 24/7 emergency service, flat-rate quotes, ~60-minute arrival." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='4' fill='%23141b23'/%3E%3Ccircle cx='17' cy='17' r='7.5' fill='none' stroke='%23d99a4e' stroke-width='2'/%3E%3Cg stroke='%23d99a4e' stroke-width='2'%3E%3Cline x1='17' y1='4' x2='17' y2='9.5'/%3E%3Cline x1='17' y1='24.5' x2='17' y2='30'/%3E%3Cline x1='4' y1='17' x2='9.5' y2='17'/%3E%3Cline x1='24.5' y1='17' x2='30' y2='17'/%3E%3C/g%3E%3Ccircle cx='17' cy='17' r='2.4' fill='%23d99a4e'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   DESIGN TOKENS — OKLCH, no hardcoded hex in components
+   Industrial Blueprint · ink-navy/graphite + brass/copper
+   ============================================================ */
+:root{
+  /* surfaces */
+  --ink-950: oklch(0.145 0.022 245);
+  --ink-900: oklch(0.175 0.026 245);
+  --ink-850: oklch(0.205 0.028 246);
+  --ink-800: oklch(0.235 0.030 247);
+  --ink-700: oklch(0.285 0.030 248);
+  --line-600: oklch(0.345 0.028 248);
+  --line-500: oklch(0.420 0.024 250);
+
+  /* text */
+  --paper:    oklch(0.945 0.008 250);
+  --steel-200:oklch(0.820 0.012 250);
+  --steel-300:oklch(0.700 0.014 250);
+  --steel-400:oklch(0.585 0.016 250);
+
+  /* accent — brass / copper (the single saturated hue) */
+  --copper-700: oklch(0.500 0.110 46);
+  --copper-600: oklch(0.590 0.125 50);
+  --copper-500: oklch(0.685 0.132 55);
+  --copper-400: oklch(0.775 0.120 63);
+  --copper-300: oklch(0.855 0.090 72);
+  --copper-glow: oklch(0.685 0.132 55 / 0.30);
+
+  /* blueprint schematic line */
+  --blueprint: oklch(0.640 0.088 236);
+  --blueprint-dim: oklch(0.560 0.060 238 / 0.55);
+
+  /* semantic */
+  --bg: var(--ink-950);
+  --surface: var(--ink-900);
+  --surface-raised: var(--ink-850);
+  --hairline: oklch(0.420 0.024 250 / 0.35);
+  --hairline-strong: oklch(0.500 0.030 250 / 0.55);
+
+  /* type */
+  --font-display: "Saira Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Archivo", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* scale / rhythm */
+  --maxw: 1320px;
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --nav-h: 68px;
+  --bar-h: 40px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ============================================================ RESET */
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--paper);
+  line-height:1.6;
+  font-size:clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  overflow-x:clip;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img,svg,canvas{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; cursor:pointer; background:none; border:none; }
+:focus-visible{ outline:2px solid var(--copper-400); outline-offset:3px; border-radius:2px; }
+::selection{ background:var(--copper-500); color:var(--ink-950); }
+
+/* utilities */
+.wrap{ width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:var(--gutter); }
+.mono{ font-family:var(--font-mono); font-weight:400; letter-spacing:0.02em; }
+.eyebrow{
+  font-family:var(--font-mono); font-size:0.7rem; font-weight:500;
+  letter-spacing:0.28em; text-transform:uppercase; color:var(--copper-400);
+}
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+
+/* ============================================================ EMERGENCY BAR (always visible, ~<1s) */
+.embar{
+  height:var(--bar-h);
+  background:linear-gradient(90deg, var(--copper-700), var(--copper-600));
+  color:var(--ink-950);
+  display:flex; align-items:center; justify-content:center; gap:0.9rem;
+  font-family:var(--font-mono); font-size:0.72rem; font-weight:500;
+  letter-spacing:0.06em; position:relative; z-index:60;
+}
+.embar__dot{
+  width:8px; height:8px; border-radius:50%; background:var(--ink-950);
+  box-shadow:0 0 0 0 oklch(0.145 0.022 245 / 0.7);
+  animation:pulseDot 1.9s var(--ease-out) infinite;
+}
+@keyframes pulseDot{
+  0%{ box-shadow:0 0 0 0 oklch(0.145 0.022 245 / 0.55);}
+  70%{ box-shadow:0 0 0 9px oklch(0.145 0.022 245 / 0);}
+  100%{ box-shadow:0 0 0 0 oklch(0.145 0.022 245 / 0);}
+}
+.embar b{ font-weight:700; text-transform:uppercase; }
+.embar a{ font-weight:700; text-decoration:underline; text-underline-offset:2px; white-space:nowrap; }
+.embar__sep{ opacity:0.5; }
+@media (max-width:560px){ .embar__hide{ display:none; } .embar{ gap:0.6rem; font-size:0.68rem; } }
+
+/* ============================================================ NAV */
+.nav{
+  position:sticky; top:0; z-index:50;
+  height:var(--nav-h);
+  background:oklch(0.145 0.022 245 / 0.72);
+  backdrop-filter:blur(14px) saturate(1.2);
+  -webkit-backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom:1px solid var(--hairline);
+  transition:background .4s var(--ease-out), border-color .4s var(--ease-out), box-shadow .4s var(--ease-out);
+}
+.nav.scrolled{ background:oklch(0.145 0.022 245 / 0.9); border-color:var(--hairline-strong); box-shadow:0 10px 30px -18px oklch(0.145 0.022 245 / 0.9); }
+.nav__inner{ height:100%; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; }
+.brand{ display:flex; align-items:center; gap:0.7rem; }
+.brand__mark{ width:34px; height:34px; flex:none; }
+.brand__mark rect,.brand__mark path,.brand__mark line,.brand__mark circle{ vector-effect:non-scaling-stroke; }
+.brand__name{ font-family:var(--font-display); font-weight:700; font-size:1.28rem; letter-spacing:0.02em; text-transform:uppercase; line-height:1; }
+.brand__name span{ color:var(--copper-400); }
+.brand__tag{ font-family:var(--font-mono); font-size:0.56rem; letter-spacing:0.24em; color:var(--steel-400); text-transform:uppercase; white-space:nowrap; }
+.nav__links{ display:flex; align-items:center; gap:2rem; }
+.nav__links a{
+  font-size:0.82rem; font-weight:500; letter-spacing:0.02em; color:var(--steel-200);
+  position:relative; padding:0.25rem 0; transition:color .25s var(--ease-out);
+}
+.nav__links a::after{
+  content:""; position:absolute; left:0; bottom:-2px; height:1.5px; width:0;
+  background:var(--copper-500); transition:width .3s var(--ease-out);
+}
+.nav__links a:hover{ color:var(--paper); }
+.nav__links a:hover::after{ width:100%; }
+.nav__cta{ display:flex; align-items:center; gap:0.9rem; }
+.nav__phone{
+  display:inline-flex; align-items:center; gap:0.5rem;
+  font-family:var(--font-mono); font-weight:500; font-size:0.9rem; color:var(--paper);
+  letter-spacing:0.01em; transition:color .2s var(--ease-out);
+}
+.nav__phone svg{ width:16px; height:16px; color:var(--copper-400); }
+.nav__phone:hover{ color:var(--copper-300); }
+
+/* copper CTA button (shared) */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:0.55rem;
+  font-family:var(--font-display); font-weight:600; font-size:1rem; letter-spacing:0.03em;
+  text-transform:uppercase; padding:0.72rem 1.35rem; border-radius:3px;
+  min-height:46px; position:relative; transition:transform .15s var(--ease-out), box-shadow .25s var(--ease-out), background .25s var(--ease-out);
+}
+.btn svg{ width:18px; height:18px; }
+.btn--primary{
+  background:linear-gradient(180deg, var(--copper-400), var(--copper-600));
+  color:var(--ink-950); box-shadow:0 1px 0 oklch(0.855 0.090 72 / 0.6) inset, 0 6px 18px -8px var(--copper-glow);
+}
+.btn--primary:hover{ transform:translateY(-1px); box-shadow:0 1px 0 oklch(0.855 0.090 72 / 0.7) inset, 0 10px 26px -8px var(--copper-glow); }
+.btn--primary:active{ transform:translateY(1px); }
+.btn--ghost{
+  background:transparent; color:var(--paper); border:1px solid var(--hairline-strong);
+}
+.btn--ghost:hover{ border-color:var(--copper-500); color:var(--copper-300); background:oklch(0.685 0.132 55 / 0.06); }
+.btn--sm{ padding:0.5rem 0.95rem; min-height:40px; font-size:0.86rem; }
+
+.nav__burger{ display:none; width:44px; height:44px; align-items:center; justify-content:center; }
+.nav__burger span{ display:block; width:22px; height:2px; background:var(--paper); position:relative; }
+.nav__burger span::before,.nav__burger span::after{ content:""; position:absolute; left:0; width:22px; height:2px; background:var(--paper); }
+.nav__burger span::before{ top:-7px; } .nav__burger span::after{ top:7px; }
+
+@media (max-width:920px){
+  .nav__links{ display:none; }
+  .nav__phone .nav__phone-num{ display:none; }
+  .nav__cta > .btn--primary{ display:none; } /* Book lives in sticky bar + drawer on mobile */
+  .nav__burger{ display:flex; }
+}
+@media (max-width:560px){ .brand__tag{ display:none; } .brand__name{ font-size:1.18rem; } }
+
+/* mobile drawer */
+.drawer{
+  position:fixed; inset:0; z-index:80; display:none;
+  background:oklch(0.145 0.022 245 / 0.97); backdrop-filter:blur(8px);
+  padding:calc(var(--bar-h) + 1.5rem) var(--gutter) 2rem;
+  flex-direction:column;
+}
+.drawer.open{ display:flex; }
+.drawer__top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:2.5rem; }
+.drawer__close{ width:44px; height:44px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:var(--paper); }
+.drawer nav{ display:flex; flex-direction:column; }
+.drawer nav a{
+  font-family:var(--font-display); font-weight:600; text-transform:uppercase; font-size:1.9rem;
+  letter-spacing:0.01em; color:var(--paper); padding:0.7rem 0; border-bottom:1px solid var(--hairline);
+  display:flex; align-items:baseline; gap:0.9rem;
+}
+.drawer nav a .idx{ font-family:var(--font-mono); font-size:0.7rem; color:var(--copper-400); font-weight:400; }
+.drawer__foot{ margin-top:auto; padding-top:2rem; display:flex; flex-direction:column; gap:0.8rem; }
+.drawer__foot .btn{ width:100%; }
+.drawer__phone{ font-family:var(--font-mono); font-size:0.75rem; color:var(--steel-300); text-align:center; letter-spacing:0.08em; }
+
+/* ============================================================ HERO */
+.hero{
+  position:relative;
+  min-height:calc(100dvh - var(--nav-h) - var(--bar-h));
+  display:flex; align-items:center;
+  padding-block:clamp(2.5rem, 5vw, 4.5rem);
+  overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 78% 30%, oklch(0.235 0.030 247 / 0.9), transparent 60%),
+    radial-gradient(90% 70% at 12% 90%, oklch(0.205 0.045 55 / 0.16), transparent 55%),
+    var(--ink-950);
+}
+/* blueprint grid overlay */
+.hero__grid{
+  position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    linear-gradient(oklch(0.500 0.030 250 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.500 0.030 250 / 0.05) 1px, transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(130% 100% at 60% 40%, #000 40%, transparent 88%);
+  mask-image:radial-gradient(130% 100% at 60% 40%, #000 40%, transparent 88%);
+}
+.hero__grid::after{
+  content:""; position:absolute; inset:0;
+  background-image:
+    linear-gradient(oklch(0.640 0.088 236 / 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.640 0.088 236 / 0.10) 1px, transparent 1px);
+  background-size:240px 240px;
+}
+.hero__inner{
+  position:relative; z-index:2; width:100%;
+  display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,0.98fr);
+  align-items:center; gap:clamp(1.5rem, 4vw, 3rem);
+}
+.hero__copy{ max-width:34rem; }
+.hero__ticker{ display:flex; align-items:center; gap:0.85rem; margin-bottom:1.5rem; }
+.hero__ticker .line{ height:1px; width:44px; background:var(--copper-500); }
+.hero h1{
+  font-family:var(--font-display); font-weight:700; text-transform:uppercase;
+  font-size:clamp(2.7rem, 1.6rem + 5.4vw, 5.4rem);
+  line-height:0.92; letter-spacing:-0.005em; color:var(--paper);
+  margin-bottom:1.4rem;
+}
+.hero h1 em{ font-style:normal; color:var(--copper-400); position:relative; }
+.hero h1 .thin{ font-weight:500; color:var(--steel-200); }
+.hero__sub{
+  font-size:clamp(1rem, 0.97rem + 0.3vw, 1.16rem); color:var(--steel-200);
+  max-width:32rem; margin-bottom:2rem;
+}
+.hero__sub b{ color:var(--paper); font-weight:600; }
+.hero__actions{ display:flex; flex-wrap:wrap; gap:0.85rem; margin-bottom:1.9rem; }
+.hero__actions .btn--primary{ font-size:1.06rem; padding-inline:1.6rem; }
+
+/* inline spec ticks under actions */
+.hero__specs{ display:flex; flex-wrap:wrap; gap:0.35rem 1.5rem; }
+.hero__spec{ display:flex; align-items:center; gap:0.5rem; font-family:var(--font-mono); font-size:0.72rem; color:var(--steel-300); letter-spacing:0.02em; }
+.hero__spec svg{ width:15px; height:15px; color:var(--copper-400); flex:none; }
+
+/* stage (3D + schematic) */
+.hero__stage{ position:relative; aspect-ratio:1/1; width:100%; min-height:340px; }
+.hero__schematic{ position:absolute; inset:-6%; z-index:1; pointer-events:none; opacity:0.9; }
+.hero__schematic path,.hero__schematic line,.hero__schematic circle,.hero__schematic rect{
+  fill:none; stroke:var(--blueprint); stroke-width:1.1; vector-effect:non-scaling-stroke;
+}
+.hero__schematic .dim{ stroke:var(--blueprint-dim); stroke-width:0.9; }
+.hero__schematic .txt{ fill:var(--blueprint); stroke:none; font-family:var(--font-mono); font-size:9px; letter-spacing:0.04em; }
+.hero__canvas{ position:absolute; inset:0; z-index:2; width:100%; height:100%; cursor:grab; }
+.hero__canvas:active{ cursor:grabbing; }
+.hero__stage.is-loading .hero__canvas{ opacity:0; }
+.stage-hint{ position:absolute; left:50%; bottom:-2px; transform:translateX(-50%); font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--steel-400); z-index:3; white-space:nowrap; }
+
+/* corner brackets like a blueprint legend */
+.bracket{ position:absolute; width:26px; height:26px; z-index:3; pointer-events:none; }
+.bracket::before,.bracket::after{ content:""; position:absolute; background:var(--copper-500); }
+.bracket::before{ width:100%; height:1.5px; } .bracket::after{ width:1.5px; height:100%; }
+.bracket--tl{ top:0; left:0; } .bracket--tl::before{ top:0; left:0; } .bracket--tl::after{ top:0; left:0; }
+.bracket--tr{ top:0; right:0; } .bracket--tr::before{ top:0; right:0; } .bracket--tr::after{ top:0; right:0; }
+.bracket--bl{ bottom:0; left:0; } .bracket--bl::before{ bottom:0; left:0; } .bracket--bl::after{ bottom:0; left:0; }
+.bracket--br{ bottom:0; right:0; } .bracket--br::before{ bottom:0; right:0; } .bracket--br::after{ bottom:0; right:0; }
+
+/* floating annotation labels around the stage */
+.annot{ position:absolute; z-index:3; font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.06em; color:var(--copper-300); text-transform:uppercase; pointer-events:none; opacity:0; }
+.annot::before{ content:""; position:absolute; background:var(--copper-500); opacity:0.7; }
+.annot--a{ top:8%; right:2%; }
+.annot--a::before{ width:34px; height:1px; left:-40px; top:50%; }
+.annot--b{ bottom:16%; left:-2%; text-align:right; }
+.annot--b::before{ width:34px; height:1px; right:-40px; top:50%; }
+.annot small{ display:block; color:var(--steel-400); font-size:0.56rem; letter-spacing:0.1em; }
+
+@media (max-width:900px){
+  .hero__inner{ grid-template-columns:1fr; gap:2rem; }
+  .hero__stage{ order:-1; max-width:400px; margin-inline:auto; aspect-ratio:4/3.4; }
+  .hero__copy{ max-width:38rem; }
+  .annot{ display:none; }
+}
+
+/* ============================================================ TRUST STRIP */
+.trust{ border-block:1px solid var(--hairline); background:var(--ink-900); position:relative; z-index:3; }
+.trust__inner{ display:grid; grid-template-columns:repeat(4,1fr); }
+.trust__item{ padding:1.5rem var(--gutter); display:flex; flex-direction:column; gap:0.15rem; position:relative; }
+.trust__item + .trust__item::before{ content:""; position:absolute; left:0; top:22%; height:56%; width:1px; background:var(--hairline); }
+.trust__num{ font-family:var(--font-display); font-weight:700; font-size:2rem; line-height:1; color:var(--copper-400); letter-spacing:0.01em; font-variant-numeric:tabular-nums; }
+.trust__num sup{ font-size:0.9rem; color:var(--copper-500); }
+.trust__label{ font-size:0.82rem; color:var(--steel-200); font-weight:500; }
+.trust__sub{ font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--steel-400); }
+.trust__stars{ color:var(--copper-400); letter-spacing:0.1em; font-size:1rem; }
+@media (max-width:760px){
+  .trust__inner{ grid-template-columns:repeat(2,1fr); }
+  .trust__item:nth-child(3)::before,.trust__item:nth-child(2)::before{ display:none; }
+  .trust__item{ padding:1.25rem var(--gutter); }
+  .trust__item:nth-child(n+3){ border-top:1px solid var(--hairline); }
+}
+
+/* ============================================================ MOBILE STICKY CALL */
+.sticky-call{
+  position:fixed; left:0; right:0; bottom:0; z-index:70;
+  display:none; padding:0.6rem 0.8rem calc(0.6rem + env(safe-area-inset-bottom));
+  gap:0.6rem;
+  background:oklch(0.145 0.022 245 / 0.92); backdrop-filter:blur(12px);
+  border-top:1px solid var(--hairline-strong);
+}
+.sticky-call .btn{ flex:1; }
+.sticky-call .btn--primary{ flex:1.5; }
+@media (max-width:900px){ .sticky-call{ display:flex; } body{ padding-bottom:74px; } }
+
+/* film grain — fixed, pointer-events-none, GPU-cheap (design-taste guardrail) */
+.grain{ position:fixed; inset:0; z-index:90; pointer-events:none; opacity:0.04; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E"); }
+@media (prefers-reduced-motion: reduce){ .grain{ display:none; } }
+
+/* reveal helper (JS-driven; safe default visible) */
+.reveal{ opacity:0; transform:translateY(22px); }
+[data-rise]{ opacity:0; transform:translateY(28px); }
+@media (prefers-reduced-motion: reduce){ .reveal,[data-rise]{ opacity:1 !important; transform:none !important; } .annot{ opacity:1 !important; } }
+
+/* ============================================================ SECTION SHELL */
+.section{ position:relative; padding-block:clamp(4.5rem, 9vw, 8rem); scroll-margin-top:calc(var(--nav-h) + 12px); }
+.section--tight{ padding-block:clamp(3.5rem, 7vw, 6rem); }
+.shead{ display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; margin-bottom:clamp(2.5rem,5vw,4rem); flex-wrap:wrap; }
+.shead__l{ max-width:42rem; }
+.shead .eyebrow{ display:flex; align-items:center; gap:0.7rem; margin-bottom:1.1rem; }
+.shead .eyebrow::before{ content:""; width:34px; height:1px; background:var(--copper-500); }
+.shead h2{
+  font-family:var(--font-display); font-weight:700; text-transform:uppercase;
+  font-size:clamp(2.1rem, 1.3rem + 3.2vw, 3.6rem); line-height:0.96; letter-spacing:-0.005em;
+}
+.shead h2 em{ font-style:normal; color:var(--copper-400); }
+.shead__r{ font-family:var(--font-mono); font-size:0.72rem; color:var(--steel-400); letter-spacing:0.06em; text-align:right; line-height:1.9; }
+.shead__r b{ color:var(--steel-200); font-weight:500; }
+@media (max-width:760px){ .shead{ flex-direction:column; align-items:flex-start; } .shead__r{ text-align:left; } }
+
+/* ============================================================ SERVICES — spec-sheet register */
+.svc{ border-top:1px solid var(--hairline-strong); }
+.svc__row{
+  display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:clamp(1rem,3vw,2.5rem);
+  padding:clamp(1.4rem,2.6vw,2rem) 0.5rem; border-bottom:1px solid var(--hairline);
+  position:relative; transition:padding-left .35s var(--ease-out);
+}
+.svc__row::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--copper-500); transform:scaleY(0); transform-origin:top; transition:transform .35s var(--ease-out); z-index:1; }
+.svc__row::after{ content:""; position:absolute; inset:0; background:linear-gradient(90deg, oklch(0.685 0.132 55 / 0.06), transparent 55%); opacity:0; transition:opacity .35s var(--ease-out); pointer-events:none; }
+.svc__row:hover{ padding-left:1.4rem; }
+.svc__row:hover::before{ transform:scaleY(1); }
+.svc__row:hover::after{ opacity:1; }
+.svc__row > *{ position:relative; z-index:2; }
+.svc__idx{ font-family:var(--font-mono); font-size:0.72rem; color:var(--steel-400); padding-top:0.35rem; align-self:start; }
+.svc__main{ display:flex; flex-direction:column; gap:0.35rem; }
+.svc__name{ font-family:var(--font-display); font-weight:600; text-transform:uppercase; font-size:clamp(1.5rem,1.1rem+1.6vw,2.15rem); line-height:1; letter-spacing:0.005em; display:flex; align-items:center; gap:0.9rem; }
+.svc__name svg{ width:30px; height:30px; color:var(--copper-400); flex:none; transition:transform .4s var(--ease-out); }
+.svc__row:hover .svc__name svg{ transform:rotate(-90deg); }
+.svc__benefit{ color:var(--steel-200); font-size:0.98rem; max-width:44ch; }
+.svc__meta{ display:flex; flex-direction:column; align-items:flex-end; gap:0.45rem; text-align:right; }
+.svc__tag{ font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--copper-300); border:1px solid var(--hairline-strong); border-radius:2px; padding:0.28rem 0.55rem; white-space:nowrap; }
+.svc__resp{ font-family:var(--font-mono); font-size:0.64rem; color:var(--steel-400); letter-spacing:0.04em; }
+@media (max-width:760px){
+  .svc__row{ grid-template-columns:auto 1fr; }
+  .svc__meta{ grid-column:2; align-items:flex-start; text-align:left; flex-direction:row; flex-wrap:wrap; margin-top:0.4rem; }
+  .svc__name{ font-size:1.5rem; }
+  .svc__name svg{ width:24px; height:24px; }
+}
+
+/* ============================================================ PROCESS */
+.process{ background:var(--ink-900); border-block:1px solid var(--hairline); }
+.proc__grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
+.proc__line{ position:absolute; top:34px; left:8%; right:8%; height:2px; z-index:0; }
+.proc__line svg{ width:100%; height:4px; overflow:visible; }
+.proc__step{ position:relative; z-index:1; padding:0 clamp(0.5rem,1.5vw,1.4rem); text-align:center; }
+.proc__node{
+  width:68px; height:68px; margin:0 auto 1.4rem; border-radius:50%;
+  background:var(--ink-950); border:1px solid var(--hairline-strong);
+  display:flex; align-items:center; justify-content:center; position:relative;
+}
+.proc__node svg{ width:28px; height:28px; color:var(--copper-400); }
+.proc__node b{ position:absolute; top:-8px; right:-8px; width:26px; height:26px; border-radius:50%; background:var(--copper-500); color:var(--ink-950); font-family:var(--font-mono); font-size:0.72rem; font-weight:500; display:flex; align-items:center; justify-content:center; }
+.proc__step h3{ font-family:var(--font-display); font-weight:600; text-transform:uppercase; font-size:1.28rem; letter-spacing:0.01em; margin-bottom:0.5rem; }
+.proc__step p{ color:var(--steel-300); font-size:0.9rem; max-width:24ch; margin-inline:auto; }
+@media (max-width:760px){
+  .proc__grid{ grid-template-columns:1fr; gap:0; }
+  .proc__line{ display:none; }
+  .proc__step{ display:grid; grid-template-columns:68px 1fr; column-gap:1.2rem; row-gap:0.4rem; text-align:left; padding:1.4rem 0; align-items:start; }
+  .proc__node{ margin:0; grid-row:1 / span 2; align-self:start; }
+  .proc__step h3{ align-self:center; margin-bottom:0; }
+  .proc__step p{ margin-inline:0; max-width:42ch; }
+  .proc__step + .proc__step{ border-top:1px solid var(--hairline); }
+}
+
+/* ============================================================ PROOF — before/after */
+.proof__cmp{
+  position:relative; width:100%; aspect-ratio:16/10; border-radius:4px; overflow:hidden;
+  border:1px solid var(--hairline-strong); user-select:none; touch-action:none;
+  background:var(--ink-850);
+}
+.proof__cmp svg{ position:absolute; inset:0; width:100%; height:100%; }
+.proof__after{ position:absolute; inset:0; }
+.proof__before{ position:absolute; inset:0; clip-path:inset(0 50% 0 0); }
+.proof__label{ position:absolute; top:1rem; font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; padding:0.3rem 0.6rem; border-radius:2px; z-index:4; }
+.proof__label--b{ left:1rem; background:oklch(0.145 0.022 245 / 0.8); color:var(--steel-200); border:1px solid var(--hairline-strong); }
+.proof__label--a{ right:1rem; background:oklch(0.590 0.125 50 / 0.85); color:var(--ink-950); font-weight:500; }
+.proof__handle{ position:absolute; top:0; bottom:0; left:50%; width:2px; background:var(--copper-400); z-index:5; transform:translateX(-1px); }
+.proof__grip{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:46px; height:46px; padding:0; border-radius:50%; background:var(--copper-500); border:2px solid var(--ink-950); display:flex; align-items:center; justify-content:center; cursor:ew-resize; box-shadow:0 6px 18px -6px var(--copper-glow); transition:transform .15s var(--ease-out), box-shadow .2s var(--ease-out); }
+.proof__grip:hover{ transform:translate(-50%,-50%) scale(1.06); }
+.proof__grip:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--ink-950), 0 0 0 6px var(--copper-400); }
+.proof__grip svg{ position:static; width:20px; height:20px; color:var(--ink-950); }
+.proof__cap{ display:flex; justify-content:space-between; gap:1rem; margin-top:1rem; flex-wrap:wrap; }
+.proof__cap .mono{ font-size:0.72rem; color:var(--steel-400); letter-spacing:0.04em; }
+.proof__cap .mono b{ color:var(--copper-300); font-weight:500; }
+
+.jobs{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-top:clamp(2rem,4vw,3rem); }
+.job{ border:1px solid var(--hairline); border-radius:4px; overflow:hidden; background:var(--ink-900); transition:border-color .3s var(--ease-out), transform .3s var(--ease-out); }
+.job:hover{ border-color:var(--copper-600); transform:translateY(-3px); }
+.job__img{ aspect-ratio:16/10; position:relative; overflow:hidden; background:var(--ink-850); }
+.job__img img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.05) brightness(0.72); mix-blend-mode:luminosity; opacity:0.85; }
+.job__img::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, oklch(0.59 0.125 50 / 0.18), oklch(0.145 0.022 245 / 0.72)); mix-blend-mode:multiply; }
+.job__img .job__tag{ position:absolute; bottom:0.7rem; left:0.7rem; z-index:2; font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--copper-300); background:oklch(0.145 0.022 245 / 0.7); padding:0.24rem 0.5rem; border-radius:2px; }
+.job__body{ padding:1.1rem 1.15rem 1.3rem; }
+.job__body h4{ font-family:var(--font-display); font-weight:600; text-transform:uppercase; font-size:1.16rem; letter-spacing:0.01em; margin-bottom:0.35rem; }
+.job__body p{ font-size:0.86rem; color:var(--steel-300); }
+.job__meta{ margin-top:0.8rem; padding-top:0.7rem; border-top:1px solid var(--hairline); display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.62rem; color:var(--steel-400); letter-spacing:0.04em; }
+@media (max-width:820px){ .jobs{ grid-template-columns:1fr 1fr; } }
+@media (max-width:540px){ .jobs{ grid-template-columns:1fr; } }
+
+/* ============================================================ TESTIMONIALS */
+.revs{ display:grid; grid-template-columns:1.35fr 1fr; gap:1.25rem; align-items:stretch; }
+.rev{ border:1px solid var(--hairline); border-radius:4px; padding:clamp(1.6rem,3vw,2.4rem); background:var(--ink-900); position:relative; display:flex; flex-direction:column; }
+.rev--feat{ background:linear-gradient(160deg, var(--ink-850), var(--ink-900)); border-color:var(--copper-700); }
+.rev__mark{ font-family:var(--font-display); font-size:4rem; line-height:0.5; color:var(--copper-500); opacity:0.6; height:1.4rem; }
+.rev__stars{ color:var(--copper-400); letter-spacing:0.12em; font-size:0.9rem; margin-bottom:1rem; }
+.rev__quote{ font-size:clamp(1rem,0.95rem+0.4vw,1.32rem); line-height:1.5; color:var(--paper); margin-bottom:1.5rem; }
+.rev--feat .rev__quote{ font-weight:500; }
+.rev__who{ margin-top:auto; display:flex; align-items:center; gap:0.85rem; }
+.rev__avatar{ width:44px; height:44px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:1.1rem; color:var(--ink-950); background:linear-gradient(150deg,var(--copper-400),var(--copper-600)); }
+.rev__name{ font-weight:600; font-size:0.95rem; }
+.rev__svc{ font-family:var(--font-mono); font-size:0.62rem; color:var(--steel-400); letter-spacing:0.06em; text-transform:uppercase; }
+.revs__col{ display:grid; gap:1.25rem; }
+@media (max-width:860px){ .revs{ grid-template-columns:1fr; } }
+
+/* ============================================================ CONTACT / BOOKING */
+.contact{ background:var(--ink-900); border-top:1px solid var(--hairline); }
+.contact__grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:clamp(2rem,4vw,3.5rem); }
+.form{ display:grid; gap:1.15rem; }
+.form__row{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.field{ display:flex; flex-direction:column; gap:0.4rem; }
+.field label{ font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--steel-300); }
+.field label .req{ color:var(--copper-400); }
+.field input,.field select,.field textarea{
+  font-family:var(--font-body); font-size:0.95rem; color:var(--paper);
+  background:var(--ink-950); border:1px solid var(--hairline-strong); border-radius:3px;
+  padding:0.8rem 0.9rem; min-height:48px; transition:border-color .18s var(--ease-out), box-shadow .18s var(--ease-out);
+  width:100%;
+}
+.field textarea{ min-height:104px; resize:vertical; }
+.field select{ appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c98a3c' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 1rem center; padding-right:2.4rem; }
+.field input::placeholder,.field textarea::placeholder{ color:var(--steel-400); }
+.field input:focus,.field select:focus,.field textarea:focus{ outline:none; border-color:var(--copper-500); box-shadow:0 0 0 3px oklch(0.685 0.132 55 / 0.15); }
+.field--err input,.field--err select{ border-color:oklch(0.6 0.18 25); }
+.field__err{ font-family:var(--font-mono); font-size:0.62rem; color:oklch(0.72 0.16 30); display:none; }
+.field--err .field__err{ display:block; }
+.form__submit{ display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-top:0.3rem; }
+.form__submit .btn--primary{ font-size:1.05rem; }
+.form__note{ font-family:var(--font-mono); font-size:0.64rem; color:var(--steel-400); letter-spacing:0.03em; }
+.form__ok{ display:none; align-items:center; gap:0.7rem; padding:1rem 1.15rem; border:1px solid var(--copper-600); border-radius:3px; background:oklch(0.59 0.125 50 / 0.12); font-size:0.9rem; }
+.form__ok svg{ width:22px; height:22px; color:var(--copper-400); flex:none; }
+.form.is-sent .form__ok{ display:flex; }
+
+.info{ display:flex; flex-direction:column; gap:1.5rem; }
+.info__call{ border:1px solid var(--copper-700); border-radius:4px; padding:1.4rem 1.5rem; background:oklch(0.59 0.125 50 / 0.08); }
+.info__call .eyebrow{ margin-bottom:0.5rem; }
+.info__call a{ font-family:var(--font-display); font-weight:700; font-size:clamp(1.7rem,1.2rem+1.8vw,2.4rem); color:var(--paper); letter-spacing:0.01em; display:inline-flex; align-items:center; gap:0.6rem; }
+.info__call a svg{ width:26px; height:26px; color:var(--copper-400); }
+.info__call small{ display:block; font-family:var(--font-mono); font-size:0.66rem; color:var(--steel-300); letter-spacing:0.05em; margin-top:0.4rem; }
+.hours{ border:1px solid var(--hairline); border-radius:4px; overflow:hidden; }
+.hours__r{ display:flex; justify-content:space-between; padding:0.65rem 1rem; font-size:0.85rem; }
+.hours__r + .hours__r{ border-top:1px solid var(--hairline); }
+.hours__r span:first-child{ color:var(--steel-200); }
+.hours__r span:last-child{ font-family:var(--font-mono); font-size:0.76rem; color:var(--steel-300); }
+.hours__r--now{ background:oklch(0.59 0.125 50 / 0.1); }
+.hours__r--now span:last-child{ color:var(--copper-300); }
+/* service-area map */
+.map{ position:relative; border:1px solid var(--hairline); border-radius:4px; overflow:hidden; background:var(--ink-950); aspect-ratio:16/10; }
+.map svg{ width:100%; height:100%; }
+.map__grid{ stroke:oklch(0.5 0.03 250 / 0.14); stroke-width:1; }
+.map__area{ fill:oklch(0.59 0.125 50 / 0.1); stroke:var(--copper-500); stroke-width:1.4; stroke-dasharray:5 4; }
+.map__pin{ fill:var(--copper-400); }
+.map__road{ stroke:oklch(0.5 0.03 250 / 0.3); stroke-width:1.4; fill:none; }
+.map__label{ fill:var(--steel-300); font-family:var(--font-mono); font-size:9px; letter-spacing:0.04em; }
+.map__hub{ fill:var(--copper-400); }
+.map__cap{ position:absolute; left:0.9rem; bottom:0.9rem; font-family:var(--font-mono); font-size:0.62rem; color:var(--steel-300); letter-spacing:0.06em; background:oklch(0.145 0.022 245 / 0.7); padding:0.3rem 0.5rem; border-radius:2px; }
+.areas{ display:flex; flex-wrap:wrap; gap:0.4rem; }
+.areas span{ font-family:var(--font-mono); font-size:0.66rem; color:var(--steel-300); letter-spacing:0.03em; border:1px solid var(--hairline); border-radius:2px; padding:0.28rem 0.55rem; }
+@media (max-width:860px){ .contact__grid{ grid-template-columns:1fr; } }
+@media (max-width:520px){ .form__row{ grid-template-columns:1fr; } }
+
+/* ============================================================ FOOTER */
+.footer{ background:var(--ink-950); border-top:1px solid var(--hairline-strong); padding-block:clamp(3rem,5vw,4.5rem) 2rem; }
+.footer__top{ display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:2.5rem; margin-bottom:3rem; }
+.footer__brand p{ color:var(--steel-300); font-size:0.9rem; max-width:34ch; margin-top:1rem; }
+.footer__col h5{ font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--copper-400); margin-bottom:1.1rem; }
+.footer__col a,.footer__col span{ display:block; color:var(--steel-200); font-size:0.9rem; padding:0.3rem 0; }
+.footer__col a{ transition:color .2s var(--ease-out); }
+.footer__col a:hover{ color:var(--copper-300); }
+.footer__bar{ display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; padding-top:1.6rem; border-top:1px solid var(--hairline); font-family:var(--font-mono); font-size:0.66rem; color:var(--steel-400); letter-spacing:0.04em; }
+@media (max-width:760px){ .footer__top{ grid-template-columns:1fr 1fr; } .footer__brand{ grid-column:1 / -1; } }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ========================= EMERGENCY BAR ========================= -->
+<div class="embar" role="region" aria-label="Emergency contact">
+  <span class="embar__dot" aria-hidden="true"></span>
+  <span><b>24/7 Emergency Service</b><span class="embar__hide"> — Burst pipe, no water, active leak?</span></span>
+  <span class="embar__sep embar__hide" aria-hidden="true">·</span>
+  <a href="tel:+16125512090">Call (612) 551-2090</a>
+</div>
+
+<!-- ========================= NAV ========================= -->
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="#top" aria-label="Ironvein Plumbing and Mechanical home">
+      <svg class="brand__mark" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="31" height="31" rx="2" stroke="var(--copper-500)" stroke-width="1.5"/>
+        <circle cx="17" cy="17" r="7.5" stroke="var(--copper-400)" stroke-width="1.5"/>
+        <line x1="17" y1="3" x2="17" y2="9.5" stroke="var(--copper-400)" stroke-width="1.5"/>
+        <line x1="17" y1="24.5" x2="17" y2="31" stroke="var(--copper-400)" stroke-width="1.5"/>
+        <line x1="3" y1="17" x2="9.5" y2="17" stroke="var(--copper-400)" stroke-width="1.5"/>
+        <line x1="24.5" y1="17" x2="31" y2="17" stroke="var(--copper-400)" stroke-width="1.5"/>
+        <circle cx="17" cy="17" r="2.4" fill="var(--copper-500)"/>
+      </svg>
+      <span>
+        <span class="brand__name">IRON<span>VEIN</span></span><br/>
+        <span class="brand__tag">Plumbing &amp; Mechanical</span>
+      </span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#process">How It Works</a>
+      <a href="#proof">Our Work</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Service Area</a>
+    </nav>
+
+    <div class="nav__cta">
+      <a class="nav__phone" href="tel:+16125512090">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="nav__phone-num">(612) 551-2090</span>
+      </a>
+      <a class="btn btn--primary btn--sm" href="#contact">Book Now</a>
+      <button class="nav__burger" aria-label="Open menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ========================= MOBILE DRAWER ========================= -->
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="drawer__top">
+    <span class="brand__name" style="font-size:1.3rem">IRON<span style="color:var(--copper-400)">VEIN</span></span>
+    <button class="drawer__close" id="drawer-close" aria-label="Close menu">&times;</button>
+  </div>
+  <nav aria-label="Mobile">
+    <a href="#services"><span class="idx">01</span>Services</a>
+    <a href="#process"><span class="idx">02</span>How It Works</a>
+    <a href="#proof"><span class="idx">03</span>Our Work</a>
+    <a href="#reviews"><span class="idx">04</span>Reviews</a>
+    <a href="#contact"><span class="idx">05</span>Service Area</a>
+  </nav>
+  <div class="drawer__foot">
+    <a class="btn btn--primary" href="tel:+16125512090">Call (612) 551-2090</a>
+    <a class="btn btn--ghost" href="#contact">Book Online</a>
+    <span class="drawer__phone">On call 24 / 7 · Twin Cities Metro</span>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ========================= HERO ========================= -->
+<section class="hero" id="hero" aria-labelledby="hero-title">
+  <div class="hero__grid" aria-hidden="true"></div>
+  <div class="wrap hero__inner">
+
+    <div class="hero__copy">
+      <div class="hero__ticker reveal">
+        <span class="line" aria-hidden="true"></span>
+        <span class="eyebrow">Fig. 01 — Licensed · Bonded · Insured</span>
+      </div>
+      <h1 id="hero-title" class="reveal">
+        Water goes<br/><em>where we</em><br/><span class="thin">tell it to.</span>
+      </h1>
+      <p class="hero__sub reveal">
+        Master-licensed residential &amp; commercial plumbers serving the Twin Cities since 2003.
+        <b>Real technicians, flat-rate quotes, and a truck at your curb the same day</b> — most emergencies within 60 minutes.
+      </p>
+      <div class="hero__actions reveal">
+        <a class="btn btn--primary" href="tel:+16125512090">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call (612) 551-2090
+        </a>
+        <a class="btn btn--ghost" href="#contact">Book Online</a>
+      </div>
+      <div class="hero__specs reveal">
+        <span class="hero__spec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>MN Master License #PM-047821</span>
+        <span class="hero__spec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>$2M Liability · Bonded</span>
+        <span class="hero__spec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>On-call around the clock</span>
+      </div>
+    </div>
+
+    <div class="hero__stage is-loading" id="stage">
+      <!-- blueprint schematic (line-draw on scroll) -->
+      <svg class="hero__schematic" id="schematic" viewBox="0 0 400 400" aria-hidden="true">
+        <!-- centre + frame guides -->
+        <line class="dim" x1="200" y1="18" x2="200" y2="382"/>
+        <line class="dim" x1="40" y1="238" x2="360" y2="238"/>
+        <!-- valve body outline (gate valve section) -->
+        <path d="M120 238 h-46 a6 6 0 0 0-6 6 v34 a6 6 0 0 0 6 6 h46"/>
+        <path d="M280 238 h46 a6 6 0 0 1 6 6 v34 a6 6 0 0 1-6 6 h-46"/>
+        <rect x="120" y="212" width="160" height="90" rx="8"/>
+        <path d="M150 212 v-40 a50 50 0 0 1 100 0 v40"/>
+        <!-- bonnet + stem -->
+        <rect x="182" y="120" width="36" height="60" rx="4"/>
+        <line x1="200" y1="120" x2="200" y2="58"/>
+        <!-- handwheel -->
+        <circle cx="200" cy="58" r="40"/>
+        <circle cx="200" cy="58" r="30" class="dim"/>
+        <circle cx="200" cy="58" r="6"/>
+        <line x1="160" y1="58" x2="240" y2="58" class="dim"/>
+        <line x1="200" y1="18" x2="200" y2="98" class="dim"/>
+        <line x1="171" y1="29" x2="229" y2="87" class="dim"/>
+        <line x1="229" y1="29" x2="171" y2="87" class="dim"/>
+        <!-- flange bolts -->
+        <circle cx="74" cy="248" r="3" class="dim"/><circle cx="74" cy="268" r="3" class="dim"/>
+        <circle cx="326" cy="248" r="3" class="dim"/><circle cx="326" cy="268" r="3" class="dim"/>
+        <!-- dimension ticks -->
+        <path class="dim" d="M120 330 h160 M120 326 v8 M280 326 v8"/>
+        <text class="txt" x="176" y="348">Ø 1½" NPS</text>
+        <text class="txt" x="250" y="150">BRASS · FIG.A</text>
+      </svg>
+      <canvas class="hero__canvas" id="valve-canvas" aria-label="Interactive 3D brass gate valve assembly"></canvas>
+
+      <span class="bracket bracket--tl" aria-hidden="true"></span>
+      <span class="bracket bracket--tr" aria-hidden="true"></span>
+      <span class="bracket bracket--bl" aria-hidden="true"></span>
+      <span class="bracket bracket--br" aria-hidden="true"></span>
+
+      <span class="annot annot--a">Cast brass body<small>Rated 600 PSI</small></span>
+      <span class="annot annot--b">Rising stem<small>Full-port gate</small></span>
+      <span class="stage-hint" aria-hidden="true">Drag to inspect · Fig. A</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========================= TRUST STRIP ========================= -->
+<section class="trust" aria-label="Credentials and reputation">
+  <div class="trust__inner">
+    <div class="trust__item">
+      <span class="trust__num"><span data-count="21">21</span><sup>yrs</sup></span>
+      <span class="trust__label">Serving the Twin Cities</span>
+      <span class="trust__sub">Est. 2003 · Family owned</span>
+    </div>
+    <div class="trust__item">
+      <span class="trust__num"><span data-count="4.9" data-dec="1">4.9</span></span>
+      <span class="trust__stars" aria-hidden="true">★★★★★</span>
+      <span class="trust__sub">1,340 verified reviews</span>
+    </div>
+    <div class="trust__item">
+      <span class="trust__num"><span data-count="60">60</span><sup>min</sup></span>
+      <span class="trust__label">Avg. emergency arrival</span>
+      <span class="trust__sub">Metro-wide dispatch</span>
+    </div>
+    <div class="trust__item">
+      <span class="trust__num"><span data-count="18">18</span><sup>+</sup></span>
+      <span class="trust__label">Licensed technicians</span>
+      <span class="trust__sub">Background-checked crews</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= SERVICES ========================= -->
+<section class="section" id="services" aria-labelledby="svc-title">
+  <div class="wrap">
+    <div class="shead">
+      <div class="shead__l">
+        <span class="eyebrow">Fig. 02 — Scope of work</span>
+        <h2 id="svc-title" data-rise>Every joint, drain<br/>and line we <em>own.</em></h2>
+      </div>
+      <div class="shead__r" data-rise>
+        RESIDENTIAL + COMMERCIAL<br/>
+        <b>Flat-rate pricing</b> · quoted before we start<br/>
+        No trip charge on approved work
+      </div>
+    </div>
+
+    <div class="svc" role="list">
+      <div class="svc__row" role="listitem" data-rise>
+        <span class="svc__idx">S/01</span>
+        <div class="svc__main">
+          <span class="svc__name">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg>
+            Drain &amp; Sewer Cleaning
+          </span>
+          <span class="svc__benefit">Hydro-jetting and camera-verified clearing — we show you the blockage on screen, then prove it's gone.</span>
+        </div>
+        <div class="svc__meta">
+          <span class="svc__tag">Camera included</span>
+          <span class="svc__resp">Same-day slots</span>
+        </div>
+      </div>
+
+      <div class="svc__row" role="listitem" data-rise>
+        <span class="svc__idx">S/02</span>
+        <div class="svc__main">
+          <span class="svc__name">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="3"/><path d="M9 8h6M12 3v0M10 21v1M14 21v1"/><circle cx="12" cy="13" r="2.2"/></svg>
+            Water Heater Install &amp; Repair
+          </span>
+          <span class="svc__benefit">Tank and tankless — sized to your home, same-day swap-outs so you're never cold overnight.</span>
+        </div>
+        <div class="svc__meta">
+          <span class="svc__tag">6-yr labor warranty</span>
+          <span class="svc__resp">Next-day install</span>
+        </div>
+      </div>
+
+      <div class="svc__row" role="listitem" data-rise>
+        <span class="svc__idx">S/03</span>
+        <div class="svc__main">
+          <span class="svc__name">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 6 6 11a6 6 0 0 1-12 0c0-5 6-11 6-11z"/><path d="M9 14a3 3 0 0 0 3 3"/></svg>
+            Leak Detection
+          </span>
+          <span class="svc__benefit">Acoustic and thermal imaging pinpoints the leak behind the wall — we open one square foot, not one wall.</span>
+        </div>
+        <div class="svc__meta">
+          <span class="svc__tag">Non-invasive</span>
+          <span class="svc__resp">Precision locate</span>
+        </div>
+      </div>
+
+      <div class="svc__row" role="listitem" data-rise>
+        <span class="svc__idx">S/04</span>
+        <div class="svc__main">
+          <span class="svc__name">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h10a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4H8"/><circle cx="4" cy="8" r="1.5"/><path d="M18 5v6M15 8h6"/></svg>
+            Whole-Home Repiping
+          </span>
+          <span class="svc__benefit">Rip out failing galvanized and poly-B. PEX or copper repipe, permitted and pressure-tested, done in a day or two.</span>
+        </div>
+        <div class="svc__meta">
+          <span class="svc__tag">Permitted</span>
+          <span class="svc__resp">Financing avail.</span>
+        </div>
+      </div>
+
+      <div class="svc__row" role="listitem" data-rise>
+        <span class="svc__idx">S/05</span>
+        <div class="svc__main">
+          <span class="svc__name">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3M6.3 6.3l2.1 2.1M15.6 15.6l2.1 2.1M17.7 6.3l-2.1 2.1M8.4 15.6l-2.1 2.1"/></svg>
+            Emergency Shutoff &amp; Burst Pipe
+          </span>
+          <span class="svc__benefit">Water everywhere at 2 a.m.? We talk you through the main shutoff on the phone, then a truck is already rolling.</span>
+        </div>
+        <div class="svc__meta">
+          <span class="svc__tag" style="color:var(--copper-400);border-color:var(--copper-600)">24 / 7 dispatch</span>
+          <span class="svc__resp">~60 min arrival</span>
+        </div>
+      </div>
+
+      <div class="svc__row" role="listitem" data-rise>
+        <span class="svc__idx">S/06</span>
+        <div class="svc__main">
+          <span class="svc__name">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l7-4 7 4v13"/><path d="M17 21V11l4 2v8M7 12h2M7 16h2M13 12h0M13 16h0"/></svg>
+            Commercial &amp; Mechanical
+          </span>
+          <span class="svc__benefit">Backflow certification, grease traps, boilers and tenant fit-outs — one contractor for the whole building.</span>
+        </div>
+        <div class="svc__meta">
+          <span class="svc__tag">Backflow certified</span>
+          <span class="svc__resp">Service contracts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= PROCESS ========================= -->
+<section class="section process" id="process" aria-labelledby="proc-title">
+  <div class="wrap">
+    <div class="shead">
+      <div class="shead__l">
+        <span class="eyebrow">Fig. 03 — Booking to fix</span>
+        <h2 id="proc-title" data-rise>No surprises.<br/><em>Four steps,</em> that's it.</h2>
+      </div>
+      <div class="shead__r" data-rise>
+        You approve the price<br/>
+        <b>before</b> a wrench is turned.
+      </div>
+    </div>
+
+    <div class="proc__grid">
+      <div class="proc__line" aria-hidden="true">
+        <svg id="proc-line" viewBox="0 0 1000 4" preserveAspectRatio="none">
+          <line x1="0" y1="2" x2="1000" y2="2" stroke="var(--hairline-strong)" stroke-width="2"/>
+          <line id="proc-flow" x1="0" y1="2" x2="1000" y2="2" stroke="var(--copper-500)" stroke-width="2" stroke-dasharray="1000" stroke-dashoffset="1000"/>
+        </svg>
+      </div>
+
+      <div class="proc__step" data-rise>
+        <div class="proc__node"><b>1</b>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h3>Call or Book</h3>
+        <p>Reach a real dispatcher, not a queue. Tell us what's happening.</p>
+      </div>
+
+      <div class="proc__step" data-rise>
+        <div class="proc__node"><b>2</b>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h3>Flat Quote</h3>
+        <p>The tech diagnoses on-site and hands you one fixed price up front.</p>
+      </div>
+
+      <div class="proc__step" data-rise>
+        <div class="proc__node"><b>3</b>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a1.5 1.5 0 0 0 2.1 2.1l6-6a4 4 0 0 0 5.4-5.4l-2.3 2.3-2.1-2.1z"/></svg>
+        </div>
+        <h3>We Fix It Right</h3>
+        <p>Licensed hands, code-compliant parts, tidy work you can inspect.</p>
+      </div>
+
+      <div class="proc__step" data-rise>
+        <div class="proc__node"><b>4</b>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 6 6 11a6 6 0 0 1-12 0c0-5 6-11 6-11z"/><path d="M9 13l2 2 4-4"/></svg>
+        </div>
+        <h3>Clean &amp; Warranty</h3>
+        <p>We clean up, walk you through it, and back the work in writing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= PROOF ========================= -->
+<section class="section" id="proof" aria-labelledby="proof-title">
+  <div class="wrap">
+    <div class="shead">
+      <div class="shead__l">
+        <span class="eyebrow">Fig. 04 — Verified field work</span>
+        <h2 id="proof-title" data-rise>The receipts.<br/>Drag to <em>see the fix.</em></h2>
+      </div>
+      <div class="shead__r" data-rise>
+        Job #IV-2249<br/>
+        <b>Galvanized → Copper repipe</b><br/>
+        Kenwood, Minneapolis · 2024
+      </div>
+    </div>
+
+    <div class="proof__cmp" id="cmp" data-rise>
+      <div class="proof__after" aria-hidden="true">
+        <!-- AFTER: clean copper repipe -->
+        <svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+          <rect width="800" height="500" fill="var(--ink-850)"/>
+          <g stroke="oklch(0.5 0.03 250 / 0.12)" stroke-width="1">
+            <line x1="0" y1="125" x2="800" y2="125"/><line x1="0" y1="250" x2="800" y2="250"/><line x1="0" y1="375" x2="800" y2="375"/>
+            <line x1="200" y1="0" x2="200" y2="500"/><line x1="400" y1="0" x2="400" y2="500"/><line x1="600" y1="0" x2="600" y2="500"/>
+          </g>
+          <g stroke="var(--copper-400)" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M70 150 H730"/>
+            <path d="M180 150 V300 Q180 332 212 332 H340"/>
+            <path d="M470 150 V270 Q470 302 502 302 H660 V400"/>
+            <path d="M650 150 V92"/>
+            <path d="M300 332 V432 H460"/>
+            <path d="M120 150 V240"/>
+          </g>
+          <!-- shutoff valve on main run -->
+          <g stroke="var(--copper-400)" stroke-width="13" fill="none"><circle cx="385" cy="104" r="28"/><line x1="385" y1="132" x2="385" y2="150"/></g>
+          <circle cx="385" cy="104" r="7" fill="var(--copper-300)"/>
+          <g fill="var(--copper-600)"><!-- couplings -->
+            <rect x="168" y="290" width="24" height="24" rx="3"/><rect x="458" y="258" width="24" height="24" rx="3"/>
+            <rect x="638" y="140" width="24" height="24" rx="3"/><rect x="288" y="320" width="24" height="24" rx="3"/>
+            <rect x="490" y="290" width="24" height="24" rx="3"/><rect x="108" y="228" width="24" height="24" rx="3"/>
+          </g>
+          <g fill="oklch(0.9 0.06 78 / 0.6)"><circle cx="230" cy="150" r="5"/><circle cx="470" cy="220" r="5"/><circle cx="560" cy="302" r="5"/><circle cx="385" cy="90" r="4"/></g>
+        </svg>
+      </div>
+      <div class="proof__before" id="cmp-before" aria-hidden="true">
+        <!-- BEFORE: corroded galvanized, leaking -->
+        <svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+          <rect width="800" height="500" fill="oklch(0.185 0.018 58)"/>
+          <g stroke="oklch(0.5 0.03 250 / 0.1)" stroke-width="1">
+            <line x1="0" y1="125" x2="800" y2="125"/><line x1="0" y1="250" x2="800" y2="250"/><line x1="0" y1="375" x2="800" y2="375"/>
+            <line x1="200" y1="0" x2="200" y2="500"/><line x1="400" y1="0" x2="400" y2="500"/><line x1="600" y1="0" x2="600" y2="500"/>
+          </g>
+          <g id="cmp-pipes-old" stroke="oklch(0.44 0.05 52)" stroke-width="17" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M70 150 H730"/>
+            <path d="M180 150 V300 Q180 332 212 332 H340"/>
+            <path d="M470 150 V270 Q470 302 502 302 H660 V400"/>
+            <path d="M650 150 V92"/>
+            <path d="M300 332 V432 H460"/>
+            <path d="M120 150 V240"/>
+          </g>
+          <g stroke="oklch(0.30 0.05 42)" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="2 11" opacity="0.85">
+            <path d="M70 150 H730"/><path d="M180 150 V300 Q180 332 212 332 H340"/><path d="M470 150 V270 Q470 302 502 302 H660 V400"/><path d="M300 332 V432 H460"/>
+          </g>
+          <g stroke="oklch(0.44 0.05 52)" stroke-width="13" fill="none"><circle cx="385" cy="104" r="28"/><line x1="385" y1="132" x2="385" y2="150"/></g>
+          <!-- rust blooms -->
+          <g fill="oklch(0.40 0.10 38 / 0.85)"><circle cx="470" cy="235" r="17"/><circle cx="180" cy="230" r="13"/><circle cx="660" cy="330" r="15"/><circle cx="385" cy="104" r="12"/></g>
+          <!-- active leak at joint -->
+          <path d="M470 270 Q482 340 478 420" stroke="oklch(0.52 0.11 235 / 0.6)" stroke-width="3" fill="none"/>
+          <g fill="oklch(0.55 0.12 235 / 0.75)"><circle cx="472" cy="320" r="4"/><circle cx="476" cy="356" r="5"/><circle cx="479" cy="398" r="6"/></g>
+        </svg>
+      </div>
+      <span class="proof__label proof__label--b">Before</span>
+      <span class="proof__label proof__label--a">After · Ironvein</span>
+      <div class="proof__handle" id="cmp-handle">
+        <button class="proof__grip" id="cmp-grip" type="button" role="slider" aria-label="Reveal before or after — use arrow keys" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50% after">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7l-4 5 4 5M16 7l4 5-4 5"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="proof__cap">
+      <span class="mono">SCOPE — <b>Full second-floor repipe</b>, 1920s galvanized to Type-L copper</span>
+      <span class="mono">DURATION — <b>1.5 days</b> · Permitted &amp; inspected</span>
+    </div>
+
+    <div class="jobs">
+      <article class="job" data-rise>
+        <div class="job__img"><img src="https://picsum.photos/seed/ironvein-heater/480/300" alt="Completed water heater installation" loading="lazy"/><span class="job__tag">Water Heater</span></div>
+        <div class="job__body">
+          <h4>50-Gal Tankless Swap</h4>
+          <p>Failed tank replaced with a wall-mount tankless — recovered a full closet for the homeowner.</p>
+          <div class="job__meta"><span>St. Paul · Highland</span><span>Job #IV-2287</span></div>
+        </div>
+      </article>
+      <article class="job" data-rise>
+        <div class="job__img"><img src="https://picsum.photos/seed/ironvein-sewer/480/300" alt="Completed sewer line repair" loading="lazy"/><span class="job__tag">Sewer Line</span></div>
+        <div class="job__body">
+          <h4>Trenchless Main Reline</h4>
+          <p>Root-crushed clay main relined from the cleanout — no lawn dug up, no driveway cut.</p>
+          <div class="job__meta"><span>Edina · Morningside</span><span>Job #IV-2301</span></div>
+        </div>
+      </article>
+      <article class="job" data-rise>
+        <div class="job__img"><img src="https://picsum.photos/seed/ironvein-bath/480/300" alt="Completed bathroom rough-in" loading="lazy"/><span class="job__tag">Commercial</span></div>
+        <div class="job__body">
+          <h4>Café Backflow &amp; Grease</h4>
+          <p>New grease trap and certified backflow assembly for a tenant fit-out — passed first inspection.</p>
+          <div class="job__meta"><span>Minneapolis · North Loop</span><span>Job #IV-2312</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= TESTIMONIALS ========================= -->
+<section class="section" id="reviews" aria-labelledby="rev-title">
+  <div class="wrap">
+    <div class="shead">
+      <div class="shead__l">
+        <span class="eyebrow">Fig. 05 — What neighbors say</span>
+        <h2 id="rev-title" data-rise>4.9 stars isn't<br/>an accident.</h2>
+      </div>
+      <div class="shead__r" data-rise>
+        1,340 verified reviews<br/>
+        <b>Google · Angi · BBB A+</b>
+      </div>
+    </div>
+
+    <div class="revs">
+      <div class="rev rev--feat" data-rise>
+        <span class="rev__mark" aria-hidden="true">&ldquo;</span>
+        <span class="rev__stars" aria-label="5 out of 5 stars">★★★★★</span>
+        <p class="rev__quote">Our basement was ankle-deep at 11pm the night before a snowstorm. Ironvein had Dwight at our door in 40 minutes, killed the leak, and pumped us out. He quoted the repipe on the spot — no upsell, no scare tactics. I've since sent them to half my street.</p>
+        <div class="rev__who">
+          <span class="rev__avatar" aria-hidden="true">DO</span>
+          <span>
+            <span class="rev__name">Danielle Osterberg</span>
+            <span class="rev__svc">Emergency shutoff · Repipe</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="revs__col">
+        <div class="rev" data-rise>
+          <span class="rev__stars" aria-label="5 out of 5 stars">★★★★★</span>
+          <p class="rev__quote">They found a slab leak two other companies missed — used a listening device instead of tearing up my kitchen. Fixed for a third of what I'd been quoted to re-tile.</p>
+          <div class="rev__who">
+            <span class="rev__avatar" aria-hidden="true">MR</span>
+            <span>
+              <span class="rev__name">Marcus Reyes</span>
+              <span class="rev__svc">Leak detection</span>
+            </span>
+          </div>
+        </div>
+        <div class="rev" data-rise>
+          <span class="rev__stars" aria-label="5 out of 5 stars">★★★★★</span>
+          <p class="rev__quote">Flat rate was the flat rate. The tech, Priya, texted when she was 15 minutes out and left the utility room cleaner than she found it. Rare these days.</p>
+          <div class="rev__who">
+            <span class="rev__avatar" aria-hidden="true">TH</span>
+            <span>
+              <span class="rev__name">Tom Halvorsen</span>
+              <span class="rev__svc">Water heater install</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= CONTACT / BOOKING ========================= -->
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <div class="shead">
+      <div class="shead__l">
+        <span class="eyebrow">Fig. 06 — Get on the schedule</span>
+        <h2 id="contact-title" data-rise>Book a plumber.<br/><em>Reach a human.</em></h2>
+      </div>
+      <div class="shead__r" data-rise>
+        Prefer to talk?<br/>
+        <b>Call — we answer 24/7.</b>
+      </div>
+    </div>
+
+    <div class="contact__grid">
+      <!-- FORM (Restraint motion) -->
+      <form class="form" id="book-form" data-rise novalidate>
+        <div class="form__row">
+          <div class="field">
+            <label for="f-name">Full name <span class="req">*</span></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Jordan Whitaker" required />
+            <span class="field__err">Please enter your name.</span>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone <span class="req">*</span></label>
+            <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(612) 555-0142" required />
+            <span class="field__err">Enter a phone we can reach you at.</span>
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="field">
+            <label for="f-service">Service needed <span class="req">*</span></label>
+            <select id="f-service" name="service" required>
+              <option value="" selected disabled>Select a service</option>
+              <option>Emergency / burst pipe</option>
+              <option>Drain &amp; sewer cleaning</option>
+              <option>Water heater</option>
+              <option>Leak detection</option>
+              <option>Repiping</option>
+              <option>Commercial / mechanical</option>
+              <option>Something else</option>
+            </select>
+            <span class="field__err">Choose a service.</span>
+          </div>
+          <div class="field">
+            <label for="f-urgency">Urgency</label>
+            <select id="f-urgency" name="urgency">
+              <option>Emergency — now</option>
+              <option selected>Today / same-day</option>
+              <option>This week</option>
+              <option>Just planning</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-zip">Service address or ZIP <span class="req">*</span></label>
+          <input id="f-zip" name="zip" type="text" autocomplete="postal-code" placeholder="55405 — or full street address" required />
+          <span class="field__err">Where should we send the truck?</span>
+        </div>
+        <div class="field">
+          <label for="f-msg">What's going on?</label>
+          <textarea id="f-msg" name="message" placeholder="e.g. Water heater leaking from the base, garage is getting wet."></textarea>
+        </div>
+        <div class="form__submit">
+          <button type="submit" class="btn btn--primary">Request Service</button>
+          <span class="form__note">Avg. reply in minutes · No obligation</span>
+        </div>
+        <div class="form__ok" role="status">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          <span>Request received. A dispatcher will call you shortly — for active emergencies, please call <a href="tel:+16125512090" style="color:var(--copper-300)">(612) 551-2090</a> now.</span>
+        </div>
+      </form>
+
+      <!-- INFO -->
+      <div class="info">
+        <div class="info__call">
+          <span class="eyebrow">Emergency line — 24/7</span>
+          <a href="tel:+16125512090">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            (612) 551-2090
+          </a>
+          <small>Live dispatcher · Twin Cities metro · 24/7 coverage</small>
+        </div>
+
+        <div class="hours" role="table" aria-label="Business hours">
+          <div class="hours__r hours__r--now"><span>Emergency service</span><span>Open now · 24 / 7</span></div>
+          <div class="hours__r"><span>Mon – Fri (standard)</span><span>7:00a – 7:00p</span></div>
+          <div class="hours__r"><span>Saturday</span><span>8:00a – 4:00p</span></div>
+          <div class="hours__r"><span>Sunday</span><span>Emergency only</span></div>
+        </div>
+
+        <div class="map" aria-label="Service area map — Twin Cities metro">
+          <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+            <rect width="400" height="250" fill="var(--ink-950)"/>
+            <g class="map__grid"><line x1="0" y1="62" x2="400" y2="62"/><line x1="0" y1="125" x2="400" y2="125"/><line x1="0" y1="188" x2="400" y2="188"/><line x1="100" y1="0" x2="100" y2="250"/><line x1="200" y1="0" x2="200" y2="250"/><line x1="300" y1="0" x2="300" y2="250"/></g>
+            <path class="map__road" d="M40 40 L200 120 L360 70"/>
+            <path class="map__road" d="M60 220 L180 130 L340 200"/>
+            <path class="map__road" d="M200 10 L200 240"/>
+            <circle class="map__area" cx="200" cy="125" r="92"/>
+            <path class="map__hub" d="M170 118 l-2 6 h-6 l5 4 -2 6 5 -3 5 3 -2 -6 5 -4 h-6 z" transform="translate(30,7) scale(0.9)"/>
+            <circle class="map__pin" cx="140" cy="95" r="4"/><circle class="map__pin" cx="255" cy="150" r="4"/><circle class="map__pin" cx="230" cy="90" r="4"/><circle class="map__pin" cx="160" cy="165" r="4"/>
+            <text class="map__label" x="206" y="118">Minneapolis</text>
+            <text class="map__label" x="250" y="150">St. Paul</text>
+          </svg>
+          <span class="map__cap">Coverage radius — 25 mi from downtown</span>
+        </div>
+
+        <div class="areas" aria-label="Cities served">
+          <span>Minneapolis</span><span>St. Paul</span><span>Edina</span><span>Bloomington</span><span>Plymouth</span><span>Maple Grove</span><span>Roseville</span><span>Eden Prairie</span><span>+ 20 more</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ========================= FOOTER ========================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="brand" href="#top" aria-label="Ironvein home">
+          <svg class="brand__mark" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+            <rect x="1.5" y="1.5" width="31" height="31" rx="2" stroke="var(--copper-500)" stroke-width="1.5"/>
+            <circle cx="17" cy="17" r="7.5" stroke="var(--copper-400)" stroke-width="1.5"/>
+            <line x1="17" y1="3" x2="17" y2="9.5" stroke="var(--copper-400)" stroke-width="1.5"/><line x1="17" y1="24.5" x2="17" y2="31" stroke="var(--copper-400)" stroke-width="1.5"/><line x1="3" y1="17" x2="9.5" y2="17" stroke="var(--copper-400)" stroke-width="1.5"/><line x1="24.5" y1="17" x2="31" y2="17" stroke="var(--copper-400)" stroke-width="1.5"/>
+            <circle cx="17" cy="17" r="2.4" fill="var(--copper-500)"/>
+          </svg>
+          <span><span class="brand__name">IRON<span style="color:var(--copper-400)">VEIN</span></span><br/><span class="brand__tag">Plumbing &amp; Mechanical</span></span>
+        </a>
+        <p>Master-licensed plumbing and mechanical for the Twin Cities. Family-owned since 2003. We answer the phone — day or night.</p>
+      </div>
+      <div class="footer__col">
+        <h5>Services</h5>
+        <a href="#services">Drain &amp; Sewer</a>
+        <a href="#services">Water Heaters</a>
+        <a href="#services">Leak Detection</a>
+        <a href="#services">Repiping</a>
+        <a href="#services">Commercial</a>
+      </div>
+      <div class="footer__col">
+        <h5>Company</h5>
+        <a href="#process">How It Works</a>
+        <a href="#proof">Our Work</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Service Area</a>
+        <a href="tel:+16125512090">(612) 551-2090</a>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <span>© 2024 Ironvein Plumbing &amp; Mechanical LLC · MN Master License #PM-047821 · Bonded &amp; Insured</span>
+      <span>Demo concept site · Design by studio</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ========================= MOBILE STICKY CALL ========================= -->
+<div class="sticky-call" aria-hidden="false">
+  <a class="btn btn--primary" href="tel:+16125512090">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    Call Now
+  </a>
+  <a class="btn btn--ghost" href="#contact">Book</a>
+</div>
+
+<!-- ========================= SCRIPTS ========================= -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+gsap.registerPlugin(ScrollTrigger);
+
+/* ---------- 3D BRASS VALVE ---------- */
+function initValve(){
+  const canvas = document.getElementById('valve-canvas');
+  const stage = document.getElementById('stage');
+  if(!canvas) return;
+
+  let renderer;
+  try{
+    renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+  }catch(e){ stage.classList.remove('is-loading'); return; }
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.12;
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+  camera.position.set(0, 0.3, 8.4);
+
+  // lights for warm brass sheen
+  const key = new THREE.DirectionalLight(0xfff1de, 2.4); key.position.set(4, 6, 5); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xd98a45, 2.0); rim.position.set(-6, 2, -3); scene.add(rim);
+  const fill = new THREE.DirectionalLight(0x88a5c0, 0.9); fill.position.set(-2, -4, 4); scene.add(fill);
+
+  // materials — brushed brass + darker copper body
+  const brass = new THREE.MeshPhysicalMaterial({
+    color:0xc98a3c, metalness:1.0, roughness:0.26, clearcoat:0.7, clearcoatRoughness:0.3,
+    reflectivity:0.75, envMapIntensity:1.35
+  });
+  const copperDark = new THREE.MeshPhysicalMaterial({
+    color:0x9a5a2c, metalness:1.0, roughness:0.40, clearcoat:0.45, clearcoatRoughness:0.48,
+    envMapIntensity:1.15
+  });
+  const steel = new THREE.MeshStandardMaterial({ color:0x8b929c, metalness:1.0, roughness:0.32, envMapIntensity:1.2 });
+
+  const valve = new THREE.Group();
+
+  // --- horizontal pipe run ---
+  const pipeGeo = new THREE.CylinderGeometry(0.62, 0.62, 4.6, 40, 1, true);
+  const pipe = new THREE.Mesh(pipeGeo, copperDark);
+  pipe.rotation.z = Math.PI/2; valve.add(pipe);
+
+  // flanges + bolts at each end
+  function flange(x){
+    const g = new THREE.Group();
+    const disc = new THREE.Mesh(new THREE.CylinderGeometry(1.02, 1.02, 0.28, 40), brass);
+    disc.rotation.z = Math.PI/2; g.add(disc);
+    const lip = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.4, 36), copperDark);
+    lip.rotation.z = Math.PI/2; g.add(lip);
+    for(let i=0;i<8;i++){
+      const a = (i/8)*Math.PI*2;
+      const bolt = new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,0.42,6), steel);
+      bolt.rotation.z = Math.PI/2;
+      bolt.position.set(0, Math.cos(a)*0.82, Math.sin(a)*0.82);
+      g.add(bolt);
+    }
+    g.position.x = x; return g;
+  }
+  valve.add(flange(2.3)); valve.add(flange(-2.3));
+
+  // --- valve body (central chunky housing) ---
+  const body = new THREE.Mesh(new THREE.SphereGeometry(1.02, 36, 28), copperDark);
+  body.scale.set(1, 1.05, 1); valve.add(body);
+  const bodyBand = new THREE.Mesh(new THREE.TorusGeometry(1.0, 0.14, 20, 44), brass);
+  bodyBand.rotation.y = Math.PI/2; valve.add(bodyBand);
+
+  // --- bonnet rising up ---
+  const bonnet = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.66, 1.4, 32), brass);
+  bonnet.position.y = 1.55; valve.add(bonnet);
+  const bonnetNut = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.6, 0.34, 6), copperDark);
+  bonnetNut.position.y = 0.98; valve.add(bonnetNut);
+  const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 1.4, 16), steel);
+  stem.position.y = 2.6; valve.add(stem);
+
+  // --- handwheel ---
+  const wheel = new THREE.Group();
+  const rimTorus = new THREE.Mesh(new THREE.TorusGeometry(0.92, 0.11, 20, 60), brass);
+  wheel.add(rimTorus);
+  const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.26, 0.34, 24), brass);
+  hub.rotation.x = Math.PI/2; wheel.add(hub);
+  for(let i=0;i<5;i++){
+    const a = (i/5)*Math.PI*2;
+    const spoke = new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.055,1.7,10), brass);
+    spoke.rotation.z = a; wheel.add(spoke);
+  }
+  wheel.rotation.x = Math.PI/2; wheel.position.y = 3.3; valve.add(wheel);
+
+  valve.rotation.set(0.12, -0.5, 0.05);
+  valve.scale.setScalar(1.0);
+  scene.add(valve);
+
+  // fit + resize
+  function resize(){
+    const r = stage.getBoundingClientRect();
+    const w = r.width, h = r.height;
+    renderer.setSize(w, h, false);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+    camera.position.z = w < 520 ? 9.6 : 8.4;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // pointer parallax
+  const target = { x:-0.5, y:0.12 };
+  const cur = { x:-0.5, y:0.12 };
+  if(!REDUCE){
+    stage.addEventListener('pointermove', (e)=>{
+      const r = stage.getBoundingClientRect();
+      const nx = ((e.clientX - r.left)/r.width) * 2 - 1;
+      const ny = ((e.clientY - r.top)/r.height) * 2 - 1;
+      target.x = -0.5 + nx * 0.7;
+      target.y = 0.12 + ny * 0.45;
+    });
+    stage.addEventListener('pointerleave', ()=>{ target.x = -0.5; target.y = 0.12; });
+  }
+
+  const clock = new THREE.Clock();
+  function loop(){
+    const dt = clock.getDelta();
+    const t = clock.getElapsedTime();
+    if(!REDUCE){
+      valve.rotation.y += dt * 0.18;          // slow auto-rotate
+      cur.x += (target.x - cur.x) * 0.06;
+      cur.y += (target.y - cur.y) * 0.06;
+      valve.rotation.x = 0.12 + cur.y;
+      valve.rotation.z = 0.05 + cur.x * 0.10;
+      valve.position.y = Math.sin(t * 0.8) * 0.12;   // gentle living float
+      wheel.rotation.z += dt * 0.35;           // wheel spins a touch faster
+    }
+    renderer.render(scene, camera);
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  // reveal stage
+  stage.classList.remove('is-loading');
+  if(!REDUCE){
+    gsap.fromTo(valve.scale, { x:0.6, y:0.6, z:0.6 }, { x:1, y:1, z:1, duration:1.4, ease:'expo.out' });
+    gsap.fromTo(canvas, { autoAlpha:0 }, { autoAlpha:1, duration:1.0, ease:'power2.out' });
+  }
+}
+
+/* ---------- SCHEMATIC LINE-DRAW ---------- */
+function initSchematic(){
+  const svg = document.getElementById('schematic');
+  if(!svg) return;
+  const shapes = svg.querySelectorAll('path, line, circle, rect');
+  shapes.forEach((el)=>{
+    let len = 0;
+    try{ len = el.getTotalLength ? el.getTotalLength() : 0; }catch(e){ len = 0; }
+    if(!len){ // circles/rects sometimes need fallback
+      const box = el.getBBox(); len = (box.width + box.height) * 2 || 400;
+    }
+    el.style.setProperty('--len', len);
+    if(REDUCE){ el.style.strokeDasharray='none'; el.style.strokeDashoffset='0'; return; }
+    el.style.strokeDasharray = len;
+    el.style.strokeDashoffset = len;
+  });
+  if(REDUCE) return;
+  gsap.to(shapes, {
+    strokeDashoffset:0, duration:1.6, ease:'power2.inOut',
+    stagger:{ each:0.03, from:'center' },
+    scrollTrigger:{ trigger:'#stage', start:'top 78%', once:true }
+  });
+}
+
+/* ---------- HERO INTRO ---------- */
+function initIntro(){
+  if(REDUCE){ document.querySelectorAll('.reveal').forEach(e=>{e.style.opacity=1;e.style.transform='none';}); return; }
+  const tl = gsap.timeline({ defaults:{ ease:'power3.out' }});
+  tl.to('.hero__copy .reveal', { opacity:1, y:0, duration:0.9, stagger:0.11 }, 0.15)
+    .to('.annot', { opacity:1, duration:0.6, stagger:0.15 }, 0.9);
+}
+
+/* ---------- NAV scroll state ---------- */
+function initNav(){
+  const nav = document.getElementById('nav');
+  ScrollTrigger.create({
+    start:'top -40',
+    onUpdate:(self)=>{ nav.classList.toggle('scrolled', self.scroll() > 40); }
+  });
+}
+
+/* ---------- COUNT-UP (trust numbers) ---------- */
+function initCounters(){
+  const nums = gsap.utils.toArray('[data-count]');
+  nums.forEach(el=>{
+    const target = parseFloat(el.dataset.count);
+    const dec = parseInt(el.dataset.dec || '0', 10);
+    if(REDUCE){ el.textContent = target.toFixed(dec); return; }
+    const obj = { v:0 };
+    ScrollTrigger.create({ trigger:el, start:'top 92%', once:true, onEnter:()=>{
+      gsap.to(obj, { v:target, duration:1.4, ease:'power2.out', onUpdate:()=>{ el.textContent = obj.v.toFixed(dec); } });
+    }});
+  });
+}
+
+/* ---------- SCROLL REVEALS ---------- */
+function initReveals(){
+  const items = gsap.utils.toArray('[data-rise]');
+  if(REDUCE){ items.forEach(el=>{ el.style.opacity=1; el.style.transform='none'; }); return; }
+  ScrollTrigger.batch(items, {
+    start:'top 86%',
+    onEnter:(els)=>gsap.to(els, { opacity:1, y:0, duration:0.8, ease:'power3.out', stagger:0.09, overwrite:true })
+  });
+}
+
+/* ---------- PROCESS FLOW LINE ---------- */
+function initProcess(){
+  const flow = document.getElementById('proc-flow');
+  if(!flow) return;
+  if(REDUCE){ flow.style.strokeDashoffset = 0; return; }
+  gsap.to(flow, {
+    strokeDashoffset:0, ease:'none',
+    scrollTrigger:{ trigger:'#process', start:'top 70%', end:'bottom 70%', scrub:0.6 }
+  });
+}
+
+/* ---------- BEFORE / AFTER SLIDER ---------- */
+function initCompare(){
+  const cmp = document.getElementById('cmp');
+  const before = document.getElementById('cmp-before');
+  const handle = document.getElementById('cmp-handle');
+  const grip = document.getElementById('cmp-grip');
+  if(!cmp) return;
+  let dragging = false;
+  let pos = 0.5;
+  const apply = (p)=>{
+    pos = Math.max(0.02, Math.min(0.98, p));
+    before.style.clipPath = `inset(0 ${(1-pos)*100}% 0 0)`;
+    handle.style.left = (pos*100)+'%';
+    const pct = Math.round(pos*100);
+    grip.setAttribute('aria-valuenow', pct);
+    grip.setAttribute('aria-valuetext', pct + '% after');
+  };
+  const setFromX = (clientX)=>{ const r = cmp.getBoundingClientRect(); apply((clientX - r.left)/r.width); };
+  const down = (e)=>{ dragging = true; setFromX(e.touches ? e.touches[0].clientX : e.clientX); e.preventDefault(); };
+  const move = (e)=>{ if(!dragging) return; setFromX(e.touches ? e.touches[0].clientX : e.clientX); };
+  const up = ()=>{ dragging = false; };
+  handle.addEventListener('mousedown', down); cmp.addEventListener('mousedown', down);
+  handle.addEventListener('touchstart', down, {passive:false}); cmp.addEventListener('touchstart', down, {passive:false});
+  window.addEventListener('mousemove', move); window.addEventListener('touchmove', move, {passive:true});
+  window.addEventListener('mouseup', up); window.addEventListener('touchend', up);
+  // keyboard support
+  grip.addEventListener('keydown', (e)=>{
+    const step = e.shiftKey ? 0.1 : 0.04;
+    if(e.key==='ArrowLeft'){ apply(pos-step); e.preventDefault(); }
+    else if(e.key==='ArrowRight'){ apply(pos+step); e.preventDefault(); }
+    else if(e.key==='Home'){ apply(0.02); e.preventDefault(); }
+    else if(e.key==='End'){ apply(0.98); e.preventDefault(); }
+  });
+  grip.addEventListener('click', (e)=>e.preventDefault());
+  // gentle auto-hint on first view
+  if(!REDUCE){
+    ScrollTrigger.create({ trigger:cmp, start:'top 70%', once:true, onEnter:()=>{
+      gsap.fromTo({p:0.5}, {p:0.5}, { p:0.62, duration:0.9, delay:0.3, yoyo:true, repeat:1, ease:'sine.inOut',
+        onUpdate:function(){ const v=this.targets()[0].p; before.style.clipPath=`inset(0 ${(1-v)*100}% 0 0)`; handle.style.left=(v*100)+'%'; } });
+    }});
+  }
+}
+
+/* ---------- BOOKING FORM (Restraint) ---------- */
+function initForm(){
+  const form = document.getElementById('book-form');
+  if(!form) return;
+  const required = form.querySelectorAll('[required]');
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    let ok = true; let firstBad = null;
+    required.forEach(inp=>{
+      const field = inp.closest('.field');
+      const bad = !inp.value.trim() || (inp.type==='tel' && inp.value.replace(/\D/g,'').length < 7);
+      field.classList.toggle('field--err', bad);
+      if(bad && !firstBad) firstBad = inp;
+      if(bad) ok = false;
+    });
+    if(!ok){ firstBad && firstBad.focus(); return; }
+    form.classList.add('is-sent');
+    form.querySelector('.form__ok').scrollIntoView({ behavior: REDUCE?'auto':'smooth', block:'center' });
+  });
+  // clear error on input
+  required.forEach(inp=> inp.addEventListener('input', ()=> inp.closest('.field').classList.remove('field--err')));
+}
+
+/* ---------- MOBILE DRAWER ---------- */
+function initDrawer(){
+  const drawer = document.getElementById('drawer');
+  const burger = document.querySelector('.nav__burger');
+  const close = document.getElementById('drawer-close');
+  if(!drawer || !burger) return;
+  const open = ()=>{ drawer.classList.add('open'); burger.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; };
+  const shut = ()=>{ drawer.classList.remove('open'); burger.setAttribute('aria-expanded','false'); document.body.style.overflow=''; };
+  burger.addEventListener('click', open);
+  close.addEventListener('click', shut);
+  drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click', shut));
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') shut(); });
+}
+
+window.addEventListener('DOMContentLoaded', ()=>{
+  initIntro(); initSchematic(); initNav(); initDrawer();
+  initReveals(); initProcess(); initCompare(); initForm();
+  initCounters();
+  initValve();
+});
+</script>
+</body>
+</html>

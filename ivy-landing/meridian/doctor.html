@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meridian Health | Doctor Profile</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.2"></script>
+
+    <style>
+        :root {
+            var(--bg-color): #F9F8F6;
+            --surface: #FFFFFF;
+            --surface-dark: #212925;
+            --text-dark: #2C3330;
+            --text-muted: #7A827E;
+            --accent: #C28E61;
+            --border: #E8E5DF;
+            
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            
+            --nav-height: 80px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-dark);
+            background-color: #F9F8F6;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, .serif { font-family: var(--font-serif); font-weight: 400; }
+        
+        .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            color: var(--surface);
+            background: var(--text-dark);
+            border-radius: 100px;
+            transition: all 0.4s;
+            border: 1px solid var(--text-dark);
+        }
+        .btn:hover { background: var(--surface); color: var(--text-dark); }
+        .btn-outline { background: transparent; color: var(--text-dark); border-color: var(--border); }
+        .btn-outline:hover { background: var(--text-dark); color: var(--surface); }
+
+        /* Nav */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5vw; z-index: 100;
+            background: rgba(249, 248, 246, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 1.5rem; text-decoration: none; color: var(--text-dark); }
+        .back-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-dark); text-decoration: none; font-size: 0.875rem; }
+        .back-link:hover { color: var(--accent); }
+
+        /* Profile Section */
+        .profile-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 4rem;
+            padding: calc(var(--nav-height) + 6rem) 5vw 8rem;
+            min-height: 100vh;
+        }
+
+        .profile-image-col {
+            grid-column: 1 / 6;
+            position: relative;
+        }
+
+        .profile-img-wrapper {
+            position: sticky;
+            top: calc(var(--nav-height) + 2rem);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+            aspect-ratio: 3/4;
+        }
+
+        .profile-img-wrapper img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .profile-content {
+            grid-column: 6 / 12;
+            padding-top: 2rem;
+        }
+
+        .doc-name { font-size: clamp(3rem, 5vw, 4.5rem); line-height: 1.1; margin-bottom: 0.5rem; }
+        .doc-title { font-size: 1.25rem; color: var(--accent); margin-bottom: 2rem; display: block; }
+        
+        .doc-bio { font-size: 1.125rem; color: var(--text-muted); margin-bottom: 3rem; }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .detail-block {
+            border-top: 1px solid var(--border);
+            padding-top: 1.5rem;
+        }
+        .detail-block h4 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .detail-block ul { list-style: none; color: var(--text-muted); }
+        .detail-block ul li { margin-bottom: 0.5rem; display: flex; gap: 0.75rem; }
+        .detail-block ul li i { color: var(--accent); margin-top: 0.25rem; }
+
+        @media (max-width: 1024px) {
+            .profile-container { grid-template-columns: 1fr; gap: 2rem; }
+            .profile-image-col { grid-column: 1 / -1; }
+            .profile-content { grid-column: 1 / -1; }
+            .profile-img-wrapper { position: relative; top: 0; max-height: 60vh; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/meridian/index.html" class="back-link"><i class="ph-light ph-arrow-left"></i> Back to Meridian</a>
+        <a href="/meridian/index.html" class="logo serif">Meridian.</a>
+        <a href="/meridian/index.html#consultation" class="btn" style="padding: 0.5rem 1.5rem;">Book Consultation</a>
+    </nav>
+
+    <div class="profile-container" id="profile-container" style="opacity: 0;">
+        <div class="profile-image-col">
+            <div class="profile-img-wrapper">
+                <img id="doc-img" src="" alt="Doctor Portrait">
+            </div>
+        </div>
+        
+        <div class="profile-content">
+            <span class="label">Specialist Profile</span>
+            <h1 class="doc-name serif" id="doc-name">Loading...</h1>
+            <span class="doc-title serif" id="doc-title"></span>
+            
+            <p class="doc-bio" id="doc-bio"></p>
+            
+            <div class="details-grid">
+                <div class="detail-block">
+                    <h4 class="serif">Education & Training</h4>
+                    <ul id="doc-edu"></ul>
+                </div>
+                <div class="detail-block">
+                    <h4 class="serif">Clinical Focus</h4>
+                    <ul id="doc-focus"></ul>
+                </div>
+            </div>
+            
+            <a href="/meridian/index.html#consultation" class="btn">Request Appointment</a>
+        </div>
+    </div>
+
+    <script>
+        const doctorsData = {
+            'sarah-jenkins': {
+                name: 'Dr. Sarah Jenkins, MD',
+                title: 'Head of Performance Medicine',
+                img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90',
+                bio: 'Dr. Jenkins pioneered the integration of cardiovascular healthspan and high-performance athletics. By rejecting the traditional reactive model of cardiology, she focuses on preemptive vascular optimization, employing advanced VO2 max tracking, arterial elasticity monitoring, and targeted peptide therapies to ensure her patients maintain peak cardiovascular function well into their later decades.',
+                education: [
+                    'M.D., Harvard Medical School',
+                    'Residency in Internal Medicine, Massachusetts General Hospital',
+                    'Fellowship in Cardiovascular Disease, Johns Hopkins Hospital',
+                    'Board Certified in Sports Medicine & Cardiology'
+                ],
+                focus: [
+                    'Cardiovascular baseline optimization',
+                    'VO2 max & metabolic threshold training',
+                    'Advanced lipidology & endothelial health',
+                    'Peptide & hormone optimization'
+                ]
+            },
+            'michael-chen': {
+                name: 'Dr. Michael Chen, DO',
+                title: 'Director of Cognitive Longevity',
+                img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90',
+                bio: 'A leading voice in the field of neuroplasticity, Dr. Chen focuses entirely on the preservation and enhancement of cognitive function. His protocols map neurological pathways, utilizing hyperbaric oxygen therapy, nootropic compounds, and strategic brain-training to dramatically delay cognitive decline and enhance daily mental acuity.',
+                education: [
+                    'D.O., Stanford University School of Medicine',
+                    'Residency in Neurology, UCSF Medical Center',
+                    'Fellowship in Neurodegenerative Diseases, Mayo Clinic',
+                    'Board Certified in Neurology'
+                ],
+                focus: [
+                    'Neuroplasticity and cognitive preservation',
+                    'Early-stage Alzheimer’s & dementia prevention',
+                    'Hyperbaric oxygen therapy (HBOT) protocols',
+                    'Executive function optimization'
+                ]
+            },
+            'elena-rodriguez': {
+                name: 'Dr. Elena Rodriguez, MD, PhD',
+                title: 'Specialist in Metabolic Health',
+                img: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90',
+                bio: 'Dr. Rodriguez brings a systems-biology approach to endocrinology. With dual doctorates in medicine and molecular biology, she specializes in reversing insulin resistance, optimizing thyroid function, and fine-tuning the body\'s hormonal axis to ensure maximum cellular energy output and metabolic flexibility.',
+                education: [
+                    'M.D., Ph.D. in Molecular Endocrinology, Yale University',
+                    'Residency in Endocrinology, NewYork-Presbyterian Hospital',
+                    'Lead Researcher, The Longevity Institute',
+                    'Board Certified in Endocrinology, Diabetes, and Metabolism'
+                ],
+                focus: [
+                    'Continuous glucose monitoring (CGM) analysis',
+                    'Hormone replacement therapy (HRT)',
+                    'Thyroid & adrenal axis optimization',
+                    'Cellular metabolism and mitochondrial health'
+                ]
+            },
+            'james-alston': {
+                name: 'Dr. James Alston, MD',
+                title: 'Director of Cellular Regeneration',
+                img: 'https://images.unsplash.com/photo-1612349316228-5942a9b489c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90',
+                bio: 'Formerly a reconstructive orthopedic surgeon for elite athletes, Dr. Alston transitioned his practice entirely to regenerative medicine. He is a world-renowned expert in stem cell therapeutics, PRP, and joint preservation—allowing his patients to maintain physical independence and mobility without invasive surgeries.',
+                education: [
+                    'M.D., Mayo Clinic Alix School of Medicine',
+                    'Residency in Orthopedic Surgery, Hospital for Special Surgery (HSS)',
+                    'Fellowship in Regenerative Medicine, Cedars-Sinai',
+                    'Pioneer in Autologous Stem Cell Therapeutics'
+                ],
+                focus: [
+                    'Mesenchymal stem cell therapy',
+                    'Platelet-Rich Plasma (PRP) joint injections',
+                    'Non-surgical orthopedic rehabilitation',
+                    'Connective tissue longevity'
+                ]
+            },
+            'amina-elsayed': {
+                name: 'Dr. Amina El-Sayed, PhD',
+                title: 'Lead Bio-Optimizer',
+                img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90',
+                bio: 'As Meridian’s Lead Bio-Optimizer, Dr. El-Sayed bridges the gap between raw data and actionable human performance. She oversees the genomic sequencing and biomarker tracking for every member, utilizing machine learning models to identify personal health risks decades before they manifest clinically.',
+                education: [
+                    'Ph.D. in Computational Biology, MIT',
+                    'M.S. in Bioinformatics, Stanford University',
+                    'Former Director of Data Science, Precision Health Corp',
+                    'Published Author in Genomics & Predictive Medicine'
+                ],
+                focus: [
+                    'Whole genome sequencing and analysis',
+                    'Epigenetic clock testing and reversal',
+                    'Quarterly 150+ biomarker blood panels',
+                    'Personalized pharmacogenomics'
+                ]
+            }
+        };
+
+        // Parse URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const doctorId = urlParams.get('id');
+        const doc = doctorsData[doctorId];
+
+        if (doc) {
+            document.title = `Meridian Health | ${doc.name}`;
+            document.getElementById('doc-img').src = doc.img;
+            document.getElementById('doc-name').textContent = doc.name;
+            document.getElementById('doc-title').textContent = doc.title;
+            document.getElementById('doc-bio').textContent = doc.bio;
+
+            const eduList = document.getElementById('doc-edu');
+            doc.education.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="ph-fill ph-check-circle"></i> <span>${item}</span>`;
+                eduList.appendChild(li);
+            });
+
+            const focusList = document.getElementById('doc-focus');
+            doc.focus.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="ph-fill ph-check-circle"></i> <span>${item}</span>`;
+                focusList.appendChild(li);
+            });
+
+            // Fade in with GSAP
+            gsap.to('#profile-container', { opacity: 1, duration: 1, ease: "power2.out" });
+            gsap.from('.profile-img-wrapper', { y: 40, opacity: 0, duration: 1, delay: 0.2 });
+            gsap.from('.profile-content > *', { y: 20, opacity: 0, duration: 0.8, stagger: 0.1, delay: 0.3 });
+        } else {
+            // Redirect or show error if doctor not found
+            document.getElementById('doc-name').textContent = "Doctor Profile Not Found";
+            document.getElementById('doc-bio').textContent = "Please return to the directory to select a valid specialist.";
+            gsap.to('#profile-container', { opacity: 1, duration: 0.5 });
+        }
+    </script>
+</body>
+</html>

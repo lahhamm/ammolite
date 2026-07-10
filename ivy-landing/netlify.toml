@@ -1,3 +1,15 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+
+# CSP intentionally omitted here: the site loads scripts from three CDN origins
+# (jsdelivr, cdnjs, unpkg) and relies on inline <script>/<style> on every page,
+# so a correct policy needs per-page testing before it ships. Add it as a
+# deliberate follow-up rather than risk silently breaking a hero animation.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"

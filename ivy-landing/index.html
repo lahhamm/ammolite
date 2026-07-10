@@ -147,7 +147,6 @@
     font-size: 1.7rem; letter-spacing: 0.01em;
     color: var(--ink); text-decoration: none;
   }
-  .nav .wordmark sup { font-size: 0.55em; font-style: normal; color: var(--accent); }
   .nav-links { display: flex; gap: 2.2rem; }
   .nav-links a {
     color: var(--ink-dim); text-decoration: none;
@@ -174,7 +173,7 @@
     z-index: 1;
     pointer-events: none;
   }
-  .marquee, .work, .services, .calldemo, .manifesto, .footer {
+  .marquee, .work, .services, .manifesto, .footer {
     position: relative; z-index: 2;
   }
   .hero-glow {
@@ -382,6 +381,14 @@
     letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--ink-dim);
   }
+  .work-photo {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 1.2s cubic-bezier(.22,1,.36,1);
+    will-change: transform;
+  }
+  .work-card--photo:hover .work-photo { transform: scale(1.06); }
   .work-card.more .work-cover {
     border-style: dashed;
     background: transparent;
@@ -471,84 +478,6 @@
     color: var(--ink-dim);
   }
 
-  /* ---------- live call demo ---------- */
-  .calldemo { padding: clamp(6rem, 16vh, 11rem) 0 0; }
-  .calldemo-inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(2rem, 5vw, 4.5rem);
-    align-items: center;
-    padding: 0 clamp(1.4rem, 4vw, 3.5rem);
-  }
-  .calldemo-copy p {
-    color: var(--ink-dim);
-    font-size: clamp(1.05rem, 1.5vw, 1.3rem);
-    line-height: 1.6;
-    max-width: 42ch;
-  }
-  .calldemo-copy p strong { color: var(--ink); font-weight: 500; }
-  .calldemo-note {
-    margin-top: 1.6rem;
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    letter-spacing: 0.06em;
-    line-height: 1.7;
-    color: var(--ink-dim);
-    padding-left: 1rem;
-    border-left: 1px solid var(--hairline);
-  }
-  .calldemo-cta {
-    display: flex; flex-direction: column; align-items: flex-start;
-    gap: 0.5rem;
-    text-decoration: none; color: var(--ink);
-    border: 1px solid var(--hairline);
-    border-radius: 6px;
-    padding: clamp(1.8rem, 4vw, 2.8rem);
-    background: var(--bg-raise);
-    position: relative; overflow: hidden;
-    transition: border-color .4s ease, transform .5s cubic-bezier(.22,1,.36,1);
-    will-change: transform;
-  }
-  .calldemo-cta::after {
-    content: ""; position: absolute; inset: 0;
-    background: radial-gradient(120% 100% at 15% 10%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 60%);
-    pointer-events: none;
-  }
-  .calldemo-cta:hover { border-color: color-mix(in oklch, var(--accent) 55%, transparent); }
-  .calldemo-cta-label {
-    font-family: var(--font-mono);
-    font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--ink-dim);
-  }
-  .calldemo-number {
-    font-family: var(--font-serif);
-    font-size: clamp(2.2rem, 5vw, 3.6rem);
-    line-height: 1.05; letter-spacing: -0.01em;
-    color: var(--ink);
-  }
-  .calldemo-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    margin-top: 0.8rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--accent);
-  }
-  .calldemo-badge .pulse {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 60%, transparent);
-    animation: pulse 2.2s ease-out infinite;
-  }
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 55%, transparent); }
-    70% { box-shadow: 0 0 0 10px transparent; }
-    100% { box-shadow: 0 0 0 0 transparent; }
-  }
-  @media (prefers-reduced-motion: reduce) { .calldemo-badge .pulse { animation: none; } }
-  @media (max-width: 760px) {
-    .calldemo-inner { grid-template-columns: 1fr; }
-  }
-
   /* ---------- footer ---------- */
   .footer {
     border-top: 1px solid var(--hairline);
@@ -592,15 +521,20 @@
     font-size: 1rem;
     padding: 0.8rem 0;
     border-radius: 0;
-    transition: border-color .35s ease;
+    transition: border-color .35s ease, border-bottom-width .2s ease;
   }
   .contact-form textarea { grid-column: 1 / -1; resize: vertical; }
   .contact-form input::placeholder,
   .contact-form textarea::placeholder { color: var(--ink-dim); }
   .contact-form input:focus,
   .contact-form textarea:focus {
+    /* thicker, higher-contrast underline stands in for the browser's default
+       outline so keyboard focus stays clearly visible without boxing the
+       borderless input style */
     outline: none;
+    border-bottom-width: 2px;
     border-bottom-color: var(--accent);
+    padding-bottom: calc(0.8rem - 1px);
   }
   .contact-form button {
     grid-column: 1 / -1;
@@ -609,6 +543,12 @@
     cursor: pointer;
     font-family: var(--font-sans);
     margin-top: 0.4rem;
+  }
+  .hp-field {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
   }
   .contact-form button:disabled { opacity: 0.5; cursor: default; }
   .form-status {
@@ -650,11 +590,10 @@
 </div>
 
 <header class="nav">
-  <a class="wordmark" href="#" data-hover>Ammolite<sup>®</sup></a>
+  <a class="wordmark" href="#" data-hover>Ammolite</a>
   <nav class="nav-links">
     <a href="#work" data-hover>Work</a>
     <a href="#services" data-hover>Services</a>
-    <a href="#demo" data-hover>Live demo</a>
     <a href="#studio" data-hover>Studio</a>
     <a href="#contact" data-hover>Contact</a>
   </nav>
@@ -706,26 +645,49 @@
       <h2 class="section-title">Built to <em>convert</em></h2>
     </div>
     <div class="work-track">
-      <!-- swap these three href values for your live demo URLs once deployed -->
-      <a class="work-card" href="https://barbershop.ammolite.studio" target="_blank" rel="noopener" data-hover>
+      <!-- subpaths under this same domain; barbershop/roofing/aurel are Vite apps that
+           still need `base` set in their vite.config.ts and a rebuild before these resolve -->
+      <a class="work-card" href="/barbershop" target="_blank" rel="noopener" data-hover>
         <div class="work-cover"><span class="ghost">Fade</span></div>
         <div class="work-meta">
           <h3>New Look Barbershop</h3>
           <span class="tags">Web · Booking</span>
         </div>
       </a>
-      <a class="work-card" href="https://roofing.ammolite.studio" target="_blank" rel="noopener" data-hover>
+      <a class="work-card" href="/roofing" target="_blank" rel="noopener" data-hover>
         <div class="work-cover"><span class="ghost">Apex</span></div>
         <div class="work-meta">
           <h3>Apex Roofing</h3>
           <span class="tags">Web · Lead capture</span>
         </div>
       </a>
-      <a class="work-card" href="https://watches.ammolite.studio" target="_blank" rel="noopener" data-hover>
-        <div class="work-cover"><span class="ghost">Meridian</span></div>
+      <a class="work-card" href="/aurel" target="_blank" rel="noopener" data-hover>
+        <div class="work-cover"><span class="ghost">Aurel</span></div>
         <div class="work-meta">
-          <h3>Meridian Watches</h3>
+          <h3>Aurel</h3>
           <span class="tags">E-commerce · Art direction</span>
+        </div>
+      </a>
+      <a class="work-card" href="/lumen" target="_blank" rel="noopener" data-hover>
+        <div class="work-cover"><span class="ghost">Lumen</span></div>
+        <div class="work-meta">
+          <h3>Lumen</h3>
+          <span class="tags">Web · Photography studio</span>
+        </div>
+      </a>
+      <a class="work-card" href="/ironvein" target="_blank" rel="noopener" data-hover>
+        <div class="work-cover"><span class="ghost">Ironvein</span></div>
+        <div class="work-meta">
+          <h3>Ironvein Plumbing</h3>
+          <span class="tags">Web · Trade services</span>
+        </div>
+      </a>
+      <!-- same-tab on purpose: the zoom transition below only makes sense if the visitor stays on this page to see it -->
+      <a class="work-card work-card--photo" href="/meridian" data-hover id="meridianCard">
+        <div class="work-cover"><div class="work-photo" style="background-image:url('assets/meridian-cover.jpg')"></div></div>
+        <div class="work-meta">
+          <h3>Meridian</h3>
+          <span class="tags">Web · Longevity clinic</span>
         </div>
       </a>
       <a class="work-card more" href="#contact" data-hover>
@@ -768,30 +730,6 @@
   </div>
 </section>
 
-<section class="calldemo" id="demo">
-  <div class="section-head">
-    <span class="section-label">Live demo</span>
-    <h2 class="section-title">Hear it <em>answer</em></h2>
-  </div>
-  <div class="calldemo-inner">
-    <div class="calldemo-copy">
-      <p>Call our AI receptionist and talk to it like a real customer would.
-      Ask about hours, prices, or book an appointment, and hear how it handles
-      the call, <strong>day or night, on its own</strong>.</p>
-      <p class="calldemo-note">
-        Please note, demo calls are limited per caller and capped in length so
-        the line stays open for everyone. One or two short calls per number.
-      </p>
-    </div>
-    <!-- swap the tel: number and the visible number once your Bland/Twilio line is live -->
-    <a class="calldemo-cta" href="tel:+10000000000" data-hover data-magnetic>
-      <span class="calldemo-cta-label">Tap to call the demo</span>
-      <span class="calldemo-number">+1 (000) 000&#8209;0000</span>
-      <span class="calldemo-badge"><span class="pulse" aria-hidden="true"></span> Answering 24/7</span>
-    </a>
-  </div>
-</section>
-
 <section class="manifesto" id="studio">
   <p class="manifesto-text">Most websites are built to exist. Ours are built to <em>work</em>: every pixel, every word, every automation pulling toward the same thing, your next customer.</p>
   <p class="sig">Ammolite, a bespoke studio</p>
@@ -801,6 +739,7 @@
   <p class="kicker">Have a project in mind?</p>
   <h2 class="footer-cta">Let's talk <span class="arrow">→</span></h2>
   <form class="contact-form" id="contact-form">
+    <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
     <input type="text" name="name" placeholder="Your name" autocomplete="name" required data-hover />
     <input type="email" name="email" placeholder="Email" autocomplete="email" required data-hover />
     <input type="text" name="business" placeholder="Business (optional)" data-hover />
@@ -810,6 +749,7 @@
   </form>
   <div class="footer-grid">
     <span>© 2026 Ammolite Studio</span>
+    <a href="privacy.html" data-hover>Privacy</a>
     <a href="mailto:lahhamadam00@gmail.com" data-hover>lahhamadam00@gmail.com</a>
     <span>Websites · AI agents · Automation</span>
     <a href="#top" data-hover>Back to top ↑</a>
@@ -862,16 +802,17 @@ scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.02).texture;
 const meshDetail = window.matchMedia('(pointer: fine)').matches && window.innerWidth > 900 ? 4 : 3;
 const geo = BufferGeometryUtils.mergeVertices(new THREE.IcosahedronGeometry(1.1, meshDetail));
 const basePositions = geo.attributes.position.array.slice();
-// warm bronze base + strong iridescence reads as polished ammolite stone
+// warm bronze base + a calmer iridescence reads as polished ammolite stone
+// without turning into a distracting glitter ball
 const mat = new THREE.MeshPhysicalMaterial({
   color: 0x8f6f48,
   metalness: 1.0,
-  roughness: 0.18,
-  clearcoat: 1.0,
-  clearcoatRoughness: 0.18,
-  iridescence: 1.0,
+  roughness: 0.27,
+  clearcoat: 0.68,
+  clearcoatRoughness: 0.3,
+  iridescence: 0.7,
   iridescenceIOR: 1.5,
-  envMapIntensity: 0.95,
+  envMapIntensity: 0.84,
   flatShading: true
 });
 const blob = new THREE.Mesh(geo, mat);
@@ -884,10 +825,11 @@ const key = new THREE.DirectionalLight(0xffd9a0, 1.7);
 key.position.set(3, 4, 5);
 scene.add(key);
 
-// bloom so the brightest facet glints bloom like fire inside a real stone
+// subtle bloom on the brightest facets only — kept low so it reads as a
+// warm glow rather than a glittery, distracting flare
 const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
-const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.5, 0.55, 0.85);
+const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.35, 0.55, 0.66);
 composer.addPass(bloom);
 composer.addPass(new OutputPass());
 
@@ -1280,6 +1222,7 @@ mm.add({
   const form = document.getElementById("contact-form");
   const status = form.querySelector(".form-status");
   const btn = form.querySelector("button[type=submit]");
+  const renderedAt = Date.now();
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -1288,6 +1231,7 @@ mm.add({
     status.textContent = "Sending…";
 
     const data = Object.fromEntries(new FormData(form));
+    data.startedAt = renderedAt;
     try {
       const res = await fetch("/.netlify/functions/contact", {
         method: "POST",
@@ -1304,6 +1248,46 @@ mm.add({
     } finally {
       btn.disabled = false;
     }
+  });
+})();
+</script>
+
+<!-- ============ zoom-in transition into the Meridian demo ============ -->
+<script>
+(() => {
+  const card = document.getElementById("meridianCard");
+  if (!card) return;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  card.addEventListener("click", (e) => {
+    // let modified clicks (new tab/window) and reduced-motion visitors navigate normally
+    if (reduceMotion || !window.gsap || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+
+    const url = card.getAttribute("href");
+    const rect = card.querySelector(".work-cover").getBoundingClientRect();
+
+    const clone = document.createElement("div");
+    clone.style.cssText = `
+      position: fixed; z-index: 200;
+      top: ${rect.top}px; left: ${rect.left}px;
+      width: ${rect.width}px; height: ${rect.height}px;
+      background-image: url('assets/meridian-cover.jpg');
+      background-size: cover; background-position: center;
+      border-radius: 4px; overflow: hidden;
+      will-change: top, left, width, height, border-radius;
+    `;
+    document.body.appendChild(clone);
+
+    gsap.to(".nav, #top, .marquee, .work, .services, .manifesto, .footer", {
+      opacity: 0, duration: 0.5, ease: "power2.out",
+    });
+    gsap.to(clone, {
+      top: 0, left: 0, width: window.innerWidth, height: window.innerHeight,
+      borderRadius: 0,
+      duration: 0.9, ease: "power3.inOut",
+      onComplete: () => { window.location.href = url; },
+    });
   });
 })();
 </script>
