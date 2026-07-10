@@ -351,6 +351,7 @@
     background: var(--bg-raise);
     position: relative; overflow: hidden;
     display: flex; align-items: center; justify-content: center;
+    transition: border-color .4s ease;
   }
   .work-cover .ghost {
     font-family: var(--font-serif); font-style: italic;
@@ -381,14 +382,18 @@
     letter-spacing: 0.1em; text-transform: uppercase;
     color: var(--ink-dim);
   }
-  .work-photo {
-    position: absolute; inset: 0;
-    background-size: cover;
-    background-position: center;
-    transition: transform 1.2s cubic-bezier(.22,1,.36,1);
-    will-change: transform;
+  .work-frame-wrap {
+    position: absolute; top: 0; left: 0;
+    width: 1600px; height: 1000px;
+    transform-origin: top left;
+    pointer-events: none;
   }
-  .work-card--photo:hover .work-photo { transform: scale(1.06); }
+  .work-frame-wrap iframe {
+    width: 1600px; height: 1000px;
+    border: 0; display: block;
+    background: var(--bg-raise);
+  }
+  .work-card--live:hover .work-cover { border-color: color-mix(in oklch, var(--accent) 55%, transparent); }
   .work-card.more .work-cover {
     border-style: dashed;
     background: transparent;
@@ -645,49 +650,26 @@
       <h2 class="section-title">Built to <em>convert</em></h2>
     </div>
     <div class="work-track">
-      <!-- subpaths under this same domain; barbershop/roofing/aurel are Vite apps that
-           still need `base` set in their vite.config.ts and a rebuild before these resolve -->
-      <a class="work-card" href="/barbershop" target="_blank" rel="noopener" data-hover>
-        <div class="work-cover"><span class="ghost">Fade</span></div>
-        <div class="work-meta">
-          <h3>New Look Barbershop</h3>
-          <span class="tags">Web · Booking</span>
-        </div>
-      </a>
-      <a class="work-card" href="/roofing" target="_blank" rel="noopener" data-hover>
-        <div class="work-cover"><span class="ghost">Apex</span></div>
-        <div class="work-meta">
-          <h3>Apex Roofing</h3>
-          <span class="tags">Web · Lead capture</span>
-        </div>
-      </a>
-      <a class="work-card" href="/aurel" target="_blank" rel="noopener" data-hover>
-        <div class="work-cover"><span class="ghost">Aurel</span></div>
-        <div class="work-meta">
-          <h3>Aurel</h3>
-          <span class="tags">E-commerce · Art direction</span>
-        </div>
-      </a>
-      <a class="work-card" href="/lumen" target="_blank" rel="noopener" data-hover>
-        <div class="work-cover"><span class="ghost">Lumen</span></div>
-        <div class="work-meta">
-          <h3>Lumen</h3>
-          <span class="tags">Web · Photography studio</span>
-        </div>
-      </a>
-      <a class="work-card" href="/ironvein" target="_blank" rel="noopener" data-hover>
-        <div class="work-cover"><span class="ghost">Ironvein</span></div>
+      <!-- same-tab on purpose: the zoom transition below only makes sense if the visitor stays on this page to see it -->
+      <a class="work-card work-card--live" href="/ironvein" data-hover id="ironveinCard">
+        <div class="work-cover"><div class="work-frame-wrap"><iframe src="/ironvein" loading="lazy" tabindex="-1" title="Ironvein Plumbing — live preview"></iframe></div></div>
         <div class="work-meta">
           <h3>Ironvein Plumbing</h3>
           <span class="tags">Web · Trade services</span>
         </div>
       </a>
-      <!-- same-tab on purpose: the zoom transition below only makes sense if the visitor stays on this page to see it -->
-      <a class="work-card work-card--photo" href="/meridian" data-hover id="meridianCard">
-        <div class="work-cover"><div class="work-photo" style="background-image:url('assets/meridian-cover.jpg')"></div></div>
+      <a class="work-card work-card--live" href="/meridian" data-hover id="meridianCard">
+        <div class="work-cover"><div class="work-frame-wrap"><iframe src="/meridian" loading="lazy" tabindex="-1" title="Meridian — live preview"></iframe></div></div>
         <div class="work-meta">
           <h3>Meridian</h3>
           <span class="tags">Web · Longevity clinic</span>
+        </div>
+      </a>
+      <a class="work-card work-card--live" href="/lumen" data-hover id="lumenCard">
+        <div class="work-cover"><div class="work-frame-wrap"><iframe src="/lumen" loading="lazy" tabindex="-1" title="Lumen — live preview"></iframe></div></div>
+        <div class="work-meta">
+          <h3>Lumen</h3>
+          <span class="tags">Web · Photography studio</span>
         </div>
       </a>
       <a class="work-card more" href="#contact" data-hover>
@@ -1252,41 +1234,65 @@ mm.add({
 })();
 </script>
 
-<!-- ============ zoom-in transition into the Meridian demo ============ -->
+<!-- ============ live-preview iframe scaling ============ -->
 <script>
 (() => {
-  const card = document.getElementById("meridianCard");
-  if (!card) return;
+  const FRAME_W = 1600; // natural width the iframes are laid out at
+
+  const wraps = [...document.querySelectorAll(".work-frame-wrap")];
+  function sync() {
+    wraps.forEach((wrap) => {
+      const cover = wrap.parentElement;
+      const scale = cover.clientWidth / FRAME_W;
+      wrap.style.transform = `scale(${scale})`;
+    });
+  }
+  sync();
+  window.addEventListener("resize", sync);
+  document.fonts?.ready.then(sync);
+})();
+</script>
+
+<!-- ============ zoom-in transition into a live demo ============ -->
+<script>
+(() => {
+  const FRAME_W = 1600;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  card.addEventListener("click", (e) => {
-    // let modified clicks (new tab/window) and reduced-motion visitors navigate normally
-    if (reduceMotion || !window.gsap || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-    e.preventDefault();
+  document.querySelectorAll(".work-card--live").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      // let modified clicks (new tab/window) and reduced-motion visitors navigate normally
+      if (reduceMotion || !window.gsap || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
 
-    const url = card.getAttribute("href");
-    const rect = card.querySelector(".work-cover").getBoundingClientRect();
+      const url = card.getAttribute("href");
+      const cover = card.querySelector(".work-cover");
+      const wrap = card.querySelector(".work-frame-wrap");
+      const rect = cover.getBoundingClientRect();
 
-    const clone = document.createElement("div");
-    clone.style.cssText = `
-      position: fixed; z-index: 200;
-      top: ${rect.top}px; left: ${rect.left}px;
-      width: ${rect.width}px; height: ${rect.height}px;
-      background-image: url('assets/meridian-cover.jpg');
-      background-size: cover; background-position: center;
-      border-radius: 4px; overflow: hidden;
-      will-change: top, left, width, height, border-radius;
-    `;
-    document.body.appendChild(clone);
+      // promote the live cover to a fixed overlay at its exact current
+      // position first, so growing it to fullscreen never reloads the
+      // iframe (a clone would restart the live animation mid-transition)
+      cover.style.position = "fixed";
+      cover.style.zIndex = "200";
+      cover.style.top = rect.top + "px";
+      cover.style.left = rect.left + "px";
+      cover.style.width = rect.width + "px";
+      cover.style.height = rect.height + "px";
+      void cover.offsetHeight; // force reflow before animating
 
-    gsap.to(".nav, #top, .marquee, .work, .services, .manifesto, .footer", {
-      opacity: 0, duration: 0.5, ease: "power2.out",
-    });
-    gsap.to(clone, {
-      top: 0, left: 0, width: window.innerWidth, height: window.innerHeight,
-      borderRadius: 0,
-      duration: 0.9, ease: "power3.inOut",
-      onComplete: () => { window.location.href = url; },
+      gsap.to(".nav, #top, .marquee, .work, .services, .manifesto, .footer", {
+        opacity: 0, duration: 0.5, ease: "power2.out",
+      });
+      gsap.to(cover, {
+        top: 0, left: 0, width: window.innerWidth, height: window.innerHeight,
+        borderRadius: 0,
+        duration: 0.9, ease: "power3.inOut",
+        onUpdate: () => {
+          wrap.style.transform = `scale(${cover.getBoundingClientRect().width / FRAME_W})`;
+        },
+        onComplete: () => { window.location.href = url; },
+      });
     });
   });
 })();
