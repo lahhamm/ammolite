@@ -363,12 +363,17 @@ import { createNoise4D } from 'simplex-noise';
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canvas = document.getElementById('gl');
-const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+// alpha:false + an opaque scene background matching --bg, rather than a
+// transparent canvas: UnrealBloomPass's additive compositing doesn't
+// reliably preserve alpha across browsers/GPUs, which was rendering as a
+// solid black canvas (hiding the page background) on some desktop setups.
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.1;
 
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x19120b); // matches --bg (oklch 19% 0.018 65)
 const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 50);
 camera.position.set(0, 0, 7);
 
