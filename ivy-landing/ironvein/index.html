@@ -304,6 +304,24 @@ button{ font:inherit; color:inherit; cursor:pointer; background:none; border:non
 .annot--b::before{ width:34px; height:1px; right:-40px; top:50%; }
 .annot small{ display:block; color:var(--steel-400); font-size:0.56rem; letter-spacing:0.1em; }
 
+.valve-hint{
+  position:absolute; z-index:4; left:52%; top:57%;
+  display:flex; align-items:center; gap:0.4rem;
+  padding:0.42rem 0.8rem 0.42rem 0.6rem; border-radius:999px;
+  background:oklch(0.145 0.022 245 / 0.78); backdrop-filter:blur(4px);
+  border:1px solid var(--copper-600);
+  font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--copper-300); cursor:pointer; opacity:0;
+  transition:opacity .3s var(--ease-out), transform .3s var(--ease-out);
+}
+.valve-hint:hover{ border-color:var(--copper-400); color:var(--copper-200); }
+.valve-hint svg{ width:13px; height:13px; color:var(--copper-400); flex:none; }
+.valve-hint__ring{ position:absolute; inset:-7px; border-radius:999px; border:1px solid var(--copper-500); animation:hintPulse 1.8s ease-out infinite; }
+@keyframes hintPulse{ 0%{ transform:scale(0.88); opacity:0.85; } 100%{ transform:scale(1.4); opacity:0; } }
+.valve-hint.is-dismissed{ opacity:0 !important; transform:scale(0.92); }
+@media (prefers-reduced-motion: reduce){ .valve-hint__ring{ animation:none; } }
+@media (max-width:600px){ .valve-hint{ left:50%; top:60%; } }
+
 @media (max-width:900px){
   .hero__inner{ grid-template-columns:1fr; gap:2rem; }
   .hero__stage{ order:-1; max-width:400px; margin-inline:auto; aspect-ratio:4/3.4; }
@@ -348,7 +366,7 @@ button{ font:inherit; color:inherit; cursor:pointer; background:none; border:non
 /* reveal helper (JS-driven; safe default visible) */
 .reveal{ opacity:0; transform:translateY(22px); }
 [data-rise]{ opacity:0; transform:translateY(28px); }
-@media (prefers-reduced-motion: reduce){ .reveal,[data-rise]{ opacity:1 !important; transform:none !important; } .annot{ opacity:1 !important; } }
+@media (prefers-reduced-motion: reduce){ .reveal,[data-rise]{ opacity:1 !important; transform:none !important; } .annot,.valve-hint{ opacity:1 !important; } }
 
 /* ============================================================ SECTION SHELL */
 .section{ position:relative; padding-block:clamp(4.5rem, 9vw, 8rem); scroll-margin-top:calc(var(--nav-h) + 12px); }
@@ -367,30 +385,44 @@ button{ font:inherit; color:inherit; cursor:pointer; background:none; border:non
 @media (max-width:760px){ .shead{ flex-direction:column; align-items:flex-start; } .shead__r{ text-align:left; } }
 
 /* ============================================================ SERVICES — spec-sheet register */
-.svc{ border-top:1px solid var(--hairline-strong); }
-.svc__row{
-  display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:clamp(1rem,3vw,2.5rem);
-  padding:clamp(1.4rem,2.6vw,2rem) 0.5rem; border-bottom:1px solid var(--hairline);
-  position:relative; transition:padding-left .35s var(--ease-out);
+.svc{
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
+  background:var(--hairline-strong); border:1px solid var(--hairline-strong);
+  perspective:900px;
 }
-.svc__row::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--copper-500); transform:scaleY(0); transform-origin:top; transition:transform .35s var(--ease-out); z-index:1; }
-.svc__row::after{ content:""; position:absolute; inset:0; background:linear-gradient(90deg, oklch(0.685 0.132 55 / 0.06), transparent 55%); opacity:0; transition:opacity .35s var(--ease-out); pointer-events:none; }
-.svc__row:hover{ padding-left:1.4rem; }
-.svc__row:hover::before{ transform:scaleY(1); }
+.svc__row{
+  display:flex; flex-direction:column; gap:0.9rem;
+  padding:clamp(1.8rem,2.4vw,2.4rem) clamp(1.4rem,2vw,1.9rem);
+  background:var(--surface);
+  position:relative; overflow:hidden;
+  transition:background-color .4s var(--ease-out), transform .4s var(--ease-out);
+}
+.svc__row::before{ content:""; position:absolute; left:0; top:0; right:0; height:2px; background:var(--copper-500); transform:scaleX(0); transform-origin:left; transition:transform .4s var(--ease-out); z-index:1; }
+.svc__row{ --glow-x:0%; --glow-y:0%; }
+.svc__row::after{ content:""; position:absolute; inset:0; background:radial-gradient(320px circle at var(--glow-x) var(--glow-y), oklch(0.685 0.132 55 / 0.14), transparent 60%); opacity:0; transition:opacity .4s var(--ease-out); pointer-events:none; }
+.svc__row:hover{ background:var(--surface-raised); }
+.svc__row:not(.tilt-active):hover{ transform:translateY(-3px); }
+.svc__row:hover::before{ transform:scaleX(1); }
 .svc__row:hover::after{ opacity:1; }
 .svc__row > *{ position:relative; z-index:2; }
-.svc__idx{ font-family:var(--font-mono); font-size:0.72rem; color:var(--steel-400); padding-top:0.35rem; align-self:start; }
-.svc__main{ display:flex; flex-direction:column; gap:0.35rem; }
-.svc__name{ font-family:var(--font-display); font-weight:600; text-transform:uppercase; font-size:clamp(1.5rem,1.1rem+1.6vw,2.15rem); line-height:1; letter-spacing:0.005em; display:flex; align-items:center; gap:0.9rem; }
-.svc__name svg{ width:30px; height:30px; color:var(--copper-400); flex:none; transition:transform .4s var(--ease-out); }
-.svc__row:hover .svc__name svg{ transform:rotate(-90deg); }
-.svc__benefit{ color:var(--steel-200); font-size:0.98rem; max-width:44ch; }
-.svc__meta{ display:flex; flex-direction:column; align-items:flex-end; gap:0.45rem; text-align:right; }
-.svc__tag{ font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--copper-300); border:1px solid var(--hairline-strong); border-radius:2px; padding:0.28rem 0.55rem; white-space:nowrap; }
+.svc__idx{ font-family:var(--font-mono); font-size:0.7rem; color:var(--steel-400); order:-1; }
+.svc__main{ display:flex; flex-direction:column; gap:0.7rem; }
+.svc__name{ font-family:var(--font-display); font-weight:600; text-transform:uppercase; font-size:clamp(1.3rem,1.05rem+1vw,1.65rem); line-height:1.05; letter-spacing:0.005em; display:flex; flex-direction:column; align-items:flex-start; gap:0.9rem; }
+.svc__name svg{
+  width:44px; height:44px; padding:9px; box-sizing:border-box;
+  color:var(--copper-400); border:1px solid var(--hairline-strong); border-radius:50%;
+  flex:none; transition:transform .4s var(--ease-out), border-color .4s var(--ease-out), background-color .4s var(--ease-out);
+}
+.svc__row:hover .svc__name svg{ transform:rotate(-90deg); border-color:var(--copper-500); background:oklch(0.685 0.132 55 / 0.08); }
+.svc__benefit{ color:var(--steel-200); font-size:0.94rem; line-height:1.5; }
+.svc__meta{ display:flex; flex-wrap:wrap; align-items:center; gap:0.5rem 0.7rem; margin-top:auto; padding-top:0.9rem; border-top:1px solid var(--hairline); }
+.svc__tag{ font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--copper-300); border:1px solid var(--hairline-strong); border-radius:2px; padding:0.28rem 0.55rem; white-space:nowrap; }
 .svc__resp{ font-family:var(--font-mono); font-size:0.64rem; color:var(--steel-400); letter-spacing:0.04em; }
+@media (max-width:1000px){
+  .svc{ grid-template-columns:repeat(2, 1fr); }
+}
 @media (max-width:760px){
-  .svc__row{ grid-template-columns:auto 1fr; }
-  .svc__meta{ grid-column:2; align-items:flex-start; text-align:left; flex-direction:row; flex-wrap:wrap; margin-top:0.4rem; }
+  .svc{ grid-template-columns:1fr; }
   .svc__name{ font-size:1.5rem; }
   .svc__name svg{ width:24px; height:24px; }
 }
@@ -445,8 +477,9 @@ button{ font:inherit; color:inherit; cursor:pointer; background:none; border:non
 .job{ border:1px solid var(--hairline); border-radius:4px; overflow:hidden; background:var(--ink-900); transition:border-color .3s var(--ease-out), transform .3s var(--ease-out); }
 .job:hover{ border-color:var(--copper-600); transform:translateY(-3px); }
 .job__img{ aspect-ratio:16/10; position:relative; overflow:hidden; background:var(--ink-850); }
-.job__img img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.05) brightness(0.72); mix-blend-mode:luminosity; opacity:0.85; }
-.job__img::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, oklch(0.59 0.125 50 / 0.18), oklch(0.145 0.022 245 / 0.72)); mix-blend-mode:multiply; }
+.job__img img{ width:100%; height:100%; object-fit:cover; filter:saturate(0.65) contrast(1.08) brightness(0.92); transition:filter .4s var(--ease-out), transform .5s var(--ease-out); }
+.job:hover .job__img img{ filter:saturate(0.85) contrast(1.1) brightness(1); transform:scale(1.04); }
+.job__img::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, oklch(0.59 0.125 50 / 0.1), oklch(0.145 0.022 245 / 0.55) 75%); }
 .job__img .job__tag{ position:absolute; bottom:0.7rem; left:0.7rem; z-index:2; font-family:var(--font-mono); font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--copper-300); background:oklch(0.145 0.022 245 / 0.7); padding:0.24rem 0.5rem; border-radius:2px; }
 .job__body{ padding:1.1rem 1.15rem 1.3rem; }
 .job__body h4{ font-family:var(--font-display); font-weight:600; text-transform:uppercase; font-size:1.16rem; letter-spacing:0.01em; margin-bottom:0.35rem; }
@@ -694,6 +727,11 @@ button{ font:inherit; color:inherit; cursor:pointer; background:none; border:non
       <span class="annot annot--a">Cast brass body<small>Rated 600 PSI</small></span>
       <span class="annot annot--b">Rising stem<small>Full-port gate</small></span>
       <span class="stage-hint" aria-hidden="true">Drag to inspect · Fig. A</span>
+      <button type="button" class="valve-hint" id="valveHint" aria-label="Click the valve to test it">
+        <span class="valve-hint__ring" aria-hidden="true"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v9.5a2.5 2.5 0 0 0 5 0V6a1.5 1.5 0 0 1 3 0v7"/><path d="M17 9.5V8a1.5 1.5 0 0 1 3 0v6a6 6 0 0 1-6 6h-2a6 6 0 0 1-5.2-3l-2-3.5a1.5 1.5 0 0 1 2.4-1.8L9 13.5"/></svg>
+        Click me
+      </button>
     </div>
 
   </div>
@@ -1265,6 +1303,9 @@ function initValve(){
 
   const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
   camera.position.set(0, 0.3, 8.4);
+  // aim up toward the assembly's vertical middle — the handwheel sits at
+  // y~3.3-4.3, well above a level-aimed camera's visible range at this fov/distance
+  camera.lookAt(0, 1.5, 0);
 
   // lights for warm brass sheen
   const key = new THREE.DirectionalLight(0xfff1de, 2.4); key.position.set(4, 6, 5); scene.add(key);
@@ -1363,6 +1404,53 @@ function initValve(){
     stage.addEventListener('pointerleave', ()=>{ target.x = -0.5; target.y = 0.12; });
   }
 
+  // --- water burst (click-to-test) ---
+  const bursts = [];
+  const sprayMat = new THREE.PointsMaterial({ color:0xbfe3ff, size:0.075, transparent:true, opacity:0.95, depthWrite:false });
+  function spawnWaterBurst(){
+    if(valveHint) valveHint.classList.add('is-dismissed');
+    if(REDUCE) return;
+    const count = 70;
+    const originLocal = new THREE.Vector3(2.28, -0.15, 0); // right-hand flange outlet
+    const origin = valve.localToWorld(originLocal.clone());
+    const positions = new Float32Array(count * 3);
+    const velocities = new Float32Array(count * 3);
+    for(let i=0;i<count;i++){
+      positions[i*3] = origin.x; positions[i*3+1] = origin.y; positions[i*3+2] = origin.z;
+      velocities[i*3]   = 1.6 + Math.random() * 1.4;
+      velocities[i*3+1] = (Math.random() - 0.35) * 2.2;
+      velocities[i*3+2] = (Math.random() - 0.5) * 1.6;
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const mat = sprayMat.clone();
+    const points = new THREE.Points(geo, mat);
+    scene.add(points);
+    bursts.push({ points, geo, mat, velocities, origin, age:0 });
+  }
+  function updateBursts(dt){
+    const gravity = -5.2;
+    for(let i = bursts.length - 1; i >= 0; i--){
+      const b = bursts[i];
+      b.age += dt;
+      if(b.age > 1.0){
+        scene.remove(b.points); b.geo.dispose(); b.mat.dispose();
+        bursts.splice(i, 1); continue;
+      }
+      const pos = b.geo.attributes.position.array;
+      for(let j = 0; j < pos.length / 3; j++){
+        pos[j*3]   = b.origin.x + b.velocities[j*3]   * b.age;
+        pos[j*3+1] = b.origin.y + b.velocities[j*3+1] * b.age + 0.5 * gravity * b.age * b.age;
+        pos[j*3+2] = b.origin.z + b.velocities[j*3+2] * b.age;
+      }
+      b.geo.attributes.position.needsUpdate = true;
+      b.mat.opacity = Math.max(0, 0.95 * (1 - b.age / 1.0));
+    }
+  }
+  const valveHint = document.getElementById('valveHint');
+  canvas.addEventListener('click', spawnWaterBurst);
+  if(valveHint) valveHint.addEventListener('click', spawnWaterBurst);
+
   const clock = new THREE.Clock();
   function loop(){
     const dt = clock.getDelta();
@@ -1376,6 +1464,7 @@ function initValve(){
       valve.position.y = Math.sin(t * 0.8) * 0.12;   // gentle living float
       wheel.rotation.z += dt * 0.35;           // wheel spins a touch faster
     }
+    if(bursts.length) updateBursts(dt);
     renderer.render(scene, camera);
     requestAnimationFrame(loop);
   }
@@ -1418,7 +1507,8 @@ function initIntro(){
   if(REDUCE){ document.querySelectorAll('.reveal').forEach(e=>{e.style.opacity=1;e.style.transform='none';}); return; }
   const tl = gsap.timeline({ defaults:{ ease:'power3.out' }});
   tl.to('.hero__copy .reveal', { opacity:1, y:0, duration:0.9, stagger:0.11 }, 0.15)
-    .to('.annot', { opacity:1, duration:0.6, stagger:0.15 }, 0.9);
+    .to('.annot', { opacity:1, duration:0.6, stagger:0.15 }, 0.9)
+    .to('.valve-hint', { opacity:1, duration:0.6 }, 1.3);
 }
 
 /* ---------- NAV scroll state ---------- */
@@ -1545,11 +1635,38 @@ function initDrawer(){
   document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') shut(); });
 }
 
+/* ---------- SERVICE CARD TILT + GLOW ---------- */
+function initServiceTilt(){
+  if(REDUCE || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  const cards = gsap.utils.toArray('.svc__row');
+  cards.forEach(card=>{
+    card.classList.add('tilt-active');
+    const rotX = gsap.quickTo(card, 'rotateX', { duration:0.5, ease:'power3.out' });
+    const rotY = gsap.quickTo(card, 'rotateY', { duration:0.5, ease:'power3.out' });
+    const lift = gsap.quickTo(card, 'y', { duration:0.4, ease:'power3.out' });
+    const glowX = gsap.quickTo(card, '--glow-x', { duration:0.3, ease:'power3.out' });
+    const glowY = gsap.quickTo(card, '--glow-y', { duration:0.3, ease:'power3.out' });
+    card.style.transformStyle = 'preserve-3d';
+    card.addEventListener('mousemove', (e)=>{
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      rotY((px - 0.5) * 10);
+      rotX((0.5 - py) * 10);
+      glowX(px * 100);
+      glowY(py * 100);
+    });
+    card.addEventListener('mouseenter', ()=>lift(-3));
+    card.addEventListener('mouseleave', ()=>{ rotX(0); rotY(0); lift(0); });
+  });
+}
+
 window.addEventListener('DOMContentLoaded', ()=>{
   initIntro(); initSchematic(); initNav(); initDrawer();
   initReveals(); initProcess(); initCompare(); initForm();
   initCounters();
   initValve();
+  initServiceTilt();
 });
 </script>
 </body>
