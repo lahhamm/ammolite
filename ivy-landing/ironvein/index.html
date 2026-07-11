@@ -544,16 +544,9 @@ button{ font:inherit; color:inherit; cursor:pointer; background:none; border:non
 .hours__r span:last-child{ font-family:var(--font-mono); font-size:0.76rem; color:var(--steel-300); }
 .hours__r--now{ background:oklch(0.59 0.125 50 / 0.1); }
 .hours__r--now span:last-child{ color:var(--copper-300); }
-/* service-area map */
-.map{ position:relative; border:1px solid var(--hairline); border-radius:4px; overflow:hidden; background:var(--ink-950); aspect-ratio:16/10; }
-.map svg{ width:100%; height:100%; }
-.map__grid{ stroke:oklch(0.5 0.03 250 / 0.14); stroke-width:1; }
-.map__area{ fill:oklch(0.59 0.125 50 / 0.1); stroke:var(--copper-500); stroke-width:1.4; stroke-dasharray:5 4; }
-.map__pin{ fill:var(--copper-400); }
-.map__road{ stroke:oklch(0.5 0.03 250 / 0.3); stroke-width:1.4; fill:none; }
-.map__label{ fill:var(--steel-300); font-family:var(--font-mono); font-size:9px; letter-spacing:0.04em; }
-.map__hub{ fill:var(--copper-400); }
-.map__cap{ position:absolute; left:0.9rem; bottom:0.9rem; font-family:var(--font-mono); font-size:0.62rem; color:var(--steel-300); letter-spacing:0.06em; background:oklch(0.145 0.022 245 / 0.7); padding:0.3rem 0.5rem; border-radius:2px; }
+/* service-area chips */
+.areas-head{ display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.7rem; }
+.areas-head__radius{ font-family:var(--font-mono); font-size:0.66rem; color:var(--steel-400); letter-spacing:0.04em; }
 .areas{ display:flex; flex-wrap:wrap; gap:0.4rem; }
 .areas span{ font-family:var(--font-mono); font-size:0.66rem; color:var(--steel-300); letter-spacing:0.03em; border:1px solid var(--hairline); border-radius:2px; padding:0.28rem 0.55rem; }
 @media (max-width:860px){ .contact__grid{ grid-template-columns:1fr; } }
@@ -1188,22 +1181,10 @@ button{ font:inherit; color:inherit; cursor:pointer; background:none; border:non
           <div class="hours__r"><span>Sunday</span><span>Emergency only</span></div>
         </div>
 
-        <div class="map" aria-label="Service area map — Twin Cities metro">
-          <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
-            <rect width="400" height="250" fill="var(--ink-950)"/>
-            <g class="map__grid"><line x1="0" y1="62" x2="400" y2="62"/><line x1="0" y1="125" x2="400" y2="125"/><line x1="0" y1="188" x2="400" y2="188"/><line x1="100" y1="0" x2="100" y2="250"/><line x1="200" y1="0" x2="200" y2="250"/><line x1="300" y1="0" x2="300" y2="250"/></g>
-            <path class="map__road" d="M40 40 L200 120 L360 70"/>
-            <path class="map__road" d="M60 220 L180 130 L340 200"/>
-            <path class="map__road" d="M200 10 L200 240"/>
-            <circle class="map__area" cx="200" cy="125" r="92"/>
-            <path class="map__hub" d="M170 118 l-2 6 h-6 l5 4 -2 6 5 -3 5 3 -2 -6 5 -4 h-6 z" transform="translate(30,7) scale(0.9)"/>
-            <circle class="map__pin" cx="140" cy="95" r="4"/><circle class="map__pin" cx="255" cy="150" r="4"/><circle class="map__pin" cx="230" cy="90" r="4"/><circle class="map__pin" cx="160" cy="165" r="4"/>
-            <text class="map__label" x="206" y="118">Minneapolis</text>
-            <text class="map__label" x="250" y="150">St. Paul</text>
-          </svg>
-          <span class="map__cap">Coverage radius — 25 mi from downtown</span>
+        <div class="areas-head">
+          <span class="eyebrow">Service area</span>
+          <span class="areas-head__radius">25 mi coverage radius from downtown</span>
         </div>
-
         <div class="areas" aria-label="Cities served">
           <span>Minneapolis</span><span>St. Paul</span><span>Edina</span><span>Bloomington</span><span>Plymouth</span><span>Maple Grove</span><span>Roseville</span><span>Eden Prairie</span><span>+ 20 more</span>
         </div>
@@ -1405,28 +1386,49 @@ function initValve(){
   }
 
   // --- water burst (click-to-test) ---
+  // droplet sprite: a soft radial dot beats THREE.Points' default hard square
+  const dropCanvas = document.createElement('canvas');
+  dropCanvas.width = dropCanvas.height = 32;
+  const dctx = dropCanvas.getContext('2d');
+  const grad = dctx.createRadialGradient(16,16,0,16,16,16);
+  grad.addColorStop(0,'rgba(255,255,255,1)'); grad.addColorStop(0.4,'rgba(200,230,255,0.8)'); grad.addColorStop(1,'rgba(200,230,255,0)');
+  dctx.fillStyle = grad; dctx.fillRect(0,0,32,32);
+  const dropTexture = new THREE.CanvasTexture(dropCanvas);
+
   const bursts = [];
-  const sprayMat = new THREE.PointsMaterial({ color:0xbfe3ff, size:0.075, transparent:true, opacity:0.95, depthWrite:false });
-  function spawnWaterBurst(){
-    if(valveHint) valveHint.classList.add('is-dismissed');
-    if(REDUCE) return;
-    const count = 70;
-    const originLocal = new THREE.Vector3(2.28, -0.15, 0); // right-hand flange outlet
-    const origin = valve.localToWorld(originLocal.clone());
+  const sprayMat = new THREE.PointsMaterial({
+    color:0xbfe3ff, size:0.16, map:dropTexture, transparent:true, opacity:0.95,
+    depthWrite:false, blending:THREE.AdditiveBlending, sizeAttenuation:true
+  });
+  let lastBurstAt = -10;
+  // spawned as a child of `valve` and simulated entirely in local space, so
+  // the spray automatically tracks the valve's own auto-rotate + idle float
+  // instead of drifting off in frozen world coordinates while it keeps moving
+  function spawnOneBurst(originLocal, dirSign){
+    const count = 46;
     const positions = new Float32Array(count * 3);
     const velocities = new Float32Array(count * 3);
     for(let i=0;i<count;i++){
-      positions[i*3] = origin.x; positions[i*3+1] = origin.y; positions[i*3+2] = origin.z;
-      velocities[i*3]   = 1.6 + Math.random() * 1.4;
-      velocities[i*3+1] = (Math.random() - 0.35) * 2.2;
-      velocities[i*3+2] = (Math.random() - 0.5) * 1.6;
+      positions[i*3] = originLocal.x; positions[i*3+1] = originLocal.y; positions[i*3+2] = originLocal.z;
+      velocities[i*3]   = dirSign * (1.5 + Math.random() * 1.3);
+      velocities[i*3+1] = (Math.random() - 0.3) * 2.0;
+      velocities[i*3+2] = (Math.random() - 0.5) * 1.5;
     }
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const mat = sprayMat.clone();
     const points = new THREE.Points(geo, mat);
-    scene.add(points);
-    bursts.push({ points, geo, mat, velocities, origin, age:0 });
+    valve.add(points);
+    bursts.push({ points, geo, mat, velocities, origin:originLocal, age:0 });
+  }
+  function spawnWaterBurst(){
+    if(valveHint) valveHint.classList.add('is-dismissed');
+    if(REDUCE) return;
+    const now = performance.now();
+    if(now - lastBurstAt < 350) return; // debounce rapid clicks so bursts don't pile up
+    lastBurstAt = now;
+    spawnOneBurst(new THREE.Vector3(2.28, -0.15, 0), 1);   // right-hand flange
+    spawnOneBurst(new THREE.Vector3(-2.28, -0.15, 0), -1); // left-hand flange
   }
   function updateBursts(dt){
     const gravity = -5.2;
@@ -1434,7 +1436,7 @@ function initValve(){
       const b = bursts[i];
       b.age += dt;
       if(b.age > 1.0){
-        scene.remove(b.points); b.geo.dispose(); b.mat.dispose();
+        valve.remove(b.points); b.geo.dispose(); b.mat.dispose();
         bursts.splice(i, 1); continue;
       }
       const pos = b.geo.attributes.position.array;
