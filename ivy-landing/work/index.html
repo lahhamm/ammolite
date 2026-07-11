@@ -101,19 +101,24 @@
     .work-grid { grid-template-columns: 1fr; }
   }
 
-  /* ---------- closing ---------- */
-  .work-close {
-    padding: 0 clamp(1.4rem, 4vw, 3.5rem) clamp(4rem, 10vh, 7rem);
-    max-width: 900px;
+  /* ---------- iframe loading state ---------- */
+  .work-loader {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-raise);
+    transition: opacity .5s ease;
+    z-index: 1;
   }
-  .work-close p {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 4.4vw, 4.2rem);
-    font-weight: 400; line-height: 1.2;
-    text-wrap: balance;
-    margin-bottom: clamp(2rem, 5vh, 3rem);
+  .work-loader span {
+    width: 22px; height: 22px;
+    border: 1.5px solid var(--hairline);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: work-spin 0.8s linear infinite;
   }
-  .work-close em { font-style: italic; color: var(--accent); }
+  .work-cover.is-loaded .work-loader { opacity: 0; pointer-events: none; }
+  @keyframes work-spin { to { transform: rotate(360deg); } }
+
 </style>
 </head>
 <body>
@@ -150,31 +155,26 @@
 <section class="work-grid">
   <!-- same-tab on purpose: the zoom transition below only makes sense if the visitor stays on this page to see it -->
   <a class="work-card work-card--live" href="/ironvein" data-hover id="ironveinCard">
-    <div class="work-cover"><div class="work-frame-wrap"><iframe src="/ironvein" loading="lazy" tabindex="-1" title="Ironvein Plumbing — live preview"></iframe></div></div>
+    <div class="work-cover"><div class="work-loader" aria-hidden="true"><span></span></div><div class="work-frame-wrap"><iframe src="/ironvein" loading="lazy" tabindex="-1" title="Ironvein Plumbing — live preview"></iframe></div></div>
     <div class="work-meta">
       <h3>Ironvein Plumbing</h3>
       <span class="tags">Web · Trade services</span>
     </div>
   </a>
   <a class="work-card work-card--live" href="/meridian" data-hover id="meridianCard">
-    <div class="work-cover"><div class="work-frame-wrap"><iframe src="/meridian" loading="lazy" tabindex="-1" title="Meridian — live preview"></iframe></div></div>
+    <div class="work-cover"><div class="work-loader" aria-hidden="true"><span></span></div><div class="work-frame-wrap"><iframe src="/meridian" loading="lazy" tabindex="-1" title="Meridian — live preview"></iframe></div></div>
     <div class="work-meta">
       <h3>Meridian</h3>
       <span class="tags">Web · Longevity clinic</span>
     </div>
   </a>
   <a class="work-card work-card--live" href="/lumen" data-hover id="lumenCard">
-    <div class="work-cover"><div class="work-frame-wrap"><iframe src="/lumen" loading="lazy" tabindex="-1" title="Lumen — live preview"></iframe></div></div>
+    <div class="work-cover"><div class="work-loader" aria-hidden="true"><span></span></div><div class="work-frame-wrap"><iframe src="/lumen" loading="lazy" tabindex="-1" title="Lumen — live preview"></iframe></div></div>
     <div class="work-meta">
       <h3>Lumen</h3>
       <span class="tags">Web · Photography studio</span>
     </div>
   </a>
-</section>
-
-<section class="manifesto work-close">
-  <p>Yours could be next. <em>Let's build it.</em></p>
-  <a class="btn btn-primary" href="#contact" data-hover data-magnetic>Start a project <span class="arrow">→</span></a>
 </section>
 
 <footer class="footer" id="contact">
@@ -195,7 +195,7 @@
     <a href="/suite" data-hover>Suite</a>
     <a href="/privacy.html" data-hover>Privacy</a>
     <a href="mailto:lahhamadam00@gmail.com" data-hover>lahhamadam00@gmail.com</a>
-    <span>Websites · Voice · SMS · Automation</span>
+    <span>Bespoke Websites + Full AI Suite</span>
     <a href="#" data-hover onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to top ↑</a>
   </div>
 </footer>
@@ -222,6 +222,11 @@
   sync();
   window.addEventListener("resize", sync);
   document.fonts?.ready.then(sync);
+
+  document.querySelectorAll(".work-frame-wrap iframe").forEach((iframe) => {
+    const cover = iframe.closest(".work-cover");
+    iframe.addEventListener("load", () => cover.classList.add("is-loaded"), { once: true });
+  });
 })();
 </script>
 
@@ -253,7 +258,7 @@
       cover.style.height = rect.height + "px";
       void cover.offsetHeight; // force reflow before animating
 
-      gsap.to(".nav, .work-hero, .work-grid, .work-close, .footer", {
+      gsap.to(".nav, .work-hero, .work-grid, .footer", {
         opacity: 0, duration: 0.5, ease: "power2.out",
       });
       gsap.to(cover, {

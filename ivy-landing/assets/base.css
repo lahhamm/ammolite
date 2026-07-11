@@ -153,6 +153,7 @@ body.gem-dragging .cursor-ring {
   font-size: 0.82rem; font-weight: 400;
   letter-spacing: 0.1em; text-transform: uppercase;
   transition: color .3s ease;
+  padding: 0.9rem 0.2rem; margin: -0.9rem -0.2rem;
 }
 .nav-links a:hover, .nav-links a.is-active { color: var(--ink); }
 @media (max-width: 760px) { .nav-links { display: none; } }

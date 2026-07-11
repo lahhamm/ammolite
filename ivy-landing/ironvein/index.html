@@ -541,6 +541,20 @@ button{ font:inherit; color:inherit; cursor:pointer; background:none; border:non
 <body>
 <div class="grain" aria-hidden="true"></div>
 
+<style>
+.ammolite-back-badge{
+  position:fixed;bottom:1.1rem;left:1.1rem;z-index:9999;
+  display:flex;align-items:center;gap:0.5rem;
+  padding:0.55rem 0.9rem;border-radius:999px;
+  background:rgba(20,16,12,0.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.14);color:#e7ddce;
+  font-family:Georgia,serif;font-style:italic;font-size:0.85rem;
+  text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,0.35);
+}
+@media (max-width:900px){ .ammolite-back-badge{ bottom:90px; } }
+</style>
+<a href="/" class="ammolite-back-badge">← Ammolite demo</a>
+
 <!-- ========================= EMERGENCY BAR ========================= -->
 <div class="embar" role="region" aria-label="Emergency contact">
   <span class="embar__dot" aria-hidden="true"></span>
