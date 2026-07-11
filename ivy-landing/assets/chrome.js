@@ -213,7 +213,7 @@
         form.reset();
       } catch {
         status.className = "form-status is-error";
-        status.textContent = "Something went wrong — email us directly at lahhamadam00@gmail.com";
+        status.textContent = "Something went wrong — please try again in a moment.";
       } finally {
         btn.disabled = false;
       }

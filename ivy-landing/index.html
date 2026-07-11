@@ -142,13 +142,16 @@
     list-style: none;
     border-top: 1px solid var(--hairline);
   }
-  .work-teaser-list li {
+  .work-teaser-list li { border-bottom: 1px solid var(--hairline); }
+  .work-teaser-list a {
     display: flex; justify-content: space-between; align-items: baseline;
     padding: 1.3rem 0;
-    border-bottom: 1px solid var(--hairline);
+    color: var(--ink); text-decoration: none;
     font-family: var(--font-serif); font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    transition: color .3s ease;
   }
-  .work-teaser-list li span {
+  .work-teaser-list a:hover { color: var(--accent); }
+  .work-teaser-list a span {
     font-family: var(--font-mono);
     font-size: 0.7rem; font-weight: 400;
     letter-spacing: 0.1em; text-transform: uppercase;
@@ -269,9 +272,9 @@
       <a class="btn btn-outline" href="/work" data-hover data-magnetic>See the full work <span class="arrow">→</span></a>
     </div>
     <ul class="work-teaser-list">
-      <li>Ironvein Plumbing <span>Trade services</span></li>
-      <li>Meridian <span>Longevity clinic</span></li>
-      <li>Lumen <span>Photography studio</span></li>
+      <li><a href="/ironvein" data-hover>Ironvein Plumbing <span>Trade services</span></a></li>
+      <li><a href="/meridian" data-hover>Meridian <span>Longevity clinic</span></a></li>
+      <li><a href="/lumen" data-hover>Lumen <span>Photography studio</span></a></li>
     </ul>
   </div>
 </section>
@@ -328,7 +331,6 @@
     <a href="/work" data-hover>Work</a>
     <a href="/suite" data-hover>Suite</a>
     <a href="/privacy.html" data-hover>Privacy</a>
-    <a href="mailto:lahhamadam00@gmail.com" data-hover>lahhamadam00@gmail.com</a>
     <span>Bespoke Websites + Full AI Suite</span>
     <a href="#top" data-hover>Back to top ↑</a>
   </div>
