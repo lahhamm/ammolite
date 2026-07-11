@@ -80,16 +80,23 @@
     font-size: clamp(1.8rem, 3.4vw, 2.6rem);
     font-weight: 400;
   }
+  /* flex-wrap (not grid) on purpose: with grid, a category whose card count
+     isn't a clean multiple of the column count leaves the last row's empty
+     tracks still enclosed by the container's outer border, rendering as a
+     dead, unbordered-looking slab. With flex-wrap + each card owning its
+     own border, an incomplete last row just ends, no phantom cell. */
   .module-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--hairline);
-    border: 1px solid var(--hairline);
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--hairline);
+    border-left: 1px solid var(--hairline);
   }
   .module-card {
+    flex: 1 1 320px;
     background: var(--bg);
     padding: clamp(1.7rem, 3vw, 2.2rem);
+    border-right: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
     transition: background-color .35s ease;
   }
   .module-card:hover { background-color: var(--bg-raise); }
@@ -104,11 +111,8 @@
     font-size: 0.92rem;
     line-height: 1.55;
   }
-  @media (max-width: 1000px) {
-    .module-grid { grid-template-columns: repeat(2, 1fr); }
-  }
   @media (max-width: 640px) {
-    .module-grid { grid-template-columns: 1fr; }
+    .module-card { flex-basis: 100%; }
   }
 
   /* ---------- premium / custom build callout ---------- */

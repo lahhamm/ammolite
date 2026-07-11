@@ -9,7 +9,12 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "DENY"
+    # SAMEORIGIN, not DENY: /work embeds /ironvein, /meridian and /lumen in
+    # their own iframes as live preview cards. DENY blocks all framing,
+    # including this same-site case. SAMEORIGIN still blocks third-party
+    # clickjacking (the actual threat this header exists for) while allowing
+    # the site to embed its own pages.
+    X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
