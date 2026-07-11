@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Suite · Ammolite</title>
+<meta name="description" content="Every AI agent and automation Ammolite can build into your website: voice receptionists, SMS follow-up, chat, reviews, booking and more. Nothing here is a fixed package, we build your stack." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23241a12'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-style='italic' font-size='42' fill='%23e3c288' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lora:ital,wght@0,400..600;1,400..600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/base.css" />
+<style>
+  /* ---------- page header ---------- */
+  .page-hero {
+    padding: clamp(9rem, 22vh, 13rem) clamp(1.4rem, 4vw, 3.5rem) clamp(4rem, 10vh, 6rem);
+    max-width: 1100px;
+  }
+  .page-hero .hero-eyebrow {
+    display: flex; align-items: center; gap: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem; font-weight: 400;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: clamp(1.2rem, 3vh, 2.2rem);
+  }
+  .page-hero .hero-eyebrow::before {
+    content: ""; width: 2.6rem; height: 1px;
+    background: var(--accent); display: inline-block;
+  }
+  .page-hero h1 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+  }
+  .page-hero h1 em {
+    font-family: var(--font-serif); font-style: italic; font-weight: 400;
+    color: var(--accent);
+  }
+  .page-hero .lede {
+    color: var(--ink-dim);
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    line-height: 1.6;
+    max-width: 58ch;
+  }
+  .page-hero .lede strong { color: var(--ink); font-weight: 500; }
+
+  /* ---------- the "not a package" banner ---------- */
+  .not-a-menu {
+    margin: 0 clamp(1.4rem, 4vw, 3.5rem) clamp(5rem, 12vh, 8rem);
+    padding: clamp(1.6rem, 3.5vw, 2.4rem) clamp(1.8rem, 4vw, 2.8rem);
+    border: 1px solid var(--hairline);
+    border-left: 2px solid var(--accent);
+    background: var(--bg-raise);
+    font-family: var(--font-serif);
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    line-height: 1.45;
+    max-width: 900px;
+  }
+  .not-a-menu em {
+    font-style: italic; color: var(--accent);
+  }
+
+  /* ---------- module categories ---------- */
+  .category { padding: 0 clamp(1.4rem, 4vw, 3.5rem) clamp(5rem, 12vh, 8rem); }
+  .category-head {
+    display: flex; align-items: baseline; gap: 1.2rem;
+    margin-bottom: clamp(1.8rem, 4vh, 2.6rem);
+  }
+  .category-head .num {
+    font-family: var(--font-mono); font-size: 0.8rem;
+    color: var(--accent); letter-spacing: 0.1em;
+  }
+  .category-head h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    font-weight: 400;
+  }
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+  }
+  .module-card {
+    background: var(--bg);
+    padding: clamp(1.7rem, 3vw, 2.2rem);
+    transition: background-color .35s ease;
+  }
+  .module-card:hover { background-color: var(--bg-raise); }
+  .module-card h3 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+    font-weight: 400;
+    margin-bottom: 0.7rem;
+  }
+  .module-card p {
+    color: var(--ink-dim);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  @media (max-width: 1000px) {
+    .module-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .module-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- premium / custom build callout ---------- */
+  .premium {
+    margin: 0 clamp(1.4rem, 4vw, 3.5rem) clamp(6rem, 14vh, 9rem);
+    padding: clamp(2.5rem, 5vw, 4rem);
+    border: 1px solid var(--hairline);
+    position: relative;
+  }
+  .premium::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(90% 120% at 0% 0%, color-mix(in oklch, var(--accent) 6%, transparent), transparent 60%);
+    pointer-events: none;
+  }
+  .premium-label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent);
+    display: block; margin-bottom: 1rem;
+    position: relative;
+  }
+  .premium h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    margin-bottom: 1.2rem;
+    max-width: 20ch;
+    position: relative;
+  }
+  .premium h2 em { font-style: italic; color: var(--accent); }
+  .premium-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    margin-top: clamp(1.8rem, 4vh, 2.6rem);
+    position: relative;
+  }
+  .premium-item h3 {
+    font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+  .premium-item p { color: var(--ink-dim); font-size: 0.95rem; line-height: 1.55; }
+  @media (max-width: 700px) {
+    .premium-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- closing CTA ---------- */
+  .suite-close {
+    padding: 0 clamp(1.4rem, 4vw, 3.5rem) clamp(6rem, 14vh, 9rem);
+    max-width: 800px;
+  }
+  .suite-close p {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    line-height: 1.35;
+    color: var(--ink-dim);
+    margin-bottom: clamp(2rem, 5vh, 3rem);
+  }
+  .suite-close em { font-style: italic; color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="candle" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<div class="preloader" aria-hidden="true">
+  <div class="mark"><span>Ammolite</span></div>
+</div>
+
+<header class="nav">
+  <a class="wordmark" href="/" data-hover>Ammolite</a>
+  <nav class="nav-links">
+    <a href="/work" data-hover>Work</a>
+    <a href="/suite" data-hover class="is-active">Suite</a>
+    <a href="/#studio" data-hover>Studio</a>
+    <a href="#contact" data-hover>Contact</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <p class="hero-eyebrow">The full suite</p>
+  <h1>Build your <em>stack.</em></h1>
+  <p class="lede">
+    Every website we build comes with the option to staff it. Below is
+    everything we can wire in: <strong>voice, text, chat, reviews, booking
+    and the automations behind them</strong>. On our call, we'll pick the
+    handful that actually move your numbers, and leave the rest for later.
+  </p>
+</section>
+
+<div class="not-a-menu">
+  This isn't a menu of <em>packages.</em> It's a menu of <em>parts.</em>
+  No two clients leave with the same stack, and nothing below is priced
+  or bundled until we've talked about your business specifically.
+</div>
+
+<section class="category" id="voice">
+  <div class="category-head"><span class="num">01</span><h2>Voice</h2></div>
+  <div class="module-grid" data-reveal-batch>
+    <div class="module-card">
+      <h3>AI Voice Receptionist</h3>
+      <p>Answers every call, day or night, in a voice that sounds like your best hire.</p>
+    </div>
+    <div class="module-card">
+      <h3>After-Hours Coverage</h3>
+      <p>Only steps in when you can't get to the phone, so nothing falls through the cracks after 5pm.</p>
+    </div>
+    <div class="module-card">
+      <h3>Outbound Follow-Up Caller</h3>
+      <p>Calls old leads and past customers back, so a full pipeline stops depending on your memory.</p>
+    </div>
+    <div class="module-card">
+      <h3>Voicemail-to-Summary</h3>
+      <p>Turns every voicemail into a text you can read in five seconds.</p>
+    </div>
+  </div>
+</section>
+
+<section class="category" id="sms">
+  <div class="category-head"><span class="num">02</span><h2>SMS</h2></div>
+  <div class="module-grid" data-reveal-batch>
+    <div class="module-card">
+      <h3>Missed-Call Text-Back</h3>
+      <p>The instant a call goes unanswered, they get a text. Most people never even notice you missed it.</p>
+    </div>
+    <div class="module-card">
+      <h3>Speed-to-Lead SMS</h3>
+      <p>Replies to new leads in under a minute, while they're still holding your name in their head.</p>
+    </div>
+    <div class="module-card">
+      <h3>Two-Way Booking Concierge</h3>
+      <p>Customers text to book, reschedule or ask a question, and get a real answer back.</p>
+    </div>
+    <div class="module-card">
+      <h3>Appointment Reminders</h3>
+      <p>Fewer no-shows, with reminders that go out automatically before every visit.</p>
+    </div>
+  </div>
+</section>
+
+<section class="category" id="chat">
+  <div class="category-head"><span class="num">03</span><h2>Website chat</h2></div>
+  <div class="module-grid" data-reveal-batch>
+    <div class="module-card">
+      <h3>Trained Website Chatbot</h3>
+      <p>Knows your services, your pricing and your hours, and answers like someone who works there.</p>
+    </div>
+    <div class="module-card">
+      <h3>Instant Quote Bot</h3>
+      <p>Walks a visitor through a few questions and hands them a ballpark before they've left the page.</p>
+    </div>
+    <div class="module-card">
+      <h3>Lead Qualifier &amp; Handoff</h3>
+      <p>Separates the tire-kickers from the ready-to-buy, and only rings your phone for the ones who matter.</p>
+    </div>
+  </div>
+</section>
+
+<section class="category" id="reviews">
+  <div class="category-head"><span class="num">04</span><h2>Reviews &amp; reputation</h2></div>
+  <div class="module-grid" data-reveal-batch>
+    <div class="module-card">
+      <h3>Google Review Requests</h3>
+      <p>Asks happy customers for a review right after the job, while the good feeling is still fresh.</p>
+    </div>
+    <div class="module-card">
+      <h3>AI Review Responses</h3>
+      <p>Replies to every review in your voice, so nothing (good or bad) ever goes ignored.</p>
+    </div>
+    <div class="module-card">
+      <h3>Reputation Monitoring</h3>
+      <p>Flags new reviews the moment they land, wherever they land.</p>
+    </div>
+  </div>
+</section>
+
+<section class="category" id="bookings">
+  <div class="category-head"><span class="num">05</span><h2>Bookings &amp; CRM</h2></div>
+  <div class="module-grid" data-reveal-batch>
+    <div class="module-card">
+      <h3>Online Booking &amp; Calendar Sync</h3>
+      <p>Customers book themselves in, and it lands straight on your calendar.</p>
+    </div>
+    <div class="module-card">
+      <h3>CRM &amp; Pipeline Setup</h3>
+      <p>Every lead in one place, so nobody gets lost in a text thread or a sticky note.</p>
+    </div>
+    <div class="module-card">
+      <h3>Database Reactivation</h3>
+      <p>Digs through your old customer list and quietly turns it back into new jobs.</p>
+    </div>
+    <div class="module-card">
+      <h3>Nurture Sequences</h3>
+      <p>Slow, patient follow-up that keeps you top of mind until someone's finally ready.</p>
+    </div>
+    <div class="module-card">
+      <h3>Referral Automation</h3>
+      <p>Asks happy customers to send a friend your way, right when they're happiest.</p>
+    </div>
+  </div>
+</section>
+
+<section class="category" id="growth">
+  <div class="category-head"><span class="num">06</span><h2>Growth &amp; visibility</h2></div>
+  <div class="module-grid" data-reveal-batch>
+    <div class="module-card">
+      <h3>Google Business Profile</h3>
+      <p>The listing that shows up when someone searches you, built to actually convert the click.</p>
+    </div>
+    <div class="module-card">
+      <h3>AI Social Content</h3>
+      <p>A steady drumbeat of posts, written and scheduled without eating your week.</p>
+    </div>
+    <div class="module-card">
+      <h3>Local SEO</h3>
+      <p>The unglamorous groundwork that gets you found by people who are already looking.</p>
+    </div>
+  </div>
+</section>
+
+<section class="premium">
+  <span class="premium-label">When off-the-shelf isn't enough</span>
+  <h2>Some businesses need something <em>nobody else</em> can build.</h2>
+  <div class="premium-grid">
+    <div class="premium-item">
+      <h3>Custom Integrations</h3>
+      <p>Already run on a system nobody else wants to touch? We'll build the bridge into it.</p>
+    </div>
+    <div class="premium-item">
+      <h3>Bespoke Internal Tools</h3>
+      <p>For businesses whose workflow doesn't fit in a template: dispatch, multi-location routing, whatever's actually yours.</p>
+    </div>
+  </div>
+</section>
+
+<section class="manifesto suite-close">
+  <p>You don't need all of this. You need the <em>three or four</em> pieces that actually fit how your business runs, and someone who's honest about which ones those are.</p>
+  <a class="btn btn-primary" href="#contact" data-hover data-magnetic>Let's find yours <span class="arrow">→</span></a>
+</section>
+
+<footer class="footer" id="contact">
+  <p class="kicker">Have a project in mind?</p>
+  <h2 class="footer-cta">Let's talk <span class="arrow">→</span></h2>
+  <form class="contact-form" id="contact-form">
+    <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <input type="text" name="name" placeholder="Your name" autocomplete="name" required data-hover />
+    <input type="email" name="email" placeholder="Email" autocomplete="email" required data-hover />
+    <input type="text" name="business" placeholder="Business (optional)" data-hover />
+    <textarea name="message" rows="3" placeholder="Tell us about the project" required data-hover></textarea>
+    <button class="btn btn-primary" type="submit" data-hover data-magnetic>Send it <span class="arrow">→</span></button>
+    <p class="form-status" aria-live="polite"></p>
+  </form>
+  <div class="footer-grid">
+    <span>© 2026 Ammolite Studio</span>
+    <a href="/" data-hover>Home</a>
+    <a href="/work" data-hover>Work</a>
+    <a href="/privacy.html" data-hover>Privacy</a>
+    <a href="mailto:lahhamadam00@gmail.com" data-hover>lahhamadam00@gmail.com</a>
+    <span>Websites · Voice · SMS · Automation</span>
+    <a href="#" data-hover onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="/assets/chrome.js"></script>
+
+</body>
+</html>

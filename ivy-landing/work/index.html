@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Work · Ammolite</title>
+<meta name="description" content="Live, working websites Ammolite has built: a plumbing company, a longevity clinic and a photography studio. Click into any of them, they're real." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23241a12'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-style='italic' font-size='42' fill='%23e3c288' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lora:ital,wght@0,400..600;1,400..600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/base.css" />
+<style>
+  /* ---------- page header ---------- */
+  .work-hero {
+    padding: clamp(9rem, 22vh, 13rem) clamp(1.4rem, 4vw, 3.5rem) clamp(4rem, 10vh, 6rem);
+    max-width: 1100px;
+  }
+  .work-hero .hero-eyebrow {
+    display: flex; align-items: center; gap: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem; font-weight: 400;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: clamp(1.2rem, 3vh, 2.2rem);
+  }
+  .work-hero .hero-eyebrow::before {
+    content: ""; width: 2.6rem; height: 1px;
+    background: var(--accent); display: inline-block;
+  }
+  .work-hero h1 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+  }
+  .work-hero h1 em {
+    font-family: var(--font-serif); font-style: italic; font-weight: 400;
+    color: var(--accent);
+  }
+  .work-hero .lede {
+    color: var(--ink-dim);
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    line-height: 1.6;
+    max-width: 58ch;
+  }
+
+  /* ---------- live demo grid ---------- */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.6rem, 3vw, 2.4rem);
+    padding: 0 clamp(1.4rem, 4vw, 3.5rem) clamp(6rem, 14vh, 9rem);
+  }
+  .work-card {
+    text-decoration: none; color: var(--ink);
+    display: block;
+  }
+  .work-cover {
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    background: var(--bg-raise);
+    position: relative; overflow: hidden;
+    transition: border-color .4s ease;
+  }
+  .work-cover::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(120% 90% at 80% 10%, color-mix(in oklch, var(--accent) 7%, transparent), transparent 55%),
+      linear-gradient(200deg, transparent 55%, oklch(10% 0.006 255 / 0.7));
+    pointer-events: none;
+  }
+  .work-meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 1.1rem;
+  }
+  .work-meta h3 { font-family: var(--font-serif); font-size: 1.45rem; font-weight: 400; }
+  .work-meta .tags {
+    font-family: var(--font-mono);
+    font-size: 0.72rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .work-frame-wrap {
+    position: absolute; top: 0; left: 0;
+    width: 1600px; height: 1000px;
+    transform-origin: top left;
+    pointer-events: none;
+  }
+  .work-frame-wrap iframe {
+    width: 1600px; height: 1000px;
+    border: 0; display: block;
+    background: var(--bg-raise);
+  }
+  .work-card--live:hover .work-cover { border-color: color-mix(in oklch, var(--accent) 55%, transparent); }
+  @media (max-width: 1000px) {
+    .work-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- closing ---------- */
+  .work-close {
+    padding: 0 clamp(1.4rem, 4vw, 3.5rem) clamp(4rem, 10vh, 7rem);
+    max-width: 900px;
+  }
+  .work-close p {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4.4vw, 4.2rem);
+    font-weight: 400; line-height: 1.2;
+    text-wrap: balance;
+    margin-bottom: clamp(2rem, 5vh, 3rem);
+  }
+  .work-close em { font-style: italic; color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="candle" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<div class="preloader" aria-hidden="true">
+  <div class="mark"><span>Ammolite</span></div>
+</div>
+
+<header class="nav">
+  <a class="wordmark" href="/" data-hover>Ammolite</a>
+  <nav class="nav-links">
+    <a href="/work" data-hover class="is-active">Work</a>
+    <a href="/suite" data-hover>Suite</a>
+    <a href="/#studio" data-hover>Studio</a>
+    <a href="#contact" data-hover>Contact</a>
+  </nav>
+</header>
+
+<section class="work-hero">
+  <p class="hero-eyebrow">Selected work</p>
+  <h1>Real businesses. <em>Real results.</em></h1>
+  <p class="lede">
+    Three industries, three completely different builds. Every one below
+    is live, click into any of them and look around.
+  </p>
+</section>
+
+<section class="work-grid">
+  <!-- same-tab on purpose: the zoom transition below only makes sense if the visitor stays on this page to see it -->
+  <a class="work-card work-card--live" href="/ironvein" data-hover id="ironveinCard">
+    <div class="work-cover"><div class="work-frame-wrap"><iframe src="/ironvein" loading="lazy" tabindex="-1" title="Ironvein Plumbing — live preview"></iframe></div></div>
+    <div class="work-meta">
+      <h3>Ironvein Plumbing</h3>
+      <span class="tags">Web · Trade services</span>
+    </div>
+  </a>
+  <a class="work-card work-card--live" href="/meridian" data-hover id="meridianCard">
+    <div class="work-cover"><div class="work-frame-wrap"><iframe src="/meridian" loading="lazy" tabindex="-1" title="Meridian — live preview"></iframe></div></div>
+    <div class="work-meta">
+      <h3>Meridian</h3>
+      <span class="tags">Web · Longevity clinic</span>
+    </div>
+  </a>
+  <a class="work-card work-card--live" href="/lumen" data-hover id="lumenCard">
+    <div class="work-cover"><div class="work-frame-wrap"><iframe src="/lumen" loading="lazy" tabindex="-1" title="Lumen — live preview"></iframe></div></div>
+    <div class="work-meta">
+      <h3>Lumen</h3>
+      <span class="tags">Web · Photography studio</span>
+    </div>
+  </a>
+</section>
+
+<section class="manifesto work-close">
+  <p>Yours could be next. <em>Let's build it.</em></p>
+  <a class="btn btn-primary" href="#contact" data-hover data-magnetic>Start a project <span class="arrow">→</span></a>
+</section>
+
+<footer class="footer" id="contact">
+  <p class="kicker">Have a project in mind?</p>
+  <h2 class="footer-cta">Let's talk <span class="arrow">→</span></h2>
+  <form class="contact-form" id="contact-form">
+    <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <input type="text" name="name" placeholder="Your name" autocomplete="name" required data-hover />
+    <input type="email" name="email" placeholder="Email" autocomplete="email" required data-hover />
+    <input type="text" name="business" placeholder="Business (optional)" data-hover />
+    <textarea name="message" rows="3" placeholder="Tell us about the project" required data-hover></textarea>
+    <button class="btn btn-primary" type="submit" data-hover data-magnetic>Send it <span class="arrow">→</span></button>
+    <p class="form-status" aria-live="polite"></p>
+  </form>
+  <div class="footer-grid">
+    <span>© 2026 Ammolite Studio</span>
+    <a href="/" data-hover>Home</a>
+    <a href="/suite" data-hover>Suite</a>
+    <a href="/privacy.html" data-hover>Privacy</a>
+    <a href="mailto:lahhamadam00@gmail.com" data-hover>lahhamadam00@gmail.com</a>
+    <span>Websites · Voice · SMS · Automation</span>
+    <a href="#" data-hover onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="/assets/chrome.js"></script>
+
+<!-- ============ live-preview iframe scaling ============ -->
+<script>
+(() => {
+  const FRAME_W = 1600; // natural width the iframes are laid out at
+
+  const wraps = [...document.querySelectorAll(".work-frame-wrap")];
+  function sync() {
+    wraps.forEach((wrap) => {
+      const cover = wrap.parentElement;
+      const scale = cover.clientWidth / FRAME_W;
+      wrap.style.transform = `scale(${scale})`;
+    });
+  }
+  sync();
+  window.addEventListener("resize", sync);
+  document.fonts?.ready.then(sync);
+})();
+</script>
+
+<!-- ============ zoom-in transition into a live demo ============ -->
+<script>
+(() => {
+  const FRAME_W = 1600;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll(".work-card--live").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      // let modified clicks (new tab/window) and reduced-motion visitors navigate normally
+      if (reduceMotion || !window.gsap || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+
+      const url = card.getAttribute("href");
+      const cover = card.querySelector(".work-cover");
+      const wrap = card.querySelector(".work-frame-wrap");
+      const rect = cover.getBoundingClientRect();
+
+      // promote the live cover to a fixed overlay at its exact current
+      // position first, so growing it to fullscreen never reloads the
+      // iframe (a clone would restart the live animation mid-transition)
+      cover.style.position = "fixed";
+      cover.style.zIndex = "200";
+      cover.style.top = rect.top + "px";
+      cover.style.left = rect.left + "px";
+      cover.style.width = rect.width + "px";
+      cover.style.height = rect.height + "px";
+      void cover.offsetHeight; // force reflow before animating
+
+      gsap.to(".nav, .work-hero, .work-grid, .work-close, .footer", {
+        opacity: 0, duration: 0.5, ease: "power2.out",
+      });
+      gsap.to(cover, {
+        top: 0, left: 0, width: window.innerWidth, height: window.innerHeight,
+        borderRadius: 0,
+        duration: 0.9, ease: "power3.inOut",
+        onUpdate: () => {
+          wrap.style.transform = `scale(${cover.getBoundingClientRect().width / FRAME_W})`;
+        },
+        onComplete: () => { window.location.href = url; },
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
