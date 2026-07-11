@@ -15,9 +15,10 @@
   .hero {
     position: relative;
     min-height: 100svh;
-    display: flex; flex-direction: column; justify-content: center;
-    /* top padding keeps the eyebrow clear of the fixed nav on short viewports */
-    padding: 6.5rem clamp(1.4rem, 4vw, 3.5rem) clamp(2rem, 6vh, 4rem);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    /* top padding keeps the eyebrow clear of the fixed nav on short viewports;
+       bottom padding lifts the footer row off the exact viewport edge */
+    padding: 6.5rem clamp(1.4rem, 4vw, 3.5rem) clamp(4rem, 12vh, 9rem);
   }
   /* the gem lives on a fixed canvas and travels with you; sections stack above it */
   #gl {
