@@ -35,11 +35,15 @@ export function SiteFooter() {
         <div className="text-sm text-canvas/70 flex flex-col gap-2">
           <p className="flex items-center gap-2">
             <Phone size={16} weight="regular" aria-label="Phone" />
-            (949) 423-3522
+            <a href="tel:+19494233522" className="hover:text-canvas">
+              (949) 423-3522
+            </a>
           </p>
           <p className="flex items-center gap-2">
             <EnvelopeSimple size={16} weight="regular" aria-label="Email" />
-            reception@reclaimintegrative.com
+            <a href="mailto:reception@reclaimintegrative.com" className="hover:text-canvas">
+              reception@reclaimintegrative.com
+            </a>
           </p>
         </div>
       </div>
