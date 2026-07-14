@@ -46,6 +46,7 @@ export function ServicesTeaser() {
                     src={service.image}
                     alt={`${service.name} at Reclaim Integrative Medicine`}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                   />
                 )}

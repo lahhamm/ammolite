@@ -31,6 +31,7 @@ export function Hero({ videoSrc, posterSrc }: HeroProps) {
             alt="Aerial view of the Newport Beach coastline"
             fill
             priority
+            sizes="100vw"
             className="object-cover"
           />
         )}
