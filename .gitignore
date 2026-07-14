@@ -4,6 +4,7 @@
 # track only the ammolite sites (monorepo scope)
 !/ivy-landing/
 !/luxury-watch-landing/
+!/reclaim-integrative/
 !/.gitignore
 
 # roofer-demo-site and new-look-barbershop-demo-site are excluded for now:
