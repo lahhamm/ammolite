@@ -16,9 +16,11 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
         <Link href="/about">About</Link>
         <Link href="/contact">Contact</Link>
       </nav>
-      <Button variant="primary" className="text-sm">
-        Schedule Consultation
-      </Button>
+      {!transparent && (
+        <Button variant="primary" className="text-sm">
+          Schedule Consultation
+        </Button>
+      )}
     </header>
   );
 }
