@@ -1,11 +1,12 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { SiteNav } from "./site-nav";
 
 describe("SiteNav", () => {
   it("renders exactly three primary nav links plus one CTA", () => {
     render(<SiteNav />);
-    const links = screen.getAllByRole("link");
+    const nav = screen.getByRole("navigation");
+    const links = within(nav).getAllByRole("link");
     expect(links).toHaveLength(3);
     expect(links.map((l) => l.textContent)).toEqual(["Services", "About", "Contact"]);
   });

@@ -8,9 +8,9 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
         transparent ? "absolute top-0 left-0 z-10 bg-transparent" : "bg-canvas border-b border-border"
       }`}
     >
-      <div className="font-serif text-xl text-ink">
+      <Link href="/" className="font-serif text-xl text-ink">
         Reclaim
-      </div>
+      </Link>
       <nav className="hidden md:flex items-center gap-8 font-sans text-sm text-ink">
         <Link href="/services">Services</Link>
         <Link href="/about">About</Link>
