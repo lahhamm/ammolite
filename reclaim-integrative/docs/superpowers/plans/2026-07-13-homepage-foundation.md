@@ -272,6 +272,13 @@ describe("Button", () => {
     const button = screen.getByRole("button", { name: "(949) 423-3522" });
     expect(button.className).not.toContain("bg-");
   });
+
+  it("renders inverse variant for CTAs on dark backgrounds without reusing gold", () => {
+    render(<Button variant="inverse">Schedule Consultation</Button>);
+    const button = screen.getByRole("button", { name: "Schedule Consultation" });
+    expect(button.className).toContain("border-canvas");
+    expect(button.className).not.toContain("bg-accent-gold");
+  });
 });
 ```
 
@@ -287,7 +294,7 @@ Create `reclaim-integrative/src/components/ui/button.tsx`:
 ```typescript
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
-type ButtonVariant = "primary" | "gold" | "text";
+type ButtonVariant = "primary" | "gold" | "inverse" | "text";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: ButtonVariant;
@@ -298,6 +305,8 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary:
     "bg-ink text-canvas px-6 py-3 rounded-sm transition-colors duration-200 hover:bg-ink/85",
   gold: "bg-accent-gold text-canvas px-6 py-3 rounded-sm transition-colors duration-200 hover:bg-accent-gold/85",
+  inverse:
+    "bg-transparent text-canvas border border-canvas px-6 py-3 rounded-sm transition-colors duration-200 hover:bg-canvas/10",
   text: "text-ink underline-offset-4 hover:underline transition-colors duration-200",
 };
 
@@ -316,13 +325,13 @@ export function Button({ variant, children, className, ...props }: ButtonProps) 
 - [ ] **Step 4: Run test to verify it passes**
 
 Run: `npm run test`
-Expected: PASS, 3 tests.
+Expected: PASS, 4 tests.
 
 - [ ] **Step 5: Commit**
 
 ```bash
 git add reclaim-integrative/src/components/ui/button.tsx reclaim-integrative/src/components/ui/button.test.tsx
-git commit -m "feat: add Button primitive with primary/gold/text variants"
+git commit -m "feat: add Button primitive with primary/gold/inverse/text variants"
 ```
 
 ---
@@ -1535,6 +1544,12 @@ describe("FinalCta", () => {
     render(<FinalCta />);
     expect(screen.getByRole("button", { name: "Schedule Consultation" })).toBeInTheDocument();
   });
+
+  it("does not reuse the gold accent, which is reserved for the hero CTA only", () => {
+    render(<FinalCta />);
+    const button = screen.getByRole("button", { name: "Schedule Consultation" });
+    expect(button.className).not.toContain("bg-accent-gold");
+  });
 });
 ```
 
@@ -1558,7 +1573,7 @@ export function FinalCta() {
       </h2>
       <p className="mt-4 text-canvas/80">A complimentary 15-minute consultation starts the process.</p>
       <div className="mt-8">
-        <Button variant="gold">Schedule Consultation</Button>
+        <Button variant="inverse">Schedule Consultation</Button>
       </div>
     </section>
   );
