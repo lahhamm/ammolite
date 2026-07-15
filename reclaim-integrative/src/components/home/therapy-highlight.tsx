@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 export function TherapyHighlight() {
   return (
     <ScrollReveal>
-      <section role="region" aria-label="Advanced therapies" className="py-24 px-6 md:px-10 bg-accent-sage/10">
+      <section role="region" aria-label="Advanced therapies" className="py-16 md:py-24 px-6 md:px-10 bg-accent-sage/10">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-serif text-3xl md:text-4xl">Advanced therapies for lasting recovery</h2>
           <p className="mt-4 text-muted max-w-xl mx-auto">

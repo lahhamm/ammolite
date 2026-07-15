@@ -53,7 +53,7 @@ export function ScheduleStep({ state, dispatch, now }: ScheduleStepProps) {
               disabled={!hasOpenSlots}
               aria-pressed={isSelected}
               onClick={() => dispatch({ type: "SELECT_DATE", date: day.date })}
-              className={`shrink-0 rounded-lg border px-4 py-3 font-sans text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-accent-sage ${
+              className={`min-h-11 shrink-0 rounded-lg border px-4 py-3 font-sans text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-accent-sage ${
                 isSelected
                   ? "border-ink bg-ink text-canvas"
                   : hasOpenSlots
@@ -85,7 +85,7 @@ export function ScheduleStep({ state, dispatch, now }: ScheduleStepProps) {
                   disabled={!slot.available}
                   aria-pressed={isSelected}
                   onClick={() => dispatch({ type: "SELECT_TIME", time: slot.time })}
-                  className={`rounded-sm border px-3 py-2.5 font-sans text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-accent-sage ${
+                  className={`min-h-11 rounded-sm border px-3 py-2.5 font-sans text-sm transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-accent-sage ${
                     isSelected
                       ? "border-ink bg-ink text-canvas"
                       : slot.available

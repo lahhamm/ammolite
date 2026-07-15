@@ -119,7 +119,7 @@ export default function PressPage() {
                   target="_blank" 
                   rel="noopener noreferrer" 
                   key={item.outlet} 
-                  className={`block transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/10 group ${spanClass}`}
+                  className={`block transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5 group ${spanClass}`}
                 >
                   <motion.div
                     className="border border-border p-6 md:p-8 bg-white rounded-3xl h-full flex flex-col justify-between gap-8 transition-colors duration-300 relative overflow-hidden"
@@ -164,7 +164,7 @@ export default function PressPage() {
               return (
                 <div 
                   key={i} 
-                  className={`border border-border p-6 md:p-8 bg-white rounded-3xl flex flex-col justify-between gap-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/10 group relative overflow-hidden ${spanClass}`}
+                  className={`border border-border p-6 md:p-8 bg-white rounded-3xl flex flex-col justify-between gap-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5 group relative overflow-hidden ${spanClass}`}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-accent-sage/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   

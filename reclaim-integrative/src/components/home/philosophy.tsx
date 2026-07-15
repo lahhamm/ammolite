@@ -2,7 +2,7 @@ import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 export function Philosophy() {
   return (
-    <section className="py-24 px-6 md:px-10">
+    <section className="py-16 md:py-24 px-6 md:px-10">
       <div className="max-w-2xl mx-auto text-center">
         <ScrollReveal>
           <h2 className="font-serif text-3xl md:text-4xl leading-tight">

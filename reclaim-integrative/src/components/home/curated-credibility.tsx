@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 
 const FEATURES = [
   {
@@ -17,48 +17,45 @@ const FEATURES = [
 
 export function CuratedCredibility() {
   return (
-    <section className="py-32 px-6 md:px-10 bg-canvas relative overflow-hidden">
-      {/* Subtle background decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent-sage/5 blur-[120px] rounded-full pointer-events-none" />
-      
-      <div className="max-w-6xl mx-auto relative z-10">
+    <section className="py-16 md:py-24 px-6 md:px-10 bg-canvas">
+      <div className="max-w-6xl mx-auto">
         <ScrollReveal>
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <h2 className="font-serif text-4xl md:text-5xl text-ink max-w-xl leading-tight">
+          <div className="flex flex-col md:flex-row justify-between md:items-end mb-10 md:mb-16 gap-6">
+            <h2 className="font-serif text-3xl md:text-5xl text-ink max-w-xl leading-tight">
               Recognized in leading health and wellness publications.
             </h2>
-            <Link 
-              href="/press" 
-              className="group flex items-center gap-2 text-sm font-sans font-medium tracking-wide uppercase text-ink hover:text-accent-sage transition-colors duration-300 pb-2 border-b border-ink/20 hover:border-accent-sage"
+            <Link
+              href="/press"
+              className="group inline-flex items-center gap-2 py-2 text-sm font-sans font-medium tracking-wide uppercase text-ink hover:text-accent-sage transition-colors duration-300"
             >
               View all press
-              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+              <ArrowRight size={16} aria-hidden="true" className="transform group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {FEATURES.map((item, idx) => (
-            <ScrollReveal key={item.outlet} delay={idx * 0.2}>
-              <a 
-                href={item.href} 
-                target="_blank" 
+            <ScrollReveal key={item.outlet} delay={idx * 0.1}>
+              <a
+                href={item.href}
+                target="_blank"
                 rel="noopener noreferrer"
-                className="group block h-full"
+                className="group flex h-full flex-col justify-between gap-8 rounded-2xl border border-border bg-white p-6 md:p-8 transition-colors duration-300 hover:border-accent-sage"
               >
-                <div className="h-full flex flex-col justify-between p-10 md:p-14 bg-white/40 backdrop-blur-md border border-ink/5 rounded-3xl hover:border-accent-sage/20 hover:bg-white hover:shadow-[0_30px_60px_-20px_rgba(0,0,0,0.08)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
-                  <div className="flex justify-between items-start mb-24">
-                    <p className="font-sans text-xs font-semibold tracking-[0.2em] uppercase text-muted">
-                      {item.outlet}
-                    </p>
-                    <div className="w-12 h-12 rounded-full bg-canvas border border-ink/10 flex items-center justify-center group-hover:bg-accent-sage group-hover:border-accent-sage group-hover:text-white transition-all duration-500 ease-out shadow-sm">
-                      <ArrowRight className="w-5 h-5 transform -rotate-45 group-hover:rotate-0 transition-transform duration-500 ease-out" />
-                    </div>
-                  </div>
-                  <h3 className="font-serif text-3xl md:text-4xl text-ink leading-snug group-hover:text-accent-sage transition-colors duration-500">
-                    {item.topic}
-                  </h3>
+                <div className="flex items-start justify-between gap-4">
+                  <p className="font-sans text-xs font-semibold tracking-[0.2em] uppercase text-muted">
+                    {item.outlet}
+                  </p>
+                  <ArrowUpRight
+                    size={20}
+                    aria-hidden="true"
+                    className="shrink-0 text-muted transition-colors duration-300 group-hover:text-accent-sage"
+                  />
                 </div>
+                <h3 className="font-serif text-2xl md:text-3xl text-ink leading-snug">
+                  {item.topic}
+                </h3>
               </a>
             </ScrollReveal>
           ))}

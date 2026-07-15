@@ -35,7 +35,7 @@ export function ServicesTeaser() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="py-24 bg-canvas">
+    <section className="py-16 md:py-24 bg-canvas">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <ScrollReveal>
           <div className="max-w-2xl mb-16">
@@ -48,7 +48,7 @@ export function ServicesTeaser() {
       <div className="max-w-7xl mx-auto px-6 md:px-10 flex flex-col lg:flex-row gap-12 lg:gap-20 relative">
         {/* Left Side: Sticky Images */}
         <div className="w-full lg:w-1/2">
-          <div className="lg:sticky lg:top-32 h-[400px] lg:h-[70vh] w-full rounded-[32px] overflow-hidden bg-ink shadow-2xl">
+          <div className="lg:sticky lg:top-32 h-64 md:h-[400px] lg:h-[70vh] w-full rounded-2xl overflow-hidden bg-ink">
             {SERVICES.map((service, idx) => (
               <div
                 key={service.name}

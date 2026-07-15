@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export function FinalCta() {
   return (
-    <section className="py-24 px-6 md:px-10 text-center bg-ink text-canvas">
+    <section className="py-16 md:py-24 px-6 md:px-10 text-center bg-ink text-canvas">
       <h2 className="font-serif text-3xl md:text-4xl leading-tight max-w-xl mx-auto">
         Take the first step toward feeling like yourself again.
       </h2>
