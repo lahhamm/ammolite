@@ -3,6 +3,7 @@ import { Phone, Printer, EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
 import { Button } from "@/components/ui/button";
 
 const SECONDARY_LINKS = [
+  { label: "Press & Media", href: "/press" },
   { label: "Memberships", href: "/memberships" },
   { label: "Journal", href: "/journal" },
   { label: "Shop", href: "/shop" },

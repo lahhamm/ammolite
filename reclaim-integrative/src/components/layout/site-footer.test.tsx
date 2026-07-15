@@ -9,17 +9,21 @@ describe("SiteFooter", () => {
     expect(screen.getByText(/Rancho Cucamonga, CA 91730/)).toBeInTheDocument();
   });
 
-  it("renders the five secondary nav links in order", () => {
+  it("renders the six secondary nav links in order, with Press & Media for discoverability after it left the top nav", () => {
     render(<SiteFooter />);
     const nav = screen.getByRole("navigation");
     const links = within(nav).getAllByRole("link");
     expect(links.map((l) => l.textContent?.trim())).toEqual([
+      "Press & Media",
       "Memberships",
       "Journal",
       "Shop",
       "Conditions Treated",
       "FAQs",
     ]);
+    expect(
+      within(nav).getByRole("link", { name: "Press & Media" }),
+    ).toHaveAttribute("href", "/press");
   });
 
   it("labels the phone, fax, and email contact rows with accessible icons, not decorative-only", () => {
