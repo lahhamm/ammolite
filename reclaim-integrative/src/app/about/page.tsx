@@ -30,13 +30,13 @@ export default function AboutPage() {
             <h1 className="font-serif text-4xl md:text-5xl mb-6">Dr. Andrea Colon, NMD</h1>
             <div className="space-y-4 text-muted text-lg leading-relaxed">
               <p>
-                Dr. Andrea Colon is a licensed Naturopathic Medical Doctor practicing in Newport Beach, California. She is a graduate of Southwest College of Naturopathic Medicine (now Sonoran University of Health Sciences) in Tempe, Arizona, and holds active licenses in both California and Connecticut.
+                Dr. Andrea Colon is a Naturopathic Doctor licensed in the states of Connecticut and California. She is currently practicing in Corona Del Mar in the beautiful neighborhood of Newport Beach, California.
               </p>
               <p>
-                She founded Reclaim Integrative Medicine with a singular focus: to identify and treat the root causes of chronic health issues rather than simply managing symptoms. Her integrative approach combines advanced functional lab testing, bio-identical hormone therapy, IV nutrient protocols, peptide therapy, and clinical nutrition.
+                She is a graduate of Southwest College of Naturopathic Medicine in Tempe, Arizona. Prior to enrolling in medical school, she was pursuing a career in the entertainment industry. Her own health struggles and a passion for helping others ultimately led her down the road to Naturopathic Medicine.
               </p>
               <p>
-                Dr. Colon specializes in women&apos;s hormonal health (including peri-menopause and menopause), thyroid and adrenal disorders, autoimmune conditions such as Hashimoto&apos;s and fibromyalgia, gastrointestinal disorders, and men&apos;s health optimization.
+                Born and raised on the shoreline in New England, Dr. Colon enjoys going to music festivals, dancing, cooking, volunteering, traveling, and going on adventures with her dog, Rocco, in her spare time.
               </p>
             </div>
           </div>
@@ -60,19 +60,11 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="border border-border p-6">
               <h3 className="font-medium mb-2">Naturopathic Medical Doctorate</h3>
-              <p className="text-muted text-sm">Sonoran University of Health Sciences (formerly SCNM), Tempe, AZ</p>
+              <p className="text-muted text-sm">Southwest College of Naturopathic Medicine, Tempe, AZ</p>
             </div>
             <div className="border border-border p-6">
               <h3 className="font-medium mb-2">Licensed NMD</h3>
               <p className="text-muted text-sm">State of California &amp; State of Connecticut</p>
-            </div>
-            <div className="border border-border p-6">
-              <h3 className="font-medium mb-2">Published Author</h3>
-              <p className="text-muted text-sm">iHerb Wellness Hub, Natural Nutmeg Magazine</p>
-            </div>
-            <div className="border border-border p-6">
-              <h3 className="font-medium mb-2">Media Expert</h3>
-              <p className="text-muted text-sm">Featured in Good Housekeeping, Marie Claire, VoyageLA</p>
             </div>
           </div>
         </ScrollReveal>

@@ -69,8 +69,8 @@ export default function JournalIndexPage() {
               <Link href={`/journal/${featuredPost.slug}`} className="group flex flex-col xl:flex-row gap-8 xl:gap-10 items-center">
                 <div className="w-full xl:w-3/5 overflow-hidden rounded-xl aspect-[16/10] bg-black/5 relative shrink-0">
                   <img 
-                    src={`https://images.unsplash.com/photo-1498623116890-37e912163d5d?q=80&w=1200&auto=format&fit=crop`} 
-                    alt=""
+                    src={featuredPost.image ?? `https://images.unsplash.com/photo-1498623116890-37e912163d5d?q=80&w=1200&auto=format&fit=crop`} 
+                    alt={featuredPost.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                   />
