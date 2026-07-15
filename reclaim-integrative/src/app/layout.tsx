@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lora, Work_Sans } from "next/font/google";
 import "./globals.css";
+import { MobileStickyCta } from "@/components/layout/mobile-sticky-cta";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -25,7 +26,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${lora.variable} ${workSans.variable}`}>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        {children}
+        <MobileStickyCta />
+      </body>
     </html>
   );
 }

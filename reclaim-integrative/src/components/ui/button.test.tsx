@@ -4,14 +4,14 @@ import { Button } from "./button";
 
 describe("Button", () => {
   it("renders primary variant with charcoal background token", () => {
-    render(<Button variant="primary">Schedule Consultation</Button>);
-    const button = screen.getByRole("button", { name: "Schedule Consultation" });
+    render(<Button variant="primary">Book an Appointment</Button>);
+    const button = screen.getByRole("button", { name: "Book an Appointment" });
     expect(button.className).toContain("bg-ink");
   });
 
   it("renders gold variant only when explicitly requested", () => {
-    render(<Button variant="gold">Schedule Consultation</Button>);
-    const button = screen.getByRole("button", { name: "Schedule Consultation" });
+    render(<Button variant="gold">Book an Appointment</Button>);
+    const button = screen.getByRole("button", { name: "Book an Appointment" });
     expect(button.className).toContain("bg-accent-gold");
   });
 
@@ -22,8 +22,8 @@ describe("Button", () => {
   });
 
   it("renders inverse variant for CTAs on dark backgrounds without reusing gold", () => {
-    render(<Button variant="inverse">Schedule Consultation</Button>);
-    const button = screen.getByRole("button", { name: "Schedule Consultation" });
+    render(<Button variant="inverse">Book an Appointment</Button>);
+    const button = screen.getByRole("button", { name: "Book an Appointment" });
     expect(button.className).toContain("border-canvas");
     expect(button.className).not.toContain("bg-accent-gold");
   });

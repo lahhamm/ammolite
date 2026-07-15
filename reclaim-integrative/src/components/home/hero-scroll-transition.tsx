@@ -29,14 +29,14 @@ export function HeroScrollTransition({ hero, pressLogoWall }: HeroScrollTransiti
 
     const ctx = gsap.context(() => {
       gsap.to(heroRef.current, {
-        scale: 0.94,
-        opacity: 0.6,
+        clipPath: "inset(100px 4vw 4vw 4vw round 2rem)",
         ease: "none",
         scrollTrigger: {
           trigger: wrapRef.current,
           start: "top top",
-          end: "bottom top",
+          end: "+=100%",
           scrub: true,
+          pin: true, // Pins the entire container while hero shrinks
         },
       });
     }, wrapRef);
@@ -45,8 +45,10 @@ export function HeroScrollTransition({ hero, pressLogoWall }: HeroScrollTransiti
   }, []);
 
   return (
-    <div ref={wrapRef}>
-      <div ref={heroRef}>{hero}</div>
+    <div ref={wrapRef} className="bg-white">
+      <div ref={heroRef} className="overflow-hidden will-change-transform">
+        {hero}
+      </div>
       {pressLogoWall}
     </div>
   );

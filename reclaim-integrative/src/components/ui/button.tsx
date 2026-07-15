@@ -1,8 +1,11 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+"use client";
+
+import type { ReactNode } from "react";
+import { motion, type HTMLMotionProps } from "motion/react";
 
 type ButtonVariant = "primary" | "gold" | "inverse" | "text";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends HTMLMotionProps<"button"> {
   variant: ButtonVariant;
   children: ReactNode;
 }
@@ -18,11 +21,13 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
 
 export function Button({ variant, children, className, ...props }: ButtonProps) {
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       className={`${VARIANT_CLASSES[variant]} ${className ?? ""}`.trim()}
       {...props}
     >
       {children}
-    </button>
+    </motion.button>
   );
 }

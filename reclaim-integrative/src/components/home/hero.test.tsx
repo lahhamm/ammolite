@@ -5,7 +5,7 @@ import { Hero } from "./hero";
 describe("Hero", () => {
   it("renders exactly one primary CTA (Hero Stack Discipline)", () => {
     render(<Hero posterSrc="/images/hero-poster.jpg" />);
-    const ctas = screen.getAllByRole("button", { name: "Schedule Consultation" });
+    const ctas = screen.getAllByRole("button", { name: "Book an Appointment" });
     expect(ctas).toHaveLength(1);
   });
 

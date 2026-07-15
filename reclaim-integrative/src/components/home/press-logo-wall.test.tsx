@@ -5,11 +5,18 @@ import { PressLogoWall } from "./press-logo-wall";
 describe("PressLogoWall", () => {
   it("renders all six press placements with no category label beneath any of them", () => {
     render(<PressLogoWall />);
-    ["GQ", "Marie Claire", "Good Housekeeping", "Yahoo! Health", "Food & Wine", "Authority Magazine"].forEach(
-      (name) => {
-        expect(screen.getByText(name)).toBeInTheDocument();
-      }
-    );
+    [
+      "GQ",
+      "Marie Claire",
+      "Good Housekeeping",
+      "Food & Wine",
+      "Authority Magazine",
+      "VoyageLA",
+      "Beauty Matter"
+    ].forEach((name) => {
+      const elements = screen.getAllByText(name);
+      expect(elements.length).toBeGreaterThan(0);
+    });
     expect(screen.queryByText(/monthly readers/i)).not.toBeInTheDocument();
   });
 

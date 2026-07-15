@@ -3,6 +3,7 @@ import { Phone, EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
 
 const SECONDARY_LINKS = [
   { label: "Memberships", href: "/memberships" },
+  { label: "Journal", href: "/journal" },
   { label: "Shop", href: "/shop" },
   { label: "Conditions Treated", href: "/conditions-treated" },
   { label: "What to Expect", href: "/what-to-expect" },
