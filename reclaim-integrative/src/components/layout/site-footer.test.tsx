@@ -35,4 +35,25 @@ describe("SiteFooter", () => {
     const cta = screen.getByRole("link", { name: "Book an Appointment" });
     expect(cta).toHaveAttribute("href", "/book");
   });
+
+  it("renders the booking band by default", () => {
+    render(<SiteFooter />);
+    expect(screen.getByText("Book your appointment online")).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Book an Appointment" }),
+    ).toBeInTheDocument();
+  });
+
+  it("omits the booking band when showBookingBand is false", () => {
+    render(<SiteFooter showBookingBand={false} />);
+    expect(
+      screen.queryByText("Book your appointment online"),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", { name: "Book an Appointment" }),
+    ).not.toBeInTheDocument();
+    // The rest of the footer still renders.
+    expect(screen.getByText(/Newport Beach, CA 92660/)).toBeInTheDocument();
+    expect(screen.getByRole("navigation")).toBeInTheDocument();
+  });
 });

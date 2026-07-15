@@ -262,7 +262,7 @@ function ServicesContent() {
         </ScrollReveal>
       </section>
 
-      <SiteFooter />
+      <SiteFooter showBookingBand={false} />
     </main>
   );
 }

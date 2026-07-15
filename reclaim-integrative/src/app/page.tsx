@@ -19,7 +19,7 @@ export default function HomePage() {
       <CuratedCredibility />
       <Testimonials />
       <FinalCta />
-      <SiteFooter />
+      <SiteFooter showBookingBand={false} />
     </main>
   );
 }

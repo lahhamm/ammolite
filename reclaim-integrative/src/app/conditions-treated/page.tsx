@@ -137,7 +137,7 @@ export default function ConditionsTreatedPage() {
         </ScrollReveal>
       </section>
 
-      <SiteFooter />
+      <SiteFooter showBookingBand={false} />
     </main>
   );
 }

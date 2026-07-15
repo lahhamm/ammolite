@@ -10,25 +10,36 @@ const SECONDARY_LINKS = [
   { label: "FAQs", href: "/faqs" },
 ];
 
-export function SiteFooter() {
+interface SiteFooterProps {
+  /**
+   * Whether to render the booking band at the top of the footer. Set to false
+   * on pages whose last content section is already a booking CTA, to avoid two
+   * near-identical "Book an Appointment" CTAs stacked adjacently.
+   */
+  showBookingBand?: boolean;
+}
+
+export function SiteFooter({ showBookingBand = true }: SiteFooterProps = {}) {
   return (
     <footer className="bg-ink text-canvas px-6 md:px-10 py-16">
       <div className="max-w-6xl mx-auto">
-        <div className="border-b border-canvas/15 pb-12 mb-12 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-md">
-            <p className="font-serif text-2xl md:text-3xl mb-2">Book your appointment online</p>
-            <p className="text-sm text-canvas/70">
-              The fastest way to schedule at either clinic. Prefer to call? Reach us at{" "}
-              <a href="tel:+19494233522" className="underline underline-offset-4 hover:text-canvas">
-                (949) 423-3522
-              </a>
-              .
-            </p>
+        {showBookingBand && (
+          <div className="border-b border-canvas/15 pb-12 mb-12 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-md">
+              <p className="font-serif text-2xl md:text-3xl mb-2">Book your appointment online</p>
+              <p className="text-sm text-canvas/70">
+                The fastest way to schedule at either clinic. Prefer to call? Reach us at{" "}
+                <a href="tel:+19494233522" className="underline underline-offset-4 hover:text-canvas">
+                  (949) 423-3522
+                </a>
+                .
+              </p>
+            </div>
+            <Button variant="inverse" href="/book" className="shrink-0">
+              Book an Appointment
+            </Button>
           </div>
-          <Button variant="inverse" href="/book" className="shrink-0">
-            Book an Appointment
-          </Button>
-        </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
