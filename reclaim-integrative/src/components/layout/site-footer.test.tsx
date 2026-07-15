@@ -9,6 +9,25 @@ describe("SiteFooter", () => {
     expect(screen.getByText(/Rancho Cucamonga, CA 91730/)).toBeInTheDocument();
   });
 
+  it("renders each clinic's hours, with the appointment-only note for Rancho Cucamonga", () => {
+    render(<SiteFooter />);
+    expect(
+      screen.getByText("Mon 8am-4pm · Tue 9am-12pm · Wed-Thu 8am-4pm · Fri 8am-3pm"),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Thu 12pm-4pm · Sat 9am-12pm/)).toBeInTheDocument();
+    expect(screen.getByText("By appointment only")).toBeInTheDocument();
+  });
+
+  it("renders the PHI email disclaimer", () => {
+    render(<SiteFooter />);
+    expect(
+      screen.getByText(/protected health information/i),
+    ).toBeInTheDocument();
+    // The disclaimer must not leak an em-dash into visible copy.
+    const disclaimer = screen.getByText(/protected health information/i);
+    expect(disclaimer.textContent).not.toContain("—");
+  });
+
   it("renders the six secondary nav links in order, with Press & Media for discoverability after it left the top nav", () => {
     render(<SiteFooter />);
     const nav = screen.getByRole("navigation");

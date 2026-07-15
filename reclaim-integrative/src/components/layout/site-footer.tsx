@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Phone, Printer, EnvelopeSimple } from "@phosphor-icons/react/dist/ssr";
 import { Button } from "@/components/ui/button";
+import { hoursSummaryLine, hoursSummary, noteFor } from "@/data/hours";
 
 const SECONDARY_LINKS = [
   { label: "Press & Media", href: "/press" },
@@ -52,12 +53,18 @@ export function SiteFooter({ showBookingBand = true }: SiteFooterProps = {}) {
               <br />
               <span className="text-canvas/50">(inside Juvemed)</span>
             </p>
-            <p className="text-sm text-canvas/70 mt-3">
+            <p className="text-xs text-canvas/60 mt-1.5">{hoursSummaryLine("newport-beach")}</p>
+            <p className="text-sm text-canvas/70 mt-4">
               10470 Foothill Blvd Suite 220
               <br />
               Rancho Cucamonga, CA 91730
               <br />
               <span className="text-canvas/50">(inside Khloestika)</span>
+            </p>
+            <p className="text-xs text-canvas/60 mt-1.5">
+              {hoursSummary("rancho-cucamonga").join(" · ")}
+              <br />
+              <span className="text-canvas/50">{noteFor("rancho-cucamonga")}</span>
             </p>
           </div>
           <nav className="flex flex-col gap-2 text-sm">
@@ -83,6 +90,12 @@ export function SiteFooter({ showBookingBand = true }: SiteFooterProps = {}) {
               <a href="mailto:reception@reclaimintegrative.com" className="hover:text-canvas">
                 reception@reclaimintegrative.com
               </a>
+            </p>
+            <p className="text-xs leading-relaxed text-canvas/50 max-w-xs mt-1">
+              Please do not include protected health information (diagnoses, lab
+              results, medications) in email. Email is not a secure channel. For
+              sensitive health matters, call us and we will direct you to our
+              secure patient portal.
             </p>
           </div>
         </div>
