@@ -48,6 +48,17 @@ describe("LocationStep", () => {
     expect(screen.getByRole("button", { name: /Rancho Cucamonga/ })).toBeInTheDocument();
   });
 
+  it("shows each clinic's hours on its card, including the Rancho appointment-only note", () => {
+    render(<LocationStep state={INITIAL_STATE} dispatch={() => {}} />);
+    // Newport Beach card lists its per-day windows.
+    expect(screen.getByText("Mon 8am-4pm")).toBeInTheDocument();
+    expect(screen.getByText("Wed-Thu 8am-4pm")).toBeInTheDocument();
+    // Rancho Cucamonga card shows its two open days and the appointment note.
+    expect(screen.getByText("Thu 12pm-4pm")).toBeInTheDocument();
+    expect(screen.getByText("Sat 9am-12pm")).toBeInTheDocument();
+    expect(screen.getByText("By appointment only")).toBeInTheDocument();
+  });
+
   it("dispatches SELECT_LOCATION when a clinic card is clicked", () => {
     const dispatch = vi.fn();
     render(<LocationStep state={heldService("iv-myers-cocktail")} dispatch={dispatch} />);

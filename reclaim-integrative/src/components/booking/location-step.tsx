@@ -6,6 +6,7 @@ import {
   getLocationsForService,
   getServiceBySlug,
 } from "@/data/booking";
+import { hoursSummary, noteFor } from "@/data/hours";
 import type { BookingAction, BookingState } from "./booking-reducer";
 
 interface LocationStepProps {
@@ -63,6 +64,14 @@ export function LocationStep({ state, dispatch }: LocationStepProps) {
                 {location.phone && (
                   <span className="font-sans text-xs text-muted">{location.phone}</span>
                 )}
+                <span className="mt-1 flex flex-col gap-0.5 border-t border-accent-sage/20 pt-3 font-sans text-xs leading-relaxed text-muted">
+                  {hoursSummary(location.id).map((line) => (
+                    <span key={line}>{line}</span>
+                  ))}
+                  {noteFor(location.id) && (
+                    <span className="text-muted/80">{noteFor(location.id)}</span>
+                  )}
+                </span>
               </button>
             </li>
           );

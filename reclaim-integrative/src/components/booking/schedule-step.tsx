@@ -6,7 +6,8 @@ import {
   formatTime,
   getAvailability,
 } from "@/lib/availability";
-import { getServiceBySlug } from "@/data/booking";
+import { getLocationById, getServiceBySlug } from "@/data/booking";
+import { openDayNames } from "@/data/hours";
 import type { BookingAction, BookingState } from "./booking-reducer";
 
 interface ScheduleStepProps {
@@ -18,8 +19,9 @@ interface ScheduleStepProps {
 
 export function ScheduleStep({ state, dispatch, now }: ScheduleStepProps) {
   const service = state.serviceSlug ? getServiceBySlug(state.serviceSlug) : null;
+  const location = state.locationId ? getLocationById(state.locationId) : null;
 
-  if (!service || now === null) {
+  if (!service || !location || now === null) {
     return (
       <div>
         <h2 className="font-serif text-3xl text-ink">Pick a date and time</h2>
@@ -28,8 +30,17 @@ export function ScheduleStep({ state, dispatch, now }: ScheduleStepProps) {
     );
   }
 
-  const days = getAvailability(service.slug, service.durationMin, now);
+  const days = getAvailability(location.id, service.slug, service.durationMin, now);
   const selectedDay = days.find((d) => d.date === state.date) ?? null;
+
+  // Clinics that open only a couple of days a week (Rancho Cucamonga) leave most
+  // of the 14-day strip closed. A short note explains the sparseness up front so
+  // the strip does not read as broken.
+  const openDays = openDayNames(location.id);
+  const limitedNote =
+    openDays.length <= 2
+      ? `Our ${location.name} clinic is open ${openDays.join(" and ")}.`
+      : null;
 
   return (
     <div>
@@ -37,6 +48,9 @@ export function ScheduleStep({ state, dispatch, now }: ScheduleStepProps) {
       <p className="mt-3 font-sans text-muted">
         Times shown in Pacific Time. {service.durationMin} minute visit.
       </p>
+      {limitedNote && (
+        <p className="mt-2 font-sans text-sm text-muted">{limitedNote}</p>
+      )}
 
       <div
         role="group"

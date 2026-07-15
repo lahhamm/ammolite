@@ -6,10 +6,13 @@ import { INITIAL_STATE, bookingReducer, type BookingState } from "./booking-redu
 // Monday, July 20 2026, 8:00 AM: full day ahead, nothing in the past.
 const NOW = new Date(2026, 6, 20, 8, 0);
 
-const BASE_STATE = bookingReducer(INITIAL_STATE, {
-  type: "SELECT_SERVICE",
-  slug: "blood-draw",
-});
+const BASE_STATE: BookingState = {
+  ...bookingReducer(INITIAL_STATE, {
+    type: "SELECT_SERVICE",
+    slug: "blood-draw",
+  }),
+  locationId: "newport-beach",
+};
 
 describe("ScheduleStep", () => {
   it("renders a 14-day date strip with Sundays closed", () => {
@@ -55,5 +58,35 @@ describe("ScheduleStep", () => {
   it("renders a quiet loading state until the clock is known", () => {
     render(<ScheduleStep state={BASE_STATE} dispatch={() => {}} now={null} />);
     expect(screen.getByText(/Loading availability/)).toBeInTheDocument();
+  });
+
+  it("renders a quiet loading state until a location is chosen", () => {
+    const noLocation: BookingState = { ...BASE_STATE, locationId: null };
+    render(<ScheduleStep state={noLocation} dispatch={() => {}} now={NOW} />);
+    expect(screen.getByText(/Loading availability/)).toBeInTheDocument();
+  });
+
+  it("shows only Thursday and Saturday as open for Rancho Cucamonga, with an explanatory note", () => {
+    const rancho: BookingState = { ...BASE_STATE, locationId: "rancho-cucamonga" };
+    render(<ScheduleStep state={rancho} dispatch={() => {}} now={NOW} />);
+    // The sparse-schedule note explains why most days are closed.
+    expect(
+      screen.getByText("Our Rancho Cucamonga clinic is open Thursday and Saturday."),
+    ).toBeInTheDocument();
+    const dateGroup = screen.getByRole("group", { name: "Choose a date" });
+    const buttons = Array.from(dateGroup.querySelectorAll("button"));
+    // 14-day strip is intact even though most days are closed.
+    expect(buttons).toHaveLength(14);
+    const enabled = buttons.filter((b) => !b.hasAttribute("disabled"));
+    // Two Thursdays and two Saturdays fall in the window from Mon Jul 20.
+    expect(enabled).toHaveLength(4);
+    for (const b of enabled) {
+      expect(b.textContent).toMatch(/Thu|Sat/);
+    }
+  });
+
+  it("does not show the sparse-schedule note for Newport Beach", () => {
+    render(<ScheduleStep state={BASE_STATE} dispatch={() => {}} now={NOW} />);
+    expect(screen.queryByText(/clinic is open/)).not.toBeInTheDocument();
   });
 });
