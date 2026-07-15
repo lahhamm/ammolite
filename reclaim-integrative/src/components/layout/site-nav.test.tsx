@@ -48,19 +48,13 @@ describe("SiteNav", () => {
     expect(servicesLink).toHaveAttribute("aria-expanded", "false");
   });
 
-  it("renders the Book an Appointment CTA linking to the booking flow", () => {
+  it("always renders the Book an Appointment CTA linking to the booking flow", () => {
+    // The transparent-over-video variant was removed with the video hero;
+    // the nav is solid everywhere and the desktop CTA is always present.
     render(<SiteNav />);
     const ctas = screen.getAllByRole("link", { name: "Book an Appointment" });
     expect(ctas).toHaveLength(1); // Only desktop is rendered when menu is closed
     expect(ctas[0]).toHaveAttribute("href", "/book");
-  });
-
-  it("does not render the desktop CTA when transparent is true", () => {
-    render(<SiteNav transparent={true} />);
-    // On transparent mode, desktop CTA is hidden. Mobile CTA only shows when menu is open.
-    // Menu is closed by default. So 0 CTAs should be visible initially.
-    const ctas = screen.queryAllByRole("link", { name: "Book an Appointment" });
-    expect(ctas).toHaveLength(0);
   });
 
   it("renders a hamburger menu toggle button", () => {
@@ -87,13 +81,10 @@ describe("SiteNav", () => {
     ).toHaveAttribute("href", "/book");
   });
 
-  it("still reveals the mobile nav links when transparent is true", () => {
-    render(<SiteNav transparent={true} />);
-    const menuButton = screen.getByRole("button", { name: "Open menu" });
-    fireEvent.click(menuButton);
-
-    const navs = screen.getAllByRole("navigation");
-    const mobileLinks = within(navs[1]).getAllByRole("link");
-    expect(mobileLinks.map((l) => l.textContent?.trim())).toEqual(EXPECTED_MOBILE_LINKS);
+  it("gives the mobile menu toggle a 44px tap target", () => {
+    render(<SiteNav />);
+    const toggle = screen.getByRole("button", { name: "Open menu" });
+    expect(toggle.className).toContain("h-11");
+    expect(toggle.className).toContain("w-11");
   });
 });
