@@ -10,9 +10,9 @@ describe("CuratedCredibility", () => {
     expect(screen.queryByText("GQ")).not.toBeInTheDocument();
   });
 
-  it("links to the full As Seen In page exactly once", () => {
+  it("links to the full Press page exactly once", () => {
     render(<CuratedCredibility />);
-    const links = screen.getAllByRole("link", { name: /view all press features/i });
+    const links = screen.getAllByRole("link", { name: /view all press/i });
     expect(links).toHaveLength(1);
     expect(links[0]).toHaveAttribute("href", "/press");
   });

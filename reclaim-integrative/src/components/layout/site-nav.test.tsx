@@ -2,15 +2,50 @@ import { render, screen, within, fireEvent } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { SiteNav } from "./site-nav";
 
-const EXPECTED_LINKS = ["Home", "Services", "About", "As Seen In", "Contact"];
+// Desktop nav renders the 7 primary destinations; the Services item exposes a
+// dropdown whose 2 sublinks are always in the DOM (revealed on hover/focus).
+const EXPECTED_DESKTOP_LINKS = [
+  "Services",
+  "Our Services",
+  "Conditions Treated",
+  "Memberships",
+  "About",
+  "Press",
+  "Journal",
+  "Shop",
+  "Contact",
+];
+
+// Mobile menu flattens Services into a labelled group, so the group heading is
+// a plain span and only the sublinks are anchors.
+const EXPECTED_MOBILE_LINKS = [
+  "Our Services",
+  "Conditions Treated",
+  "Memberships",
+  "About",
+  "Press",
+  "Journal",
+  "Shop",
+  "Contact",
+];
 
 describe("SiteNav", () => {
-  it("renders exactly five primary nav links plus one CTA", () => {
+  it("renders the seven primary destinations plus the Services dropdown sublinks", () => {
     render(<SiteNav />);
     const nav = screen.getByRole("navigation");
     const links = within(nav).getAllByRole("link");
-    expect(links).toHaveLength(5);
-    expect(links.map((l) => l.textContent)).toEqual(EXPECTED_LINKS);
+    expect(links).toHaveLength(EXPECTED_DESKTOP_LINKS.length);
+    expect(links.map((l) => l.textContent?.trim())).toEqual(EXPECTED_DESKTOP_LINKS);
+  });
+
+  it("marks the Services item as a dropdown trigger", () => {
+    render(<SiteNav />);
+    const nav = screen.getByRole("navigation");
+    const servicesLink = within(nav)
+      .getAllByRole("link")
+      .find((l) => l.textContent?.trim() === "Services");
+    expect(servicesLink).toHaveAttribute("aria-haspopup", "true");
+    expect(servicesLink).toHaveAttribute("aria-expanded", "false");
   });
 
   it("renders the Book an Appointment CTA", () => {
@@ -32,7 +67,7 @@ describe("SiteNav", () => {
     expect(screen.getByRole("button", { name: "Open menu" })).toBeInTheDocument();
   });
 
-  it("reveals the 5 nav links in a mobile menu when the hamburger is clicked", () => {
+  it("reveals the full link set in a mobile menu when the hamburger is clicked", () => {
     render(<SiteNav />);
     const menuButton = screen.getByRole("button", { name: "Open menu" });
     fireEvent.click(menuButton);
@@ -40,8 +75,15 @@ describe("SiteNav", () => {
     expect(screen.getByRole("button", { name: "Close menu" })).toBeInTheDocument();
     const navs = screen.getAllByRole("navigation");
     expect(navs).toHaveLength(2); // Desktop nav + Mobile nav
-    const mobileLinks = within(navs[1]).getAllByRole("link");
-    expect(mobileLinks.map((l) => l.textContent)).toEqual(EXPECTED_LINKS);
+    const mobileNav = navs[1];
+    // Services renders as a group heading, not a link, in the mobile menu.
+    expect(within(mobileNav).getByText("Services")).toBeInTheDocument();
+    const mobileLinks = within(mobileNav).getAllByRole("link");
+    expect(mobileLinks.map((l) => l.textContent?.trim())).toEqual(EXPECTED_MOBILE_LINKS);
+    // Mobile menu carries its own CTA.
+    expect(
+      within(mobileNav).getByRole("button", { name: "Book an Appointment" }),
+    ).toBeInTheDocument();
   });
 
   it("still reveals the mobile nav links when transparent is true", () => {
@@ -51,6 +93,6 @@ describe("SiteNav", () => {
 
     const navs = screen.getAllByRole("navigation");
     const mobileLinks = within(navs[1]).getAllByRole("link");
-    expect(mobileLinks.map((l) => l.textContent)).toEqual(EXPECTED_LINKS);
+    expect(mobileLinks.map((l) => l.textContent?.trim())).toEqual(EXPECTED_MOBILE_LINKS);
   });
 });

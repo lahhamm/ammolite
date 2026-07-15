@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { SiteFooter } from "./site-footer";
 
@@ -9,11 +9,17 @@ describe("SiteFooter", () => {
     expect(screen.getByText(/Rancho Cucamonga, CA 91730/)).toBeInTheDocument();
   });
 
-  it("renders the secondary nav items moved out of the primary nav", () => {
+  it("renders the five secondary nav links in order", () => {
     render(<SiteFooter />);
-    ["Memberships", "Shop", "Conditions Treated", "What to Expect"].forEach((label) => {
-      expect(screen.getByText(label)).toBeInTheDocument();
-    });
+    const nav = screen.getByRole("navigation");
+    const links = within(nav).getAllByRole("link");
+    expect(links.map((l) => l.textContent?.trim())).toEqual([
+      "Memberships",
+      "Journal",
+      "Shop",
+      "Conditions Treated",
+      "FAQs",
+    ]);
   });
 
   it("labels the phone and email contact rows with accessible icons, not decorative-only", () => {

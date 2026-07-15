@@ -5,7 +5,12 @@ import { ServicesTeaser } from "./services-teaser";
 describe("ServicesTeaser", () => {
   it("features four specific offerings", () => {
     render(<ServicesTeaser />);
-    const expectedServices = ["Hormone Optimization", "IV Therapy", "Peptide Therapy", "Gut Health & Nutrition"];
+    const expectedServices = [
+      "Hormone & Thyroid Optimization",
+      "Cellular Health & IV Therapy",
+      "Gut Health & Metabolism",
+      "Longevity & Regeneration",
+    ];
     expectedServices.forEach((name) => {
       expect(screen.getByText(name)).toBeInTheDocument();
     });
