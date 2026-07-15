@@ -13,6 +13,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import {
   CATEGORIES,
+  LOCATIONS,
   formatPrice,
   getServicesByCategory,
   type BookingService,
@@ -34,18 +35,29 @@ interface ServiceStepProps {
 }
 
 export function ServiceStep({ state, dispatch }: ServiceStepProps) {
+  // Location is chosen first, so every listing is scoped to that clinic.
+  const locationId = state.locationId ?? undefined;
+  const locationName = state.locationId
+    ? LOCATIONS.find((l) => l.id === state.locationId)?.name
+    : null;
+
   if (state.categoryId === null) {
+    // Only show categories that offer at least one service at this clinic.
+    const availableCategories = CATEGORIES.filter(
+      (category) => getServicesByCategory(category.id, locationId).length > 0,
+    );
     return (
       <div>
         <h2 className="font-serif text-3xl text-ink">What brings you in?</h2>
         <p className="mt-3 font-sans text-muted">
-          Choose a type of care to see available services at our Newport Beach
-          and Rancho Cucamonga clinics.
+          {locationName
+            ? `Choose a type of care available at our ${locationName} clinic.`
+            : "Choose a type of care to see available services."}
         </p>
         <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {CATEGORIES.map((category) => {
+          {availableCategories.map((category) => {
             const Icon = CATEGORY_ICONS[category.id];
-            const count = getServicesByCategory(category.id).length;
+            const count = getServicesByCategory(category.id, locationId).length;
             return (
               <li key={category.id}>
                 <button
@@ -73,7 +85,7 @@ export function ServiceStep({ state, dispatch }: ServiceStepProps) {
   }
 
   const category = CATEGORIES.find((c) => c.id === state.categoryId);
-  const services = getServicesByCategory(state.categoryId);
+  const services = getServicesByCategory(state.categoryId, locationId);
 
   return (
     <div>

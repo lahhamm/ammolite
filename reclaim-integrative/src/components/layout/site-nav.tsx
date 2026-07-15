@@ -21,7 +21,6 @@ const NAV_LINKS: { label: string; href: string; external?: boolean; sublinks?: {
   { label: "Press", href: "/press" },
   { label: "Journal", href: "/journal" },
   { label: "Shop", href: "/shop" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export function SiteNav({ transparent = false }: { transparent?: boolean }) {

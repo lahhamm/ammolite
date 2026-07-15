@@ -1,7 +1,11 @@
 "use client";
 
 import { MapPin } from "@phosphor-icons/react/dist/ssr";
-import { getLocationsForService, getServiceBySlug } from "@/data/booking";
+import {
+  LOCATIONS,
+  getLocationsForService,
+  getServiceBySlug,
+} from "@/data/booking";
 import type { BookingAction, BookingState } from "./booking-reducer";
 
 interface LocationStepProps {
@@ -10,18 +14,24 @@ interface LocationStepProps {
 }
 
 export function LocationStep({ state, dispatch }: LocationStepProps) {
+  // Location comes first. With no service deep-linked, show both clinics.
+  // When a service is held (deep link), scope to the clinics that offer it.
   const service = state.serviceSlug ? getServiceBySlug(state.serviceSlug) : null;
-  const locations = state.serviceSlug ? getLocationsForService(state.serviceSlug) : [];
+  const locations = service
+    ? getLocationsForService(service.slug)
+    : LOCATIONS;
   const single = locations.length === 1 ? locations[0] : null;
+
+  const lede = service
+    ? single
+      ? `${service.name} is available at our ${single.name} clinic.`
+      : `${service.name} is available at both clinics. Choose one to continue.`
+    : "The two clinics are a distance apart, so start by choosing where you would like to be seen.";
 
   return (
     <div>
       <h2 className="font-serif text-3xl text-ink">Choose a clinic</h2>
-      <p className="mt-3 font-sans text-muted">
-        {single
-          ? `${service?.name ?? "This service"} is available at our ${single.name} clinic.`
-          : `${service?.name ?? "This service"} is available at both clinics.`}
-      </p>
+      <p className="mt-3 font-sans text-muted">{lede}</p>
       <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {locations.map((location) => {
           const isSelected = state.locationId === location.id;
@@ -52,11 +62,6 @@ export function LocationStep({ state, dispatch }: LocationStepProps) {
           );
         })}
       </ul>
-      {single && (
-        <p className="mt-6 font-sans text-sm text-muted">
-          Select the clinic card to continue.
-        </p>
-      )}
     </div>
   );
 }

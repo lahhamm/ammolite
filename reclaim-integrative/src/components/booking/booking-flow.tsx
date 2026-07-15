@@ -21,8 +21,14 @@ import { ReviewStep } from "./review-step";
 import { ConfirmationScreen } from "./confirmation-screen";
 import { BookingSummary } from "./booking-summary";
 
-/** Builds the initial state from ?service= / ?category= deep links.
- *  Invalid slugs fall back to the Step 1 welcome. */
+/** Builds the initial state from ?service= / ?category= deep links, under the
+ *  location-first flow:
+ *  - valid single-location service: auto-select that clinic AND the service,
+ *    land on the next relevant step (add-ons or schedule).
+ *  - valid both-locations service: hold the service, open on the Location step.
+ *  - valid category: hold the category, open on the Location step (the Service
+ *    step is later filtered to that category and the chosen location).
+ *  - invalid/unknown slug: Location step, nothing pre-selected. */
 export function initStateFromParams(
   serviceParam: string | null,
   categoryParam: string | null,

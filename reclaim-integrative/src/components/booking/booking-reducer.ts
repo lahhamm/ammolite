@@ -47,7 +47,9 @@ export const INITIAL_DETAILS: PatientDetails = {
 };
 
 export const INITIAL_STATE: BookingState = {
-  step: "service",
+  // Location-first: the two clinics are geographically far apart, so visitors
+  // choose where they will physically go before browsing services.
+  step: "location",
   categoryId: null,
   serviceSlug: null,
   variantLabel: null,
@@ -72,13 +74,14 @@ export type BookingAction =
   | { type: "CONFIRM" }
   | { type: "RESET" };
 
-/** Ordered steps for the current selection; add-ons only when suggested. */
+/** Ordered steps for the current selection; add-ons only when suggested.
+ *  Location comes first so visitors pick a clinic before browsing services. */
 export function stepsForService(serviceSlug: string | null): StepId[] {
   const hasAddOns =
     serviceSlug !== null && getAddOnsForService(serviceSlug).length > 0;
   return [
-    "service",
     "location",
+    "service",
     ...(hasAddOns ? (["addons"] as StepId[]) : []),
     "schedule",
     "details",
@@ -106,8 +109,9 @@ export function bookingReducer(
     case "SELECT_SERVICE": {
       const service = getServiceBySlug(action.slug);
       if (!service) return state;
-      // Keep location if the new service is still offered there;
-      // reset all downstream selections.
+      // Location is chosen first. Keep it if the new service is offered there;
+      // if a single-location service is picked without a location yet (deep
+      // link), auto-select its only clinic. Reset downstream selections.
       const keepLocation =
         state.locationId !== null && service.locations.includes(state.locationId);
       const locationId = keepLocation
@@ -115,9 +119,8 @@ export function bookingReducer(
         : service.locations.length === 1
           ? service.locations[0]
           : null;
-      return {
+      const withService: BookingState = {
         ...state,
-        step: "location",
         categoryId: service.category,
         serviceSlug: service.slug,
         variantLabel:
@@ -127,6 +130,14 @@ export function bookingReducer(
         date: null,
         time: null,
       };
+      // With a location known, advance past the service step; otherwise the
+      // visitor still needs to pick a clinic first.
+      return {
+        ...withService,
+        step: locationId
+          ? nextStep({ ...withService, step: "service" })
+          : "location",
+      };
     }
 
     case "SELECT_VARIANT":
@@ -134,12 +145,44 @@ export function bookingReducer(
 
     case "SELECT_LOCATION": {
       const changed = state.locationId !== action.locationId;
-      return {
+      const service = state.serviceSlug
+        ? getServiceBySlug(state.serviceSlug)
+        : null;
+      // If the currently-selected service is not offered at the new location,
+      // clear it (and its add-ons) and send the visitor to the Service step.
+      // Never let an invalid service+location combo persist downstream.
+      const serviceInvalid =
+        service !== null && !service.locations.includes(action.locationId);
+
+      if (serviceInvalid) {
+        return {
+          ...state,
+          locationId: action.locationId,
+          serviceSlug: null,
+          categoryId: null,
+          variantLabel: null,
+          addOnIds: [],
+          date: null,
+          time: null,
+          step: "service",
+        };
+      }
+
+      const withLocation: BookingState = {
         ...state,
         locationId: action.locationId,
-        step: nextStep({ ...state, step: "location" }),
         ...(changed ? { date: null, time: null } : {}),
       };
+      // Advance from location. With a service already held and valid here
+      // (a both-locations deep link), skip the Service step entirely and go to
+      // the step after it. Otherwise land on the Service step to browse.
+      if (service) {
+        return {
+          ...withLocation,
+          step: nextStep({ ...withLocation, step: "service" }),
+        };
+      }
+      return { ...withLocation, step: "service" };
     }
 
     case "TOGGLE_ADD_ON": {

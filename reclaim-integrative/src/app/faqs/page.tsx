@@ -47,8 +47,8 @@ export default function FAQsPage() {
             Our team is here to help you understand your options and guide you toward the right treatment plan.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact" className="bg-ink text-canvas px-6 py-3 rounded-sm transition-colors duration-200 hover:bg-ink/85 gap-2 inline-flex items-center">
-              Contact Our Office <ArrowRight weight="bold" />
+            <Link href="/book" className="bg-ink text-canvas px-6 py-3 rounded-sm transition-colors duration-200 hover:bg-ink/85 gap-2 inline-flex items-center">
+              Book an Appointment <ArrowRight weight="bold" />
             </Link>
             <Link href="/services" className="bg-transparent text-ink border border-ink px-6 py-3 rounded-sm transition-colors duration-200 hover:bg-ink/5">
               Explore Services
