@@ -8,9 +8,9 @@ const EXPECTED_DESKTOP_LINKS = [
   "Services",
   "Our Services",
   "Conditions Treated",
-  "Memberships",
   "About",
   "Press",
+  "Memberships",
   "Journal",
   "Shop",
 ];
@@ -21,9 +21,9 @@ const EXPECTED_DESKTOP_LINKS = [
 const EXPECTED_MOBILE_LINKS = [
   "Our Services",
   "Conditions Treated",
-  "Memberships",
   "About",
   "Press",
+  "Memberships",
   "Journal",
   "Shop",
   "Book an Appointment",

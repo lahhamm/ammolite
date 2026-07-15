@@ -16,9 +16,9 @@ const NAV_LINKS: { label: string; href: string; external?: boolean; sublinks?: {
       { label: "Conditions Treated", href: "/conditions-treated" }
     ]
   },
-  { label: "Memberships", href: "/memberships" },
   { label: "About", href: "/about" },
   { label: "Press", href: "/press" },
+  { label: "Memberships", href: "/memberships" },
   { label: "Journal", href: "/journal" },
   { label: "Shop", href: "/shop" },
 ];
