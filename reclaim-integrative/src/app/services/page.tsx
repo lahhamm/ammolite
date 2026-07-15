@@ -6,6 +6,8 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "motion/react";
+import { Accordion } from "@/components/ui/accordion";
+import { faqs } from "@/data/faqs";
 import { 
   ClipboardList, 
   Droplets, 
@@ -193,6 +195,19 @@ function ServicesContent() {
             ))}
           </AnimatePresence>
         </div>
+      </section>
+
+      <section className="py-24 px-6 md:px-10 max-w-4xl mx-auto border-t border-border mt-12">
+        <ScrollReveal>
+          <div className="mb-16">
+            <h2 className="font-serif text-3xl md:text-4xl mb-8 text-ink">Treatments & Services FAQs</h2>
+            <Accordion items={faqs.find((f) => f.category === "Treatments & Services")?.questions || []} />
+          </div>
+          <div>
+            <h2 className="font-serif text-3xl md:text-4xl mb-8 text-ink">Lab Work & Testing FAQs</h2>
+            <Accordion items={faqs.find((f) => f.category === "Lab Work & Testing")?.questions || []} />
+          </div>
+        </ScrollReveal>
       </section>
 
       <section className="py-16 mt-12 bg-ink text-canvas px-6 md:px-10 text-center">

@@ -16,9 +16,29 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Reclaim Integrative Medicine | Naturopathic Doctor Newport Beach",
+  metadataBase: new URL('https://reclaimintegrative.com'),
+  title: {
+    default: "Reclaim Integrative Medicine | Naturopathic Doctor Newport Beach",
+    template: "%s | Reclaim Integrative Medicine",
+  },
   description:
     "Personalized naturopathic and integrative medicine in Newport Beach and Rancho Cucamonga. Hormone optimization, IV therapy, and root-cause care.",
+  openGraph: {
+    title: "Reclaim Integrative Medicine | Naturopathic Doctor Newport Beach",
+    description: "Personalized naturopathic and integrative medicine in Newport Beach and Rancho Cucamonga. Hormone optimization, IV therapy, and root-cause care.",
+    url: 'https://reclaimintegrative.com',
+    siteName: 'Reclaim Integrative Medicine',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Reclaim Integrative Medicine | Naturopathic Doctor Newport Beach",
+    description: "Personalized naturopathic and integrative medicine in Newport Beach and Rancho Cucamonga.",
+  },
+  alternates: {
+    canonical: '/',
+  }
 };
 
 export default function RootLayout({

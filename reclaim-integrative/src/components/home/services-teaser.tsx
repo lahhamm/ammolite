@@ -10,22 +10,22 @@ const SERVICES = [
   {
     name: "Hormone & Thyroid Optimization",
     description: "Restoring balance, energy, and vitality through personalized bioidentical hormone therapy and comprehensive thyroid care.",
-    image: "/images/hormone-optimization.jpg",
+    image: "/images/hormone-vitality.jpg",
   },
   {
     name: "Cellular Health & IV Therapy",
     description: "Customized nutrient infusions, vitamin injections, and advanced blood oxygenation for immediate absorption and detoxification.",
-    image: "https://picsum.photos/seed/reclaim-iv/800/800",
+    image: "/images/iv-nutrient-therapy.jpg",
   },
   {
     name: "Gut Health & Metabolism",
     description: "Uncovering root causes through advanced labs to heal digestion and create sustainable weight management programs.",
-    image: "https://picsum.photos/seed/reclaim-gut/800/800",
+    image: "/images/gut-microbiome-health.jpg",
   },
   {
     name: "Longevity & Regeneration",
     description: "Advanced therapies designed to resolve chronic fatigue, manage autoimmune conditions, and promote youthful skin.",
-    image: "https://picsum.photos/seed/reclaim-peptides2/800/800",
+    image: "/images/peptides-weight-wellness.jpg",
   },
 ];
 

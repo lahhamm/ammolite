@@ -1,6 +1,8 @@
 import { SiteNav } from "@/components/layout/site-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { Accordion } from "@/components/ui/accordion";
+import { faqs } from "@/data/faqs";
 import Image from "next/image";
 
 export default function AboutPage() {
@@ -74,6 +76,17 @@ export default function AboutPage() {
             </div>
           </div>
         </ScrollReveal>
+      </section>
+
+      <section className="py-20 px-6 md:px-10 bg-canvas">
+        <div className="max-w-4xl mx-auto">
+          <ScrollReveal>
+            <h2 className="font-serif text-3xl md:text-4xl mb-12 text-center text-foreground">
+              About Our Practice
+            </h2>
+            <Accordion items={faqs.find((f) => f.category === "About Our Practice")?.questions || []} />
+          </ScrollReveal>
+        </div>
       </section>
 
       <SiteFooter />

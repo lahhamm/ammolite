@@ -13,7 +13,7 @@ const PRESS_FEATURES = [
   { outlet: "Food & Wine", title: "I Asked a Naturopathic Doctor About Flamingo Estate Manuka Honey", type: "Feature", href: "https://www.foodandwine.com/flamingo-estate-manuka-honey-july-2026-12006259" },
   { outlet: "Yahoo Health", title: "8 Common Postpartum Changes to Skin, Body, Hair, and More", type: "Expert Feature", href: "https://health.yahoo.com/your-body/womens-health/articles/8-common-postpartum-changes-skin-145652611.html" },
   { outlet: "Beauty Matter", title: "The Hormonal–Mental Health Nexus and Femtech's Holistic Approach", type: "Feature", href: "https://beautymatter.com/articles/inside-the-hormonal-mental-health-nexus" },
-  { outlet: "Authority Magazine", title: "Weight Loss Drugs for Women Over 40", type: "Expert Feature", href: "https://reclaimintegrative.com/blog/authority-magazine-weight-loss-drugs-women-over-40" },
+  { outlet: "Authority Magazine", title: "Weight Loss Drugs for Women Over 40", type: "Expert Feature", href: "/journal/authority-magazine-weight-loss-drugs-women-over-40" },
   { outlet: "Hello Mamas", title: "“Normal” Labs but Still Exhausted? Essential Blood Tests for Moms by Life Stage", type: "Expert Feature", href: "https://www.hellomamas.co/blog/the-labs-i-wish-every-mom-knew-to-ask-for" },
   { outlet: "Health+Wellth", title: "Fall 2025 Issue", type: "Feature", href: "https://indd.adobe.com/view/e0fa3047-df94-4409-9abb-f221e33e3460" },
 ];
@@ -38,7 +38,7 @@ const MARQUEE_LINKS: Record<string, string> = {
   "Marie Claire": "https://www.marieclaire.com/beauty/hydrotherapy-benefits/",
   "Food & Wine": "https://www.foodandwine.com/flamingo-estate-manuka-honey-july-2026-12006259",
   "Good Housekeeping": "https://www.goodhousekeeping.com/health/wellness/a70175982/milk-thistle-liver-benefits/",
-  "Authority Magazine": "https://reclaimintegrative.com/blog/authority-magazine-weight-loss-drugs-women-over-40",
+  "Authority Magazine": "/journal/authority-magazine-weight-loss-drugs-women-over-40",
   "Beauty Matter": "https://beautymatter.com/articles/inside-the-hormonal-mental-health-nexus"
 };
 

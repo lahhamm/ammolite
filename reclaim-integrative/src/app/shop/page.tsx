@@ -26,7 +26,7 @@ export default function ShopPage() {
                 </p>
               </div>
               <div className="mt-10 flex justify-start w-full">
-                <a href="https://us.fullscript.com/u/catalog" target="_blank" rel="noopener noreferrer">
+                <a href="https://us.fullscript.com/welcome/acolon1582244597/store-start?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_light_500x500.svg&signup_source=website_buttons" target="_blank" rel="noopener noreferrer">
                   <button className="bg-ink text-white px-8 py-4 rounded-sm transition-colors duration-200 hover:bg-ink/85 font-medium shadow-sm w-full sm:w-auto">
                     Access Our Dispensary
                   </button>

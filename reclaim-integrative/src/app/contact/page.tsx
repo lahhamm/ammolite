@@ -5,6 +5,8 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
+import { Accordion } from "@/components/ui/accordion";
+import { faqs } from "@/data/faqs";
 
 export default function ContactPage() {
   return (
@@ -29,6 +31,11 @@ export default function ContactPage() {
                 <p className="text-muted text-sm">Newport Beach, CA</p>
                 <p className="text-ink mt-2 font-medium">(949) 423-3522</p>
               </motion.div>
+
+              <div className="pt-8">
+                <h2 className="font-serif text-2xl mb-6">Appointments & Scheduling</h2>
+                <Accordion items={faqs.find((f) => f.category === "Appointments & Scheduling")?.questions || []} />
+              </div>
             </div>
           </ScrollReveal>
         </div>

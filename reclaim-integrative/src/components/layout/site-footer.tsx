@@ -6,7 +6,7 @@ const SECONDARY_LINKS = [
   { label: "Journal", href: "/journal" },
   { label: "Shop", href: "/shop" },
   { label: "Conditions Treated", href: "/conditions-treated" },
-  { label: "What to Expect", href: "/what-to-expect" },
+  { label: "FAQs", href: "/faqs" },
 ];
 
 export function SiteFooter() {

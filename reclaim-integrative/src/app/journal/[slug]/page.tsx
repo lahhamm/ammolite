@@ -1,24 +1,114 @@
-"use client";
-
+import { Metadata } from "next";
 import Link from "next/link";
-import { notFound, useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import { SiteNav } from "@/components/layout/site-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import journalData from "@/data/journal.json";
 
-export default function ArticlePage() {
-  const params = useParams();
-  const slug = params?.slug as string;
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = journalData.find((p) => p.slug === slug);
+
+  if (!post) {
+    return {
+      title: "Article Not Found",
+    };
+  }
+
+  return {
+    title: `${post.title} | Reclaim Integrative Medicine`,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+      publishedTime: post.date,
+      authors: ["Reclaim Integrative Medicine"],
+      images: post.image ? [post.image] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: post.image ? [post.image] : undefined,
+    },
+    alternates: {
+      canonical: `/journal/${post.slug}`,
+    }
+  };
+}
+
+export default async function ArticlePage({ params }: Props) {
+  const { slug } = await params;
   const post = journalData.find((p) => p.slug === slug);
 
   if (!post) {
     notFound();
   }
 
+  // Generate Article JSON-LD Schema
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: post.title,
+      description: post.excerpt,
+      image: post.image,
+      datePublished: post.date,
+      author: {
+        "@type": "Organization",
+        name: "Reclaim Integrative Medicine",
+        url: "https://reclaimintegrative.com"
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "Reclaim Integrative Medicine",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://reclaimintegrative.com/logo.png" // Replace with actual logo URL later
+        }
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://reclaimintegrative.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Journal",
+          "item": "https://reclaimintegrative.com/journal"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": post.title,
+          "item": `https://reclaimintegrative.com/journal/${post.slug}`
+        }
+      ]
+    }
+  ];
+
   return (
     <main className="bg-canvas min-h-screen flex flex-col selection:bg-accent-sage/20">
+      {/* Inject JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <SiteNav />
 
       <article className="flex-grow pt-[140px] pb-24">

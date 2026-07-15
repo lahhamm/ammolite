@@ -90,9 +90,8 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
                     }`}>
                       {link.label}
                     </span>
-                    <CaretDown weight="bold" className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""} ${isActive ? (isTransparent ? "text-accent-gold" : "text-accent-sage") : (isTransparent ? "text-white/80" : "text-ink/60")}`} />
                     <span
-                      className={`absolute -bottom-0.5 left-0 h-[1.5px] transition-all duration-500 ease-out ${isActive ? "w-full" : "w-0"} ${isOpen ? "w-full" : ""} ${isTransparent ? "bg-accent-gold" : "bg-accent-sage"}`}
+                      className={`absolute -bottom-0.5 left-0 h-[1.5px] transition-all duration-500 ease-out ${isActive ? "w-full" : "w-0 group-hover:w-full"} ${isOpen ? "w-full" : ""} ${isTransparent ? "bg-accent-gold" : "bg-accent-sage"}`}
                     />
                   </Link>
                   {/* Dropdown Menu */}

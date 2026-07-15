@@ -6,7 +6,7 @@ const PRESS_LINKS: Record<string, string> = {
   "Marie Claire": "https://www.marieclaire.com/beauty/hydrotherapy-benefits/",
   "Food & Wine": "https://www.foodandwine.com/flamingo-estate-manuka-honey-july-2026-12006259",
   "Good Housekeeping": "https://www.goodhousekeeping.com/health/wellness/a70175982/milk-thistle-liver-benefits/",
-  "Authority Magazine": "https://reclaimintegrative.com/blog/authority-magazine-weight-loss-drugs-women-over-40",
+  "Authority Magazine": "/journal/authority-magazine-weight-loss-drugs-women-over-40",
   "Beauty Matter": "https://beautymatter.com/articles/inside-the-hormonal-mental-health-nexus"
 };
 

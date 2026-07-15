@@ -102,8 +102,8 @@ export default function JournalIndexPage() {
                     <article className="flex flex-col h-full">
                       <div className="aspect-[16/10] w-full overflow-hidden rounded-xl bg-black/5 mb-6 relative">
                         <img 
-                          src={`https://picsum.photos/seed/${post.slug}/800/500`} 
-                          alt="" 
+                          src={post.image ?? `https://picsum.photos/seed/${post.slug}/800/500`} 
+                          alt={post.title} 
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           loading="lazy"
                         />
