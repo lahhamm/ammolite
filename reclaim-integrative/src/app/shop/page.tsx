@@ -17,7 +17,6 @@ export default function ShopPage() {
           <ScrollReveal>
             <div className="bg-accent-sage/10 rounded-2xl p-10 md:p-12 lg:p-16 border border-accent-sage/20 h-full flex flex-col shadow-sm hover:shadow-md transition-shadow duration-300">
               <div className="flex-1 flex flex-col items-start justify-start text-left w-full">
-                <span className="text-sm uppercase tracking-widest text-muted mb-4 block font-medium">🌿 Supplements 🌿</span>
                 <h2 className="font-serif text-3xl md:text-4xl mb-6 text-ink">
                   Fullscript Dispensary
                 </h2>
@@ -39,7 +38,6 @@ export default function ShopPage() {
           <ScrollReveal delay={0.1}>
             <div className="bg-accent-sage/10 rounded-2xl p-10 md:p-12 lg:p-16 border border-accent-sage/20 h-full flex flex-col shadow-sm hover:shadow-md transition-shadow duration-300">
               <div className="flex-1 flex flex-col items-start justify-start text-left w-full">
-                <span className="text-sm uppercase tracking-widest text-muted mb-4 block font-medium">✨ BEMER Therapy ✨</span>
                 <h2 className="font-serif text-3xl md:text-4xl mb-6 text-ink">Unlock Your Body&apos;s Healing Potential</h2>
                 <p className="text-muted text-base md:text-lg leading-relaxed mb-10 max-w-md">
                   BEMER uses pulsed electromagnetic field (PEMF) technology to stimulate healthy microcirculation — the foundation of vitality, recovery, and long-term wellness.
