@@ -40,7 +40,7 @@ export default function ShopPage() {
               <div className="flex-1 flex flex-col items-start justify-start text-left w-full">
                 <h2 className="font-serif text-3xl md:text-4xl mb-6 text-ink">Unlock Your Body&apos;s Healing Potential</h2>
                 <p className="text-muted text-base md:text-lg leading-relaxed mb-10 max-w-md">
-                  BEMER uses pulsed electromagnetic field (PEMF) technology to stimulate healthy microcirculation, the foundation of vitality, recovery, and long-term wellness.
+                  BEMER uses pulsed electromagnetic field (PEMF) technology to stimulate healthy microcirculation — the foundation of vitality, recovery, and long-term wellness.
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 text-left max-w-xl w-full">
