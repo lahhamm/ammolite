@@ -6,11 +6,13 @@ import { Leaf } from "@phosphor-icons/react/dist/ssr";
 import { Button } from "@/components/ui/button";
 
 /**
- * Hero image: drop the real asset at `public/images/hero.png` and it renders
- * automatically. Until the file exists, a quiet stone/sage placeholder box is
- * shown instead (the Image onError falls back to it).
+ * Hero image: the real asset lives at `public/images/hero.jpg` (4:5 portrait).
+ * If the file is ever missing, a quiet stone/sage placeholder box is shown
+ * instead (the Image onError falls back to it).
  */
-const HERO_IMAGE_SRC = "/images/hero.png";
+const HERO_IMAGE_SRC = "/images/hero.jpg";
+const HERO_IMAGE_ALT =
+  "A couple in muted athletic wear walking together along a coastal promenade after a workout";
 
 export function Hero() {
   const [imageAvailable, setImageAvailable] = useState(true);
@@ -46,10 +48,10 @@ export function Hero() {
           {imageAvailable ? (
             <Image
               src={HERO_IMAGE_SRC}
-              alt="The calm, coastal interior of the Reclaim Integrative clinic"
+              alt={HERO_IMAGE_ALT}
               fill
               priority
-              sizes="(min-width: 768px) 50vw, 100vw"
+              sizes="(min-width: 768px) 40vw, 92vw"
               className="object-cover"
               onError={() => setImageAvailable(false)}
             />

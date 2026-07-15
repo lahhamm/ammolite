@@ -34,7 +34,9 @@ describe("Hero", () => {
     expect(box.className).toContain("rounded-2xl");
     expect(box.className).toContain("overflow-hidden");
     const image = screen.getByRole("img");
-    expect(image).toHaveAttribute("alt", expect.stringContaining("Reclaim Integrative"));
+    // The real hero photo is a couple walking after a workout; alt is meaningful.
+    expect(image).toHaveAttribute("alt", expect.stringContaining("walking"));
+    expect(image.getAttribute("alt")?.length).toBeGreaterThan(20);
   });
 
   it("falls back to the styled placeholder when the hero image is missing", () => {
