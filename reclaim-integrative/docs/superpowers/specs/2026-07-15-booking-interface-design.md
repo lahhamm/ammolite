@@ -27,11 +27,15 @@
 
 A multi-step booking flow at **`/book`** (dedicated route, not a modal), plus wiring so every booking CTA on the site enters it.
 
-### Flow (service-first)
+### Flow (location-first)
+
+The two clinics are geographically far apart, so the visitor chooses **where**
+they will physically go before browsing services. Services are then scoped to
+that clinic.
 
 ```
-Step 1  Service    — category cards, then service list within category
-Step 2  Location   — filtered to locations that offer the chosen service
+Step 1  Location   — choose a clinic (both shown unless a deep link scopes it)
+Step 2  Service    — category cards then service list, filtered to the chosen clinic
 Step 3  Add-ons    — ONLY for IV Therapy services that have suggested add-ons; otherwise skipped
 Step 4  Date & time — simulated availability calendar
 Step 5  Your details — name, email, phone, new/returning patient, optional note
@@ -39,16 +43,17 @@ Step 6  Review & confirm → confirmation screen
 ```
 
 - A **persistent booking summary** shows the running selection and total price: sticky sidebar on desktop, collapsible bar on mobile.
-- A **step indicator** shows progress. Steps are navigable backwards; changing service resets downstream steps (location kept if still valid).
+- A **step indicator** shows progress. Steps are navigable backwards. Changing the service resets downstream steps. If the visitor goes back and changes location to one where the currently-selected service is NOT offered, the service (and its add-ons) is cleared and they are returned to the Service step, so an invalid service+location combo never persists into Date/Time or Review.
 - Steps animate between each other with a quiet Motion crossfade/slide.
 - State lives in a client-side context or reducer. URL supports deep links (below) but does not need to encode every step.
 
 ### Deep links / entry points
 
-- `/book` → Step 1 welcome.
-- `/book?service=<service-slug>` → service pre-selected, opens on Step 2 (location).
-- `/book?category=<category-slug>` → category pre-selected, opens on Step 1's service list.
-- Invalid slugs fall back gracefully to Step 1 (no crash, no error screen).
+- `/book` → Step 1 (Location), nothing pre-selected.
+- `/book?service=<service-slug>` offered at only ONE location → auto-select that location AND pre-select the service, land on the next relevant step (Add-ons for an IV service with add-ons, otherwise Date/Time).
+- `/book?service=<service-slug>` offered at BOTH locations → pre-select the service but open on the Location step (service held in state). After the visitor picks a location, proceed past the Service step with that service already selected.
+- `/book?category=<category-slug>` → open on the Location step; after location is chosen, show the Service step filtered to that category AND that location.
+- Invalid slugs fall back gracefully to Step 1 (Location), no pre-selection (no crash, no error screen).
 
 Wire these existing CTAs to `/book` (they are currently inert or placeholder links — find all of them, including: SiteNav CTA, homepage Hero CTA, mobile sticky CTA, final CTA band, therapy highlight section, contact page, memberships page, FAQ page CTAs if any):
 - Generic booking CTAs → `/book`.

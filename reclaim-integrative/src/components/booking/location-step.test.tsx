@@ -1,22 +1,33 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { LocationStep } from "./location-step";
-import { INITIAL_STATE, bookingReducer } from "./booking-reducer";
+import { INITIAL_STATE, type BookingState } from "./booking-reducer";
+
+// Location comes first, so the plain landing has no service held.
+function heldService(slug: string): BookingState {
+  // A deep-linked service that still needs a clinic: service set, location null.
+  return { ...INITIAL_STATE, serviceSlug: slug, locationId: null };
+}
 
 describe("LocationStep", () => {
-  it("shows both clinics for dual-location services", () => {
-    const state = bookingReducer(INITIAL_STATE, {
-      type: "SELECT_SERVICE",
-      slug: "blood-draw",
-    });
-    render(<LocationStep state={state} dispatch={() => {}} />);
+  it("shows both clinics on a generic entry (no service held)", () => {
+    render(<LocationStep state={INITIAL_STATE} dispatch={() => {}} />);
     expect(screen.getByRole("button", { name: /Newport Beach/ })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Rancho Cucamonga/ })).toBeInTheDocument();
+    expect(screen.getByText(/two clinics are a distance apart/)).toBeInTheDocument();
   });
 
-  it("never shows a disabled dead-end clinic for single-location services", () => {
-    const state = bookingReducer(INITIAL_STATE, { type: "SELECT_SERVICE", slug: "eboo" });
-    render(<LocationStep state={state} dispatch={() => {}} />);
+  it("shows both clinics for a both-locations service deep link", () => {
+    render(<LocationStep state={heldService("blood-draw")} dispatch={() => {}} />);
+    expect(screen.getByRole("button", { name: /Newport Beach/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Rancho Cucamonga/ })).toBeInTheDocument();
+    expect(
+      screen.getByText("Blood Draw is available at both clinics. Choose one to continue."),
+    ).toBeInTheDocument();
+  });
+
+  it("scopes to the only clinic for a single-location service deep link (no dead-end card)", () => {
+    render(<LocationStep state={heldService("eboo")} dispatch={() => {}} />);
     expect(screen.getByRole("button", { name: /Newport Beach/ })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Rancho Cucamonga/ })).not.toBeInTheDocument();
     expect(
@@ -24,25 +35,22 @@ describe("LocationStep", () => {
     ).toBeInTheDocument();
   });
 
-  it("pre-selects the only clinic for single-location services", () => {
-    const state = bookingReducer(INITIAL_STATE, {
-      type: "SELECT_SERVICE",
-      slug: "b12-vitamin-shot",
-    });
-    render(<LocationStep state={state} dispatch={() => {}} />);
-    expect(screen.getByRole("button", { name: /Rancho Cucamonga/ })).toHaveAttribute(
-      "aria-pressed",
-      "true",
-    );
+  it("shows all clinics when revisited after a location was chosen, so it can be switched", () => {
+    // Returning to change a Rancho-scoped single-location booking: both clinics
+    // appear so the visitor can switch (which then invalidates the service).
+    const revisiting: BookingState = {
+      ...INITIAL_STATE,
+      serviceSlug: "b12-vitamin-shot",
+      locationId: "rancho-cucamonga",
+    };
+    render(<LocationStep state={revisiting} dispatch={() => {}} />);
+    expect(screen.getByRole("button", { name: /Newport Beach/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Rancho Cucamonga/ })).toBeInTheDocument();
   });
 
   it("dispatches SELECT_LOCATION when a clinic card is clicked", () => {
     const dispatch = vi.fn();
-    const state = bookingReducer(INITIAL_STATE, {
-      type: "SELECT_SERVICE",
-      slug: "iv-myers-cocktail",
-    });
-    render(<LocationStep state={state} dispatch={dispatch} />);
+    render(<LocationStep state={heldService("iv-myers-cocktail")} dispatch={dispatch} />);
     fireEvent.click(screen.getByRole("button", { name: /Newport Beach/ }));
     expect(dispatch).toHaveBeenCalledWith({
       type: "SELECT_LOCATION",

@@ -147,12 +147,12 @@ export function bookingReducer(
       const changed = state.locationId !== action.locationId;
       const service = state.serviceSlug
         ? getServiceBySlug(state.serviceSlug)
-        : null;
+        : undefined;
       // If the currently-selected service is not offered at the new location,
       // clear it (and its add-ons) and send the visitor to the Service step.
       // Never let an invalid service+location combo persist downstream.
       const serviceInvalid =
-        service !== null && !service.locations.includes(action.locationId);
+        service !== undefined && !service.locations.includes(action.locationId);
 
       if (serviceInvalid) {
         return {

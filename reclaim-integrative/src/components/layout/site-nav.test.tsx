@@ -2,7 +2,7 @@ import { render, screen, within, fireEvent } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { SiteNav } from "./site-nav";
 
-// Desktop nav renders the 7 primary destinations; the Services item exposes a
+// Desktop nav renders the 6 primary destinations; the Services item exposes a
 // dropdown whose 2 sublinks are always in the DOM (revealed on hover/focus).
 const EXPECTED_DESKTOP_LINKS = [
   "Services",
@@ -13,7 +13,6 @@ const EXPECTED_DESKTOP_LINKS = [
   "Press",
   "Journal",
   "Shop",
-  "Contact",
 ];
 
 // Mobile menu flattens Services into a labelled group, so the group heading is
@@ -27,12 +26,11 @@ const EXPECTED_MOBILE_LINKS = [
   "Press",
   "Journal",
   "Shop",
-  "Contact",
   "Book an Appointment",
 ];
 
 describe("SiteNav", () => {
-  it("renders the seven primary destinations plus the Services dropdown sublinks", () => {
+  it("renders the six primary destinations plus the Services dropdown sublinks", () => {
     render(<SiteNav />);
     const nav = screen.getByRole("navigation");
     const links = within(nav).getAllByRole("link");

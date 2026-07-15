@@ -14,18 +14,24 @@ interface LocationStepProps {
 }
 
 export function LocationStep({ state, dispatch }: LocationStepProps) {
-  // Location comes first. With no service deep-linked, show both clinics.
-  // When a service is held (deep link), scope to the clinics that offer it.
-  const service = state.serviceSlug ? getServiceBySlug(state.serviceSlug) : null;
-  const locations = service
-    ? getLocationsForService(service.slug)
+  // Location comes first. On the initial deep-link landing (a service is held
+  // but no clinic chosen yet), scope to the clinics that offer that service.
+  // Once a clinic has been chosen and the visitor returns here to change it,
+  // show every clinic so they can switch. Picking one that does not offer the
+  // held service clears it via the reducer's invalidation rule.
+  const service = state.serviceSlug ? getServiceBySlug(state.serviceSlug) : undefined;
+  // Scope to the held service's clinics only on the initial landing (no clinic
+  // chosen yet); once one is chosen, show all so it can be switched.
+  const scopedService = service && state.locationId === null ? service : undefined;
+  const locations = scopedService
+    ? getLocationsForService(scopedService.slug)
     : LOCATIONS;
-  const single = locations.length === 1 ? locations[0] : null;
+  const single = scopedService && locations.length === 1 ? locations[0] : null;
 
-  const lede = service
+  const lede = scopedService
     ? single
-      ? `${service.name} is available at our ${single.name} clinic.`
-      : `${service.name} is available at both clinics. Choose one to continue.`
+      ? `${scopedService.name} is available at our ${single.name} clinic.`
+      : `${scopedService.name} is available at both clinics. Choose one to continue.`
     : "The two clinics are a distance apart, so start by choosing where you would like to be seen.";
 
   return (

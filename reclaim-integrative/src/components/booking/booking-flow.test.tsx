@@ -12,24 +12,35 @@ beforeEach(() => {
   params = new URLSearchParams();
 });
 
-describe("initStateFromParams", () => {
-  it("pre-selects a valid service and opens on the location step", () => {
+describe("initStateFromParams (location-first)", () => {
+  it("auto-selects the clinic and advances past location for a single-location service", () => {
     const state = initStateFromParams("eboo", null);
     expect(state.serviceSlug).toBe("eboo");
-    expect(state.step).toBe("location");
-    expect(state.locationId).toBe("newport-beach"); // single location auto-selects
+    expect(state.locationId).toBe("newport-beach"); // Newport-only auto-selects
+    expect(state.step).toBe("schedule"); // no add-ons, steps past service
   });
 
-  it("pre-selects a valid category and stays on the service step", () => {
+  it("holds a both-locations service but opens on the Location step", () => {
+    const state = initStateFromParams("iv-myers-cocktail", null);
+    expect(state.serviceSlug).toBe("iv-myers-cocktail");
+    expect(state.locationId).toBeNull();
+    expect(state.step).toBe("location");
+  });
+
+  it("holds a category and opens on the Location step", () => {
     const state = initStateFromParams(null, "iv-therapy");
     expect(state.categoryId).toBe("iv-therapy");
-    expect(state.step).toBe("service");
+    expect(state.locationId).toBeNull();
+    expect(state.step).toBe("location");
   });
 
-  it("falls back to the welcome step for invalid slugs", () => {
-    expect(initStateFromParams("nonsense", null).step).toBe("service");
-    expect(initStateFromParams("nonsense", null).serviceSlug).toBeNull();
-    expect(initStateFromParams(null, "nonsense").categoryId).toBeNull();
+  it("falls back to the Location step with nothing pre-selected for invalid slugs", () => {
+    const badService = initStateFromParams("nonsense", null);
+    expect(badService.step).toBe("location");
+    expect(badService.serviceSlug).toBeNull();
+    const badCategory = initStateFromParams(null, "nonsense");
+    expect(badCategory.step).toBe("location");
+    expect(badCategory.categoryId).toBeNull();
   });
 
   it("prefers the service param when both are provided", () => {
@@ -40,43 +51,63 @@ describe("initStateFromParams", () => {
 });
 
 describe("BookingFlow", () => {
-  it("opens on the welcome step with category cards for a generic entry", () => {
+  it("opens on the Location step for a generic entry", () => {
     render(<BookingFlow />);
-    expect(screen.getByText("What brings you in?")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Choose a clinic" })).toBeInTheDocument();
+    // Both clinics are offered when nothing is deep-linked.
+    expect(screen.getByRole("button", { name: /Newport Beach/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Rancho Cucamonga/ })).toBeInTheDocument();
     expect(screen.getByRole("navigation", { name: "Booking progress" })).toBeInTheDocument();
   });
 
-  it("deep links ?service=b12-vitamin-shot straight to the location step", () => {
+  it("deep links ?service=b12-vitamin-shot past Location (Rancho-only auto-selected)", () => {
+    // B12 is Rancho-only: the clinic is auto-selected and, with no add-ons,
+    // the flow lands straight on the schedule step. No dead-end Location step.
     params = new URLSearchParams("service=b12-vitamin-shot");
     render(<BookingFlow />);
-    expect(screen.getByText("Choose a clinic")).toBeInTheDocument();
-    expect(
-      screen.getByText("B12 Vitamin Shot is available at our Rancho Cucamonga clinic."),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Pick a date and time" })).toBeInTheDocument();
+    // The summary confirms the auto-selected clinic.
+    const summary = screen.getByRole("complementary", { name: "Booking summary" });
+    expect(summary).toHaveTextContent("Rancho Cucamonga");
+    expect(summary).toHaveTextContent("B12 Vitamin Shot");
   });
 
-  it("deep links ?category=consultations to that category's service list", () => {
+  it("deep links ?service= for a both-locations service to the Location step with both clinics", () => {
+    params = new URLSearchParams("service=iv-myers-cocktail");
+    render(<BookingFlow />);
+    expect(
+      screen.getByText("IV Myers Cocktail is available at both clinics. Choose one to continue."),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Newport Beach/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Rancho Cucamonga/ })).toBeInTheDocument();
+  });
+
+  it("deep links ?category=consultations to Location, then the filtered service list", async () => {
     params = new URLSearchParams("category=consultations");
     render(<BookingFlow />);
-    expect(screen.getByRole("heading", { name: "Consultations" })).toBeInTheDocument();
+    // Location first.
+    expect(screen.getByRole("heading", { name: "Choose a clinic" })).toBeInTheDocument();
+    // Pick a clinic, then the service list is filtered to that category.
+    fireEvent.click(screen.getByRole("button", { name: /Newport Beach/ }));
+    expect(await screen.findByRole("heading", { name: "Consultations" })).toBeInTheDocument();
     expect(screen.getByText("Dr. Colon Initial Consultation (Virtual)")).toBeInTheDocument();
   });
 
-  it("falls back to the welcome step for an invalid ?service=", () => {
+  it("falls back to the Location step for an invalid ?service=", () => {
     params = new URLSearchParams("service=nonsense");
     render(<BookingFlow />);
-    expect(screen.getByText("What brings you in?")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Choose a clinic" })).toBeInTheDocument();
   });
 
-  it("walks the full flow from category to confirmation", async () => {
+  it("walks the full location-first flow to confirmation", async () => {
     render(<BookingFlow />);
 
-    // Step 1: category, then service.
-    fireEvent.click(screen.getByRole("button", { name: /Blood Draw/ }));
-    fireEvent.click(await screen.findByRole("button", { name: /Blood Draw.*30 min/s }));
+    // Step 1: location.
+    fireEvent.click(screen.getByRole("button", { name: /Newport Beach/ }));
 
-    // Step 2: location.
-    fireEvent.click(await screen.findByRole("button", { name: /Newport Beach/ }));
+    // Step 2: category, then service.
+    fireEvent.click(await screen.findByRole("button", { name: /Blood Draw/ }));
+    fireEvent.click(await screen.findByRole("button", { name: /Blood Draw.*30 min/s }));
 
     // Step 4 (add-ons skipped): pick the first available day and time.
     const dateGroup = await screen.findByRole("group", { name: "Choose a date" });
@@ -114,11 +145,26 @@ describe("BookingFlow", () => {
     ).toBeInTheDocument();
   });
 
+  it("clears an invalid service when going back to change location (invalidation path)", async () => {
+    // Deep-link B12 (Rancho-only): auto-selected Rancho, on the schedule step.
+    params = new URLSearchParams("service=b12-vitamin-shot");
+    render(<BookingFlow />);
+    // Go back to Location via the step indicator.
+    fireEvent.click(screen.getByRole("button", { name: "Location" }));
+    // Switch to Newport, where B12 is not offered.
+    fireEvent.click(await screen.findByRole("button", { name: /Newport Beach/ }));
+    // Service is cleared and we are on the Service step choosing a category.
+    expect(await screen.findByText("What brings you in?")).toBeInTheDocument();
+  });
+
   it("supports backwards navigation via the step indicator", async () => {
     params = new URLSearchParams("service=blood-draw");
     render(<BookingFlow />);
+    // blood-draw is both-locations, so we open on Location; pick a clinic.
     fireEvent.click(screen.getByRole("button", { name: /Newport Beach/ }));
     await screen.findByRole("group", { name: "Choose a date" });
+    // Blood Draw has no add-ons, so the schedule step follows service directly;
+    // step back to Service via the indicator.
     fireEvent.click(screen.getByRole("button", { name: "Service" }));
     expect(await screen.findByRole("heading", { name: "Blood Draw" })).toBeInTheDocument();
   });
