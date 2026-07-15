@@ -21,6 +21,18 @@ describe("Button", () => {
     expect(button.className).not.toContain("bg-");
   });
 
+  it("renders as a link with identical variant styling when href is provided", () => {
+    render(
+      <Button variant="primary" href="/book">
+        Book an Appointment
+      </Button>,
+    );
+    const link = screen.getByRole("link", { name: "Book an Appointment" });
+    expect(link).toHaveAttribute("href", "/book");
+    expect(link.className).toContain("bg-ink");
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
+  });
+
   it("renders inverse variant for CTAs on dark backgrounds without reusing gold", () => {
     render(<Button variant="inverse">Book an Appointment</Button>);
     const button = screen.getByRole("button", { name: "Book an Appointment" });

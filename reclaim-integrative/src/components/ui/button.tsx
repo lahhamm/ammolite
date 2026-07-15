@@ -1,6 +1,7 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
+import Link from "next/link";
 import { motion, type HTMLMotionProps } from "motion/react";
 
 type ButtonVariant = "primary" | "gold" | "inverse" | "text";
@@ -8,6 +9,8 @@ type ButtonVariant = "primary" | "gold" | "inverse" | "text";
 interface ButtonProps extends HTMLMotionProps<"button"> {
   variant: ButtonVariant;
   children: ReactNode;
+  /** When provided, renders as a Next.js Link styled identically. */
+  href?: string;
 }
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
@@ -19,14 +22,27 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   text: "text-ink underline-offset-4 hover:underline transition-colors duration-200",
 };
 
-export function Button({ variant, children, className, ...props }: ButtonProps) {
+const MotionLink = motion.create(Link);
+
+export function Button({ variant, children, className, href, onClick, ...props }: ButtonProps) {
+  const classes = `${VARIANT_CLASSES[variant]} ${className ?? ""}`.trim();
+  const interaction = { whileHover: { scale: 1.02 }, whileTap: { scale: 0.98 } };
+
+  if (href) {
+    return (
+      <MotionLink
+        href={href}
+        {...interaction}
+        className={`inline-block text-center ${classes}`}
+        onClick={onClick as MouseEventHandler<HTMLAnchorElement> | undefined}
+      >
+        {children}
+      </MotionLink>
+    );
+  }
+
   return (
-    <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className={`${VARIANT_CLASSES[variant]} ${className ?? ""}`.trim()}
-      {...props}
-    >
+    <motion.button {...interaction} className={classes} onClick={onClick} {...props}>
       {children}
     </motion.button>
   );

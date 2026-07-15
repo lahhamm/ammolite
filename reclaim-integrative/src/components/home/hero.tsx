@@ -60,6 +60,17 @@ export function Hero({ videoSrc, posterSrc }: HeroProps) {
             Personalized naturopathic and integrative medicine for hormones, gut
             health, and lasting energy.
           </p>
+          <div className="mt-8 flex flex-wrap items-center gap-6">
+            <Button variant="gold" href="/book">
+              Book an Appointment
+            </Button>
+            <a
+              href="tel:+19494233522"
+              className="text-white/90 hover:text-white underline-offset-4 hover:underline transition-colors duration-200 drop-shadow-md"
+            >
+              (949) 423-3522
+            </a>
+          </div>
         </div>
       </div>
     </section>
