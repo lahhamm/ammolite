@@ -22,9 +22,17 @@ describe("SiteFooter", () => {
     ]);
   });
 
-  it("labels the phone and email contact rows with accessible icons, not decorative-only", () => {
+  it("labels the phone, fax, and email contact rows with accessible icons, not decorative-only", () => {
     render(<SiteFooter />);
     expect(screen.getByLabelText("Phone")).toBeInTheDocument();
+    expect(screen.getByLabelText("Fax")).toBeInTheDocument();
     expect(screen.getByLabelText("Email")).toBeInTheDocument();
+    expect(screen.getByText(/Fax: \(949\) 629-6929/)).toBeInTheDocument();
+  });
+
+  it("gives online booking primary visual hierarchy with a Book an Appointment CTA to /book", () => {
+    render(<SiteFooter />);
+    const cta = screen.getByRole("link", { name: "Book an Appointment" });
+    expect(cta).toHaveAttribute("href", "/book");
   });
 });
