@@ -108,7 +108,7 @@ const EBOO_MEMBERSHIPS = [
       "Medical-grade dialysis membrane filtration",
       "Recovery and follow-up plan",
     ],
-    cta: "Book Your Consultation",
+    cta: "Book an Appointment",
     popular: true,
   },
 ];
@@ -121,6 +121,11 @@ export default function MembershipsPage() {
   let currentMemberships = TRT_MEMBERSHIPS;
   if (activeTab === "Vitamin Shot & IV") currentMemberships = IV_MEMBERSHIPS;
   if (activeTab === "EBOO Therapy") currentMemberships = EBOO_MEMBERSHIPS;
+
+  // Card CTAs enter the booking flow at the closest matching point.
+  let bookingHref = "/book?service=trt-injection";
+  if (activeTab === "Vitamin Shot & IV") bookingHref = "/book?category=iv-therapy";
+  if (activeTab === "EBOO Therapy") bookingHref = "/book?service=eboo";
 
   return (
     <main className="pt-[72px] bg-canvas/30 min-h-screen">
@@ -177,11 +182,11 @@ export default function MembershipsPage() {
                   key={membership.title}
                   className="h-full"
                 >
-                  <Card className={`relative w-full h-full flex flex-col rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5 border ${membership.popular ? 'border-accent-gold shadow-lg shadow-accent-gold/10' : 'border-border bg-white shadow-sm'}`}>
-                    
+                  <Card className={`relative w-full h-full flex flex-col rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5 border ${membership.popular ? 'border-accent-sage shadow-lg shadow-accent-sage/10' : 'border-border bg-white shadow-sm'}`}>
+
                     {membership.popular && (
                       <div className="absolute -top-3.5 left-0 right-0 flex justify-center">
-                        <span className="bg-accent-gold text-ink text-xs font-bold uppercase tracking-wider py-1 px-4 rounded-full flex items-center gap-1.5 shadow-sm">
+                        <span className="bg-accent-sage text-white text-xs font-bold uppercase tracking-wider py-1 px-4 rounded-full flex items-center gap-1.5 shadow-sm">
                           <Sparkle size={12} fill="currentColor" strokeWidth={1.5} /> Most Popular
                         </span>
                       </div>
@@ -217,9 +222,10 @@ export default function MembershipsPage() {
                         ))}
                       </div>
 
-                      <Button 
-                        variant={membership.popular ? "gold" : "primary"} 
-                        className={`w-full gap-2 rounded-xl h-12 text-sm ${membership.popular ? '' : 'bg-transparent border border-border text-ink hover:bg-accent-sage/5'}`}
+                      <Button
+                        variant="primary"
+                        href={bookingHref}
+                        className={`w-full gap-2 rounded-xl h-12 text-sm inline-flex items-center justify-center ${membership.popular ? '' : 'bg-transparent border border-border text-ink hover:bg-accent-sage/5'}`}
                       >
                         {membership.cta} {membership.price === "Custom" ? <PhoneCall className="w-4 h-4" strokeWidth={1.5} /> : <MoveRight className="w-4 h-4" strokeWidth={1.5} />}
                       </Button>
@@ -244,18 +250,18 @@ export default function MembershipsPage() {
                 <>
                   <p><strong>Standard TRT ($199/mo):</strong> Labs are billed separately at a deeply discounted rate through our recommended lab partners. You only pay for the labs you need, when you need them — no insurance required.</p>
                   <p><strong>Premium Optimization ($279–$299/mo):</strong> Quarterly monitoring labs are included in your membership — no separate lab bills for your routine TRT monitoring panels.</p>
-                  <p><strong>Terms:</strong> Monthly billing on the 1st of each month. Requires a 3-month contract commitment. A credit card must remain on file. After the initial 3 months, membership renews monthly unless cancelled with 30 days' written notice.</p>
+                  <p><strong>Terms:</strong> Monthly billing on the 1st of each month. Requires a 3-month contract commitment. A credit card must remain on file. After the initial 3 months, membership renews monthly unless cancelled with 30 days&apos; written notice.</p>
                 </>
               )}
               {activeTab === "Vitamin Shot & IV" && (
                 <>
                   <p>Your membership shots can be any of our most popular injections — mix and match each month based on your goals: B12 Energy Shot, Glutathione Shot, Tri-Immune Shot, Biotin Shot, MIC Fat Burner, Vitamin D, Amino Acid, NAD+, Liver Detox, or Stress Relief Shot.</p>
-                  <p><strong>Terms:</strong> No long-term contracts — cancel anytime with 30 days' notice. Unused shots do not roll over. Billed on the 1st of each month. A credit card must remain on file.</p>
+                  <p><strong>Terms:</strong> No long-term contracts — cancel anytime with 30 days&apos; notice. Unused shots do not roll over. Billed on the 1st of each month. A credit card must remain on file.</p>
                 </>
               )}
               {activeTab === "EBOO Therapy" && (
                 <>
-                  <p>EBOO stands for Extracorporeal Blood Oxygenation and Ozonation. Unlike standard IV ozone, EBOO filters and recirculates your blood through a medical-grade dialysis membrane while infusing it with medical ozone and oxygen. It's the most thorough form of ozone therapy available today.</p>
+                  <p>EBOO stands for Extracorporeal Blood Oxygenation and Ozonation. Unlike standard IV ozone, EBOO filters and recirculates your blood through a medical-grade dialysis membrane while infusing it with medical ozone and oxygen. It&apos;s the most thorough form of ozone therapy available today.</p>
                   <p>The procedure processes a larger volume of blood than any other ozone method, making it significantly more effective for immune activation and circulatory support. Ideal for chronic fatigue, Lyme disease, mold toxicity, and autoimmune conditions.</p>
                 </>
               )}

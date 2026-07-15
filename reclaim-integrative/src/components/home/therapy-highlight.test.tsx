@@ -10,9 +10,10 @@ describe("TherapyHighlight", () => {
     expect(screen.getAllByRole("region")).toHaveLength(1);
   });
 
-  it("uses the canonical booking CTA label, not a duplicate variant", () => {
+  it("uses the canonical booking CTA label, deep-linked to EBOO booking", () => {
     render(<TherapyHighlight />);
-    expect(screen.getByRole("button", { name: "Book an Appointment" })).toBeInTheDocument();
+    const cta = screen.getByRole("link", { name: "Book an Appointment" });
+    expect(cta).toHaveAttribute("href", "/book?service=eboo");
     expect(screen.queryByText(/schedule online/i)).not.toBeInTheDocument();
   });
 });

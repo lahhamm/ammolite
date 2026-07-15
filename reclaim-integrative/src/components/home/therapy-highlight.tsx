@@ -19,7 +19,9 @@ export function TherapyHighlight() {
             </div>
           </div>
           <div className="mt-10">
-            <Button variant="primary">Book an Appointment</Button>
+            <Button variant="primary" href="/book?service=eboo">
+              Book an Appointment
+            </Button>
           </div>
         </div>
       </section>

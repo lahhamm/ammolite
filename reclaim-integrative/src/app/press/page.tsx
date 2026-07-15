@@ -135,7 +135,7 @@ export default function PressPage() {
                     
                     <div className="relative z-10 mt-auto">
                       <h3 className={`font-serif text-ink mb-3 ${isLarge ? 'text-3xl md:text-5xl' : 'text-xl md:text-2xl'}`}>{item.outlet}</h3>
-                      {item.title && <p className={`text-ink/70 ${isLarge ? 'text-lg md:text-xl max-w-md' : 'text-sm'} line-clamp-3`}>"{item.title}"</p>}
+                      {item.title && <p className={`text-ink/70 ${isLarge ? 'text-lg md:text-xl max-w-md' : 'text-sm'} line-clamp-3`}>&ldquo;{item.title}&rdquo;</p>}
                     </div>
                   </motion.div>
                 </a>
@@ -172,7 +172,7 @@ export default function PressPage() {
                     <span className="text-xs uppercase tracking-widest text-accent-sage font-medium bg-accent-sage/10 px-3 py-1 rounded-full inline-block mb-8">Podcast</span>
                     <h3 className={`font-serif text-ink mb-3 ${isLarge ? 'text-3xl md:text-5xl max-w-md' : 'text-xl md:text-2xl'}`}>{podcast.name}</h3>
                     {podcast.episode && (
-                      <p className={`text-ink/70 ${isLarge ? 'text-lg md:text-xl max-w-sm' : 'text-sm'}`}>"{podcast.episode}"</p>
+                      <p className={`text-ink/70 ${isLarge ? 'text-lg md:text-xl max-w-sm' : 'text-sm'}`}>&ldquo;{podcast.episode}&rdquo;</p>
                     )}
                   </div>
                   

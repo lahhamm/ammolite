@@ -17,7 +17,8 @@ const EXPECTED_DESKTOP_LINKS = [
 ];
 
 // Mobile menu flattens Services into a labelled group, so the group heading is
-// a plain span and only the sublinks are anchors.
+// a plain span and only the sublinks are anchors. The booking CTA renders as
+// a link at the end of the menu.
 const EXPECTED_MOBILE_LINKS = [
   "Our Services",
   "Conditions Treated",
@@ -27,6 +28,7 @@ const EXPECTED_MOBILE_LINKS = [
   "Journal",
   "Shop",
   "Contact",
+  "Book an Appointment",
 ];
 
 describe("SiteNav", () => {
@@ -48,17 +50,18 @@ describe("SiteNav", () => {
     expect(servicesLink).toHaveAttribute("aria-expanded", "false");
   });
 
-  it("renders the Book an Appointment CTA", () => {
+  it("renders the Book an Appointment CTA linking to the booking flow", () => {
     render(<SiteNav />);
-    const ctas = screen.getAllByRole("button", { name: "Book an Appointment" });
+    const ctas = screen.getAllByRole("link", { name: "Book an Appointment" });
     expect(ctas).toHaveLength(1); // Only desktop is rendered when menu is closed
+    expect(ctas[0]).toHaveAttribute("href", "/book");
   });
 
   it("does not render the desktop CTA when transparent is true", () => {
     render(<SiteNav transparent={true} />);
     // On transparent mode, desktop CTA is hidden. Mobile CTA only shows when menu is open.
     // Menu is closed by default. So 0 CTAs should be visible initially.
-    const ctas = screen.queryAllByRole("button", { name: "Book an Appointment" });
+    const ctas = screen.queryAllByRole("link", { name: "Book an Appointment" });
     expect(ctas).toHaveLength(0);
   });
 
@@ -80,10 +83,10 @@ describe("SiteNav", () => {
     expect(within(mobileNav).getByText("Services")).toBeInTheDocument();
     const mobileLinks = within(mobileNav).getAllByRole("link");
     expect(mobileLinks.map((l) => l.textContent?.trim())).toEqual(EXPECTED_MOBILE_LINKS);
-    // Mobile menu carries its own CTA.
+    // Mobile menu carries its own CTA linking to the booking flow.
     expect(
-      within(mobileNav).getByRole("button", { name: "Book an Appointment" }),
-    ).toBeInTheDocument();
+      within(mobileNav).getByRole("link", { name: "Book an Appointment" }),
+    ).toHaveAttribute("href", "/book");
   });
 
   it("still reveals the mobile nav links when transparent is true", () => {

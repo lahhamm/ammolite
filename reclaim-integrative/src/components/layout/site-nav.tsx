@@ -142,7 +142,7 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
         {/* Right side — CTA or spacer */}
         <div className="hidden md:flex justify-end">
           {!isTransparent && (
-            <Button variant="primary" className="text-sm">
+            <Button variant="primary" href="/book" className="text-sm">
               Book an Appointment
             </Button>
           )}
@@ -209,7 +209,12 @@ export function SiteNav({ transparent = false }: { transparent?: boolean }) {
               </Link>
             );
           })}
-          <Button variant="primary" className="text-sm w-full" onClick={() => setIsMenuOpen(false)}>
+          <Button
+            variant="primary"
+            href="/book"
+            className="text-sm w-full"
+            onClick={() => setIsMenuOpen(false)}
+          >
             Book an Appointment
           </Button>
         </motion.nav>

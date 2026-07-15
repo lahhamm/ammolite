@@ -15,8 +15,11 @@ describe("HomePage", () => {
 
   it("uses the canonical booking CTA label everywhere and never a variant (No Duplicate CTA Intent)", () => {
     render(<HomePage />);
-    const bookingButtons = screen.getAllByRole("button", { name: "Book an Appointment" });
-    expect(bookingButtons.length).toBeGreaterThan(0);
+    const bookingLinks = screen.getAllByRole("link", { name: "Book an Appointment" });
+    expect(bookingLinks.length).toBeGreaterThan(0);
+    bookingLinks.forEach((link) => {
+      expect(link.getAttribute("href")).toMatch(/^\/book/);
+    });
     expect(screen.queryByText(/book now/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/schedule online/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/let's talk/i)).not.toBeInTheDocument();

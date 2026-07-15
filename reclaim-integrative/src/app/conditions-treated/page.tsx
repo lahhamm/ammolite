@@ -121,16 +121,18 @@ export default function ConditionsTreatedPage() {
         <ScrollReveal>
           <div className="max-w-2xl mx-auto">
             <h2 className="font-serif text-3xl md:text-4xl text-ink mb-6">
-              Don't See Your Condition?
+              Don&apos;t See Your Condition?
             </h2>
             <p className="text-muted text-lg mb-8 leading-relaxed">
               We treat many conditions not listed here. Schedule a consultation to discuss your specific health concerns and explore how root-cause medicine can help you reclaim your health.
             </p>
-            <Link href="https://reclaimintegrative.janeapp.com/" target="_blank" rel="noopener noreferrer">
-              <Button variant="primary" className="h-14 px-8 text-base rounded-sm">
-                Schedule Your Consultation
-              </Button>
-            </Link>
+            <Button
+              variant="primary"
+              href="/book?category=consultations"
+              className="h-14 px-8 text-base rounded-sm"
+            >
+              Book an Appointment
+            </Button>
           </div>
         </ScrollReveal>
       </section>

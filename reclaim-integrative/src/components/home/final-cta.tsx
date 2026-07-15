@@ -8,7 +8,9 @@ export function FinalCta() {
       </h2>
       <p className="mt-4 text-canvas/80">A complimentary 15-minute consultation starts the process.</p>
       <div className="mt-8">
-        <Button variant="inverse">Book an Appointment</Button>
+        <Button variant="inverse" href="/book">
+          Book an Appointment
+        </Button>
       </div>
     </section>
   );

@@ -17,9 +17,19 @@ export default function ContactPage() {
         <div>
           <ScrollReveal>
             <h1 className="font-serif text-4xl md:text-5xl mb-6">Start your <br /> health reset.</h1>
-            <p className="text-lg text-muted mb-12 max-w-md">
+            <p className="text-lg text-muted mb-8 max-w-md">
               Whether you&apos;re ready to book or just have questions about our approach, we&apos;re here to help.
             </p>
+
+            <div className="mb-12 border border-accent-sage/40 bg-accent-sage/5 p-6">
+              <h2 className="font-serif text-2xl mb-2">Ready to book?</h2>
+              <p className="text-muted text-sm mb-5 max-w-sm">
+                Choose your service, clinic, and time in a few quiet steps. No phone call needed.
+              </p>
+              <Button variant="primary" href="/book">
+                Book an Appointment
+              </Button>
+            </div>
 
             <div className="space-y-8">
               <motion.div
