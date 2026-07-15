@@ -30,13 +30,16 @@ export default function AboutPage() {
             <h1 className="font-serif text-4xl md:text-5xl mb-6">Dr. Andrea Colon, NMD</h1>
             <div className="space-y-4 text-muted text-lg leading-relaxed">
               <p>
-                Dr. Andrea Colon is a Naturopathic Doctor licensed in the states of Connecticut and California. She is currently practicing in Corona Del Mar in the beautiful neighborhood of Newport Beach, California.
+                Dr. Andrea Colon is a licensed Naturopathic Doctor with a deep passion for helping patients heal from the inside out. She specializes in hormone optimization, gut health, IV and peptide therapy, and personalized wellness programs that address the root causes of fatigue, hormone imbalances, inflammation, and chronic health issues. She currently practices in Newport Beach and Rancho Cucamonga, California.
               </p>
               <p>
-                She is a graduate of Southwest College of Naturopathic Medicine in Tempe, Arizona. Prior to enrolling in medical school, she was pursuing a career in the entertainment industry. Her own health struggles and a passion for helping others ultimately led her down the road to Naturopathic Medicine.
+                Her mission is to empower patients to take control of their health and feel vibrant at every stage of life, using a holistic approach that&apos;s grounded in medical insight and compassionate care.
               </p>
               <p>
-                Born and raised on the shoreline in New England, Dr. Colon enjoys going to music festivals, dancing, cooking, volunteering, traveling, and going on adventures with her dog, Rocco, in her spare time.
+                At her practice, she offers IV therapy, comprehensive lab testing, peptide therapy, bioidentical hormone replacement, and functional wellness consultations.
+              </p>
+              <p>
+                When she&apos;s not in the clinic, you&apos;ll find her practicing pilates, traveling, or enjoying time with her two Pomeranians, Rocco and Theodore.
               </p>
             </div>
           </div>
@@ -47,9 +50,12 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto text-center">
           <ScrollReveal>
             <h2 className="font-serif text-2xl md:text-3xl leading-relaxed italic">
-              We treat the patient as a whole, not a single symptom.
+              I take my time to listen to your healthcare concerns in order to fully understand your needs and work with you to achieve your healthcare goals.
             </h2>
             <p className="mt-6 text-canvas/60 text-sm uppercase tracking-widest">Dr. Andrea Colon, NMD</p>
+            <p className="mt-8 text-canvas/70 text-base leading-relaxed not-italic">
+              Her care follows the six principles of naturopathic medicine: First Do No Harm, Identify and Treat the Cause, The Healing Power of Nature, Doctor as Teacher, Treat the Whole Person, and Prevention.
+            </p>
           </ScrollReveal>
         </div>
       </section>
@@ -60,11 +66,19 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="border border-border p-6">
               <h3 className="font-medium mb-2">Naturopathic Medical Doctorate</h3>
-              <p className="text-muted text-sm">Southwest College of Naturopathic Medicine, Tempe, AZ</p>
+              <p className="text-muted text-sm">Southwest College of Naturopathic Medicine (SCNM)</p>
             </div>
             <div className="border border-border p-6">
-              <h3 className="font-medium mb-2">Licensed NMD</h3>
-              <p className="text-muted text-sm">State of California &amp; State of Connecticut</p>
+              <h3 className="font-medium mb-2">Licensed Naturopathic Doctor</h3>
+              <p className="text-muted text-sm">State of California</p>
+            </div>
+            <div className="border border-border p-6">
+              <h3 className="font-medium mb-2">Biote Certified</h3>
+              <p className="text-muted text-sm">Bioidentical hormone replacement therapy</p>
+            </div>
+            <div className="border border-border p-6">
+              <h3 className="font-medium mb-2">IV Therapy Certified</h3>
+              <p className="text-muted text-sm">Intravenous nutrient and hydration therapy</p>
             </div>
           </div>
         </ScrollReveal>
