@@ -1,9 +1,18 @@
 import { SiteNav } from "@/components/layout/site-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { Button } from "@/components/ui/button";
 import { Accordion } from "@/components/ui/accordion";
 import { faqs } from "@/data/faqs";
 import Image from "next/image";
+
+// Mirrors the STATS source on /press and the homepage credibility section.
+const ABOUT_PRESS_STATS = [
+  { value: "3B+", label: "Media impressions" },
+  { value: "11+", label: "Press features" },
+  { value: "7+", label: "Podcast appearances" },
+  { value: "117M+", label: "Monthly readers reached" },
+];
 
 export default function AboutPage() {
   return (
@@ -58,6 +67,30 @@ export default function AboutPage() {
             </p>
           </ScrollReveal>
         </div>
+      </section>
+
+      <section className="py-20 px-6 md:px-10 max-w-4xl mx-auto">
+        <ScrollReveal>
+          <div className="text-center">
+            <h2 className="font-serif text-3xl md:text-4xl mb-6">Recognized by the press</h2>
+            <p className="text-muted text-lg leading-relaxed max-w-2xl mx-auto">
+              Dr. Colon is a trusted expert voice, featured in national outlets including GQ, Marie Claire, and Good Housekeeping, and a regular guest on wellness podcasts.
+            </p>
+            <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
+              {ABOUT_PRESS_STATS.map((stat) => (
+                <div key={stat.label}>
+                  <p className="font-serif text-3xl text-accent-sage">{stat.value}</p>
+                  <p className="text-sm text-muted mt-1">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-10">
+              <Button variant="text" href="/press">
+                Explore her features in the press
+              </Button>
+            </div>
+          </div>
+        </ScrollReveal>
       </section>
 
       <section className="py-20 px-6 md:px-10 max-w-5xl mx-auto">
