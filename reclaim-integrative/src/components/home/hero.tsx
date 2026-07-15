@@ -43,7 +43,7 @@ export function Hero() {
 
         <div
           data-testid="hero-image-box"
-          className="relative h-64 w-full overflow-hidden rounded-2xl border border-accent-sage/30 bg-accent-sage/10 md:h-auto md:aspect-[4/5]"
+          className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-accent-sage/30 bg-accent-sage/10 sm:aspect-[3/4] md:aspect-[4/5]"
         >
           {imageAvailable ? (
             <Image
@@ -52,7 +52,7 @@ export function Hero() {
               fill
               priority
               sizes="(min-width: 768px) 40vw, 92vw"
-              className="object-cover"
+              className="object-cover object-[center_25%] md:object-center"
               onError={() => setImageAvailable(false)}
             />
           ) : (
