@@ -16,8 +16,14 @@ const NAV_LINKS: { label: string; href: string; external?: boolean; sublinks?: {
       { label: "Conditions Treated", href: "/conditions-treated" }
     ]
   },
-  { label: "About", href: "/about" },
-  { label: "Press", href: "/press" },
+  {
+    label: "About",
+    href: "/about",
+    sublinks: [
+      { label: "About Dr. Colon", href: "/about" },
+      { label: "Press & Media", href: "/press" }
+    ]
+  },
   { label: "Memberships", href: "/memberships" },
   { label: "Journal", href: "/journal" },
   { label: "Shop", href: "/shop" },

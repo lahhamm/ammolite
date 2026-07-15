@@ -2,27 +2,29 @@ import { render, screen, within, fireEvent } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { SiteNav } from "./site-nav";
 
-// Desktop nav renders the 6 primary destinations; the Services item exposes a
-// dropdown whose 2 sublinks are always in the DOM (revealed on hover/focus).
+// Desktop nav renders the 5 primary destinations; the Services and About items
+// each expose a dropdown whose sublinks are always in the DOM (revealed on
+// hover/focus). Press now lives under About as "Press & Media".
 const EXPECTED_DESKTOP_LINKS = [
   "Services",
   "Our Services",
   "Conditions Treated",
   "About",
-  "Press",
+  "About Dr. Colon",
+  "Press & Media",
   "Memberships",
   "Journal",
   "Shop",
 ];
 
-// Mobile menu flattens Services into a labelled group, so the group heading is
-// a plain span and only the sublinks are anchors. The booking CTA renders as
-// a link at the end of the menu.
+// Mobile menu flattens Services and About into labelled groups, so each group
+// heading is a plain span and only the sublinks are anchors. The booking CTA
+// renders as a link at the end of the menu.
 const EXPECTED_MOBILE_LINKS = [
   "Our Services",
   "Conditions Treated",
-  "About",
-  "Press",
+  "About Dr. Colon",
+  "Press & Media",
   "Memberships",
   "Journal",
   "Shop",
@@ -30,7 +32,7 @@ const EXPECTED_MOBILE_LINKS = [
 ];
 
 describe("SiteNav", () => {
-  it("renders the six primary destinations plus the Services dropdown sublinks", () => {
+  it("renders the five primary destinations plus the Services and About dropdown sublinks", () => {
     render(<SiteNav />);
     const nav = screen.getByRole("navigation");
     const links = within(nav).getAllByRole("link");
@@ -46,6 +48,19 @@ describe("SiteNav", () => {
       .find((l) => l.textContent?.trim() === "Services");
     expect(servicesLink).toHaveAttribute("aria-haspopup", "true");
     expect(servicesLink).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("marks the About item as a dropdown trigger with Press folded under it", () => {
+    render(<SiteNav />);
+    const nav = screen.getByRole("navigation");
+    const links = within(nav).getAllByRole("link");
+    const aboutLink = links.find((l) => l.textContent?.trim() === "About");
+    expect(aboutLink).toHaveAttribute("aria-haspopup", "true");
+    expect(aboutLink).toHaveAttribute("aria-expanded", "false");
+    // Press is no longer a top-level item; it lives under About.
+    expect(links.find((l) => l.textContent?.trim() === "Press")).toBeUndefined();
+    const pressSublink = links.find((l) => l.textContent?.trim() === "Press & Media");
+    expect(pressSublink).toHaveAttribute("href", "/press");
   });
 
   it("always renders the Book an Appointment CTA linking to the booking flow", () => {
@@ -71,8 +86,10 @@ describe("SiteNav", () => {
     const navs = screen.getAllByRole("navigation");
     expect(navs).toHaveLength(2); // Desktop nav + Mobile nav
     const mobileNav = navs[1];
-    // Services renders as a group heading, not a link, in the mobile menu.
+    // Services and About each render as a group heading, not a link, in the
+    // mobile menu.
     expect(within(mobileNav).getByText("Services")).toBeInTheDocument();
+    expect(within(mobileNav).getByText("About")).toBeInTheDocument();
     const mobileLinks = within(mobileNav).getAllByRole("link");
     expect(mobileLinks.map((l) => l.textContent?.trim())).toEqual(EXPECTED_MOBILE_LINKS);
     // Mobile menu carries its own CTA linking to the booking flow.
