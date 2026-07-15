@@ -44,7 +44,7 @@ export function ServicesTeaser() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 flex flex-col lg:flex-row gap-12 lg:gap-20 relative">
-        {/* Left Side: Sticky Images — desktop enhancement only */}
+        {/* Left Side: Sticky Images, desktop enhancement only */}
         <div className="hidden lg:block lg:w-1/2">
           <div className="lg:sticky lg:top-32 lg:h-[70vh] w-full rounded-2xl overflow-hidden bg-ink">
             {SERVICES.map((service, idx) => (
