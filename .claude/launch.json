@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "reclaim-integrative",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/adamlahham/Developer/reclaim-integrative-homepage/reclaim-integrative && npm run dev"],
+      "port": 3000,
+      "autoPort": true
+    },
+    {
+      "name": "jarvis-os",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd '/Users/adamlahham/Desktop/IVY AI/jarvis-os' && npm run dev"],
+      "port": 5273
+    }
+  ]
+}
