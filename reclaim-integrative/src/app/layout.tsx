@@ -39,7 +39,13 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: '/',
-  }
+  },
+  // Demo/staging deploys set SITE_NOINDEX=1: robots.txt blocks crawling and
+  // this meta tag blocks indexing, so the demo never competes with the
+  // client's live site in search. Remove the env var at real launch.
+  ...(process.env.SITE_NOINDEX
+    ? { robots: { index: false, follow: false } }
+    : {}),
 };
 
 export default function RootLayout({
