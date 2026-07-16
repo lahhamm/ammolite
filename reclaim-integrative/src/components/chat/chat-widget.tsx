@@ -30,7 +30,7 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
             transition={transition}
-            className="fixed right-4 bottom-24 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-ink text-canvas shadow-lg transition-colors duration-200 hover:bg-ink/85 md:right-6 md:bottom-6"
+            className="fixed right-4 bottom-32 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-ink text-canvas shadow-lg transition-colors duration-200 hover:bg-ink/85 md:right-6 md:bottom-6"
           >
             <ChatCircleDots size={24} aria-hidden />
           </motion.button>
