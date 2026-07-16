@@ -137,8 +137,10 @@ function ServiceRow({
 
   return (
     <li
-      className={`rounded-lg border bg-white p-5 transition-colors duration-300 ${
-        selected ? "border-accent-sage ring-1 ring-accent-sage" : "border-border"
+      className={`rounded-lg border bg-white p-5 transition-all duration-300 ${
+        selected
+          ? "border-accent-sage ring-1 ring-accent-sage"
+          : "border-border hover:-translate-y-0.5 hover:border-accent-sage hover:shadow-lg hover:shadow-black/5"
       }`}
     >
       <button
