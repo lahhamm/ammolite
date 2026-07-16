@@ -4,6 +4,7 @@ import { JarvisStage } from './panes/JarvisStage';
 import { NeedsYou } from './panes/NeedsYou';
 import { AgentOverlay } from './panes/AgentOverlay';
 import { setState, useApp } from './store';
+import { api } from './ws';
 import { stopSpeaking } from './voice';
 
 function Clock() {
@@ -31,6 +32,7 @@ export function App() {
   const escalationCount = useApp((s) => s.escalations.length);
   const [rosterOpen, setRosterOpen] = useState(false);
   const [needsOpen, setNeedsOpen] = useState(false);
+  const [armReset, setArmReset] = useState(false);
 
   const status = listening ? 'listening' : speaking ? 'speaking' : (STATE_LABEL[jarvisState] ?? jarvisState);
 
@@ -47,6 +49,21 @@ export function App() {
           {status}
         </div>
         <div className="topbar-right">
+          <button
+            className={`btn ghost small ${armReset ? 'armed' : ''}`}
+            title="Fresh Jarvis session — clears his context window; history and agents are kept"
+            onClick={() => {
+              if (armReset) {
+                api.resetJarvis();
+                setArmReset(false);
+              } else {
+                setArmReset(true);
+                setTimeout(() => setArmReset(false), 3000);
+              }
+            }}
+          >
+            {armReset ? 'confirm reset?' : '↺ new session'}
+          </button>
           <span className="workers-chip">{running} active</span>
           <button
             className={`btn ghost small ${muted ? 'muted-on' : ''}`}

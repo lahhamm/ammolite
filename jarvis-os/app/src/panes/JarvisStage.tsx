@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Sphere } from '../Sphere';
 import { useApp } from '../store';
 import { api } from '../ws';
-import { setDirectiveHandler, startListening, stopListening, sttSupported } from '../voice';
+import { setDirectiveHandler, startListening, stopListening, stopSpeaking, sttSupported } from '../voice';
 import { PlanCard } from './PlanCard';
 
 function MicButton() {
@@ -37,6 +37,7 @@ export function JarvisStage() {
   const streaming = useApp((s) => s.streamingText);
   const interim = useApp((s) => s.interim);
   const jarvisState = useApp((s) => s.jarvisState);
+  const speaking = useApp((s) => s.speaking);
   const [draft, setDraft] = useState('');
   const feedRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -117,15 +118,20 @@ export function JarvisStage() {
             if (e.key === 'Enter') sendDirective(draft);
           }}
         />
-        {jarvisState === 'thinking' ? (
-          <button className="btn ghost small" onClick={api.interruptJarvis} title="Interrupt Jarvis">
-            ■
-          </button>
-        ) : (
-          <button className="btn primary small" onClick={() => sendDirective(draft)}>
-            ↵
-          </button>
-        )}
+        <button
+          className={`btn small ${jarvisState === 'thinking' || speaking ? 'danger' : 'ghost'}`}
+          disabled={jarvisState !== 'thinking' && !speaking}
+          title="Stop Jarvis — interrupt his turn and silence him"
+          onClick={() => {
+            stopSpeaking();
+            api.interruptJarvis();
+          }}
+        >
+          ■
+        </button>
+        <button className="btn primary small" onClick={() => sendDirective(draft)}>
+          ↵
+        </button>
       </div>
     </main>
   );

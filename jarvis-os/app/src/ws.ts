@@ -119,6 +119,7 @@ export const api = {
   steerAgent: (id: string, text: string) => send({ type: 'agent.steer', id, text }),
   stopAgent: (id: string) => send({ type: 'agent.stop', id }),
   interruptJarvis: () => send({ type: 'jarvis.interrupt' }),
+  resetJarvis: () => send({ type: 'jarvis.reset' }),
 };
 
 export async function openAgent(id: string) {

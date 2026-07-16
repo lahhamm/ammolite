@@ -91,6 +91,9 @@ wss.on('connection', (socket) => {
         case 'jarvis.interrupt':
           void jarvis.interrupt();
           break;
+        case 'jarvis.reset':
+          void jarvis.reset();
+          break;
       }
     } catch (err) {
       socket.send(JSON.stringify({ type: 'error', message: String(err instanceof Error ? err.message : err) }));

@@ -261,6 +261,8 @@ input, select { font: inherit; color: var(--text); }
 .btn.ghost:hover { color: var(--text); border-color: var(--hairline-strong); }
 .btn.danger { color: var(--red); border-color: rgba(248, 113, 113, 0.4); }
 .btn.danger:hover { background: rgba(248, 113, 113, 0.12); }
+.btn.armed { color: var(--amber); border-color: rgba(245, 166, 35, 0.55); background: var(--amber-soft); }
+.btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
 
 /* ── plan card ── */
 .plan-card {

@@ -55,6 +55,7 @@ class Jarvis {
   private input = new AsyncQueue<SDKUserMessage>();
   private handle: Query | null = null;
   private restarts = 0;
+  private gen = 0;
   state: JarvisState = 'idle';
 
   start() {
@@ -95,7 +96,43 @@ class Jarvis {
     this.setState('thinking');
   }
 
+  /** Tear down the current session and boot a fresh one with a recap, clearing the context window. */
+  async reset() {
+    const oldInput = this.input;
+    this.gen += 1;
+    await this.handle?.interrupt().catch(() => {});
+    oldInput.close();
+    this.input = new AsyncQueue<SDKUserMessage>();
+    this.restarts = 0;
+    logEvent('jarvis', 'session.reset', {});
+    activity('JARVIS session reset — context cleared');
+    this.push(this.recapNote(), 'note');
+    this.run();
+  }
+
+  private recapNote(): string {
+    const recent = (q.recentEventsForAgent.all('jarvis', 40) as { type: string; payload: string }[])
+      .filter((e) => e.type === 'adam' || e.type === 'jarvis')
+      .slice(-12)
+      .map((e) => {
+        const text = (JSON.parse(e.payload) as { text?: string }).text ?? '';
+        return `${e.type === 'adam' ? 'Adam' : 'You'}: ${trim(text.replace(/\s+/g, ' '), 220)}`;
+      });
+    const agents = (q.allAgents.all() as AgentRow[])
+      .filter((a) => ['running', 'queued', 'waiting'].includes(a.status))
+      .map((a) => `${a.id} "${a.title}" (${a.model}, ${a.status})`);
+    return [
+      '[SYSTEM NOTE] Adam started a FRESH session to clear your context window. You have full amnesia of the old one — this recap is all you get.',
+      recent.length ? `Recent conversation:\n${recent.join('\n')}` : 'No recent conversation on record.',
+      agents.length
+        ? `Agents still active (they kept running through the reset): ${agents.join('; ')}`
+        : 'No agents currently active.',
+      'Greet Adam in one short sentence confirming you are reset and up to speed.',
+    ].join('\n\n');
+  }
+
   private async run() {
+    const myGen = this.gen;
     const canUseTool = async (
       toolName: string,
       toolInput: Record<string, unknown>
@@ -113,7 +150,7 @@ class Jarvis {
     };
 
     try {
-      this.handle = query({
+      const handle = query({
         prompt: this.input,
         options: {
           model: MODELS.jarvis,
@@ -127,11 +164,13 @@ class Jarvis {
           canUseTool,
         },
       });
+      this.handle = handle;
 
       broadcast('jarvis.status', { state: 'idle', booted: true });
       activity('JARVIS online');
 
-      for await (const msg of this.handle) {
+      for await (const msg of handle) {
+        if (this.gen !== myGen) return; // superseded by a fresh session
         if (msg.type === 'stream_event') {
           const ev = msg.event as { type: string; delta?: { type: string; text?: string } };
           if (ev.type === 'content_block_delta' && ev.delta?.type === 'text_delta' && ev.delta.text) {
@@ -156,14 +195,17 @@ class Jarvis {
         }
       }
       // Input closed or session ended
-      this.setState('idle');
+      if (this.gen === myGen) this.setState('idle');
     } catch (err) {
+      if (this.gen !== myGen) return; // stale session tearing down — not an error
       const message = err instanceof Error ? err.message : String(err);
       activity(`JARVIS session error: ${trim(message, 160)}`);
       broadcast('jarvis.status', { state: 'error', message });
       this.restarts += 1;
       if (this.restarts <= 3) {
         setTimeout(() => {
+          if (this.gen !== myGen) return; // a manual reset already replaced this session
+          this.gen += 1;
           this.input = new AsyncQueue<SDKUserMessage>();
           this.push(
             '[SYSTEM NOTE] Your previous session crashed and was restarted. Briefly tell Adam you are back online.',
