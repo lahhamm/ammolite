@@ -29,14 +29,27 @@ export function parseSegments(text: string): Segment[] {
 }
 
 export function MessageContent({ text }: { text: string }) {
+  const segments = parseSegments(text);
+  // The model sometimes embeds the link mid-sentence, stranding the closing
+  // punctuation after the button ("schedule online [button] ."). Drop a
+  // final punctuation-only text segment that directly follows a link.
+  const last = segments[segments.length - 1];
+  const beforeLast = segments[segments.length - 2];
+  if (
+    last?.kind === "text" &&
+    /^[\s.,!?]*$/.test(last.text) &&
+    beforeLast?.kind === "link"
+  ) {
+    segments.pop();
+  }
   return (
     <>
-      {parseSegments(text).map((seg, i) =>
+      {segments.map((seg, i) =>
         seg.kind === "link" && isAllowedLink(seg.href) ? (
           <Link
             key={i}
             href={seg.href}
-            className="mt-2 inline-block rounded-sm bg-ink px-4 py-2 text-sm text-canvas transition-colors duration-200 hover:bg-ink/85"
+            className="mt-2 block w-fit rounded-sm bg-ink px-3 py-1.5 text-xs text-canvas transition-colors duration-200 hover:bg-ink/85"
           >
             {seg.label}
           </Link>

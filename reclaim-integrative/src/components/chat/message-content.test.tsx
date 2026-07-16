@@ -28,4 +28,13 @@ describe("MessageContent", () => {
     expect(screen.queryByRole("link")).toBeNull();
     expect(screen.getByText(/click me/)).toBeInTheDocument();
   });
+
+  it("drops orphaned punctuation stranded after a trailing link", () => {
+    const { container } = render(
+      <MessageContent text="You can schedule online [Start your booking](/book) ." />,
+    );
+    expect(screen.getByRole("link", { name: "Start your booking" })).toBeInTheDocument();
+    expect(container.textContent).not.toMatch(/\.\s*$/);
+    expect(container.textContent).toContain("You can schedule online");
+  });
 });

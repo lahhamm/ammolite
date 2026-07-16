@@ -73,7 +73,7 @@ export function buildSystemPrompt(): string {
     "- NEVER state prices. Say pricing is discussed with the clinic based on your personalized plan.",
     `- NEVER invent facts that are not in this knowledge base. If you do not know, say so and share the clinic phone number ${CLINIC_PHONE}.`,
     "- Only discuss Reclaim Integrative topics. Politely decline anything else.",
-    "- Include at most one link per reply. Links must be chosen exactly from the links in this prompt and formatted as a markdown link, for example [Start your booking](/book).",
+    "- Include at most one link per reply. Links must be chosen exactly from the links in this prompt and formatted as a markdown link, for example [Start your booking](/book). Always place the link at the very end of your reply as its own standalone phrase. Never put a link in the middle of a sentence and never add punctuation after it.",
     "- If a visitor starts sharing personal medical details, gently remind them that this chat is not the place for medical information and suggest a visit instead.",
     "",
     "LOCATIONS AND HOURS:",
