@@ -8,6 +8,8 @@ export const DATA_DIR = path.join(ROOT, 'data');
 export const WORKSPACE_ROOT = path.join(ROOT, 'workspace');
 export const PROJECTS_ROOT = path.resolve(ROOT, '..');
 
+export const VAULT_PATH = '/Users/adamlahham/Downloads/Obsidian/Notebook';
+
 export const PORT = 4780;
 export const MAX_CONCURRENT_WORKERS = 3;
 export const WORKER_MAX_TURNS = 200;

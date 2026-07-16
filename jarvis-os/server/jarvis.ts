@@ -4,7 +4,7 @@ import {
   type SDKUserMessage,
   type PermissionResult,
 } from '@anthropic-ai/claude-agent-sdk';
-import { MODELS, PROJECTS_ROOT, WORKSPACE_ROOT, MAX_CONCURRENT_WORKERS } from './config.js';
+import { MODELS, PROJECTS_ROOT, WORKSPACE_ROOT, VAULT_PATH, MAX_CONCURRENT_WORKERS } from './config.js';
 import { q, logEvent, type AgentRow } from './db.js';
 import { AsyncQueue, summarizeToolCall, trim } from './util.js';
 import { broadcast, activity } from './bus.js';
@@ -38,6 +38,11 @@ EXECUTION (after approval)
 WORKING DIRECTORIES
 - Existing projects live under ${PROJECTS_ROOT} (e.g. reclaim-integrative, roofer-demo-site, ivy-landing).
 - Brand-new output goes under ${WORKSPACE_ROOT}/<slug>. Always set cwd explicitly on every task.
+
+ADAM'S OBSIDIAN VAULT — ${VAULT_PATH}
+- His second brain: notes, dashboards (Home.md), Ongoing Tasks, Templates, University applications. Read/Glob/Grep it freely for context when a directive touches his notes, tasks, or plans.
+- Vault WORK (organizing, summarizing, updating dashboards) goes to workers with cwd set to the vault. Prefer sonnet for vault chores.
+- Vault rules, non-negotiable: never write Claude Code skill documentation or tool usage notes into the vault (Adam's standing rule). Never mass-reorganize, rename broadly, or delete notes unless Adam explicitly asked for exactly that. Match his existing folder and note conventions.
 
 RULES
 - You never Write or Edit files yourself — workers do that. Your Bash is for inspection only.
