@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lora, Work_Sans } from "next/font/google";
 import "./globals.css";
 import { MobileStickyCta } from "@/components/layout/mobile-sticky-cta";
+import { ChatWidget } from "@/components/chat/chat-widget";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -49,6 +50,7 @@ export default function RootLayout({
       <body className="font-sans">
         {children}
         <MobileStickyCta />
+        <ChatWidget />
       </body>
     </html>
   );
