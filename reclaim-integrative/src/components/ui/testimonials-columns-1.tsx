@@ -40,6 +40,7 @@ export const TestimonialsColumn = (props: {
                     <div className="relative h-10 w-10 rounded-full overflow-hidden shrink-0">
                       <Image
                         fill
+                        sizes="40px"
                         src={image}
                         alt={name}
                         className="object-cover"
