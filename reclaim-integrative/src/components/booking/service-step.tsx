@@ -137,12 +137,15 @@ function ServiceRow({
 
   return (
     <li
-      className={`rounded-lg border bg-white p-5 transition-all duration-300 ${
+      className={`relative rounded-lg border bg-white p-5 transition-all duration-300 ${
         selected
           ? "border-accent-sage ring-1 ring-accent-sage"
           : "border-border hover:-translate-y-0.5 hover:border-accent-sage hover:shadow-lg hover:shadow-black/5"
       }`}
     >
+      {/* Stretched hit area: after:inset-0 anchors to the li, so a click
+          anywhere on the card selects the service. Dosage and Details sit
+          above it (relative z-10) and stay independently clickable. */}
       <button
         type="button"
         onClick={() =>
@@ -152,7 +155,7 @@ function ServiceRow({
             variantLabel: pendingVariant ?? undefined,
           })
         }
-        className="flex w-full items-baseline justify-between gap-4 text-left focus-visible:outline-2 focus-visible:outline-accent-sage"
+        className="flex w-full cursor-pointer items-baseline justify-between gap-4 text-left after:absolute after:inset-0 after:content-[''] focus-visible:outline-2 focus-visible:outline-accent-sage"
       >
         <span>
           <span className="block font-sans font-medium text-ink">{service.name}</span>
@@ -166,7 +169,7 @@ function ServiceRow({
       </button>
 
       {service.variants && (
-        <div className="mt-3">
+        <div className="relative z-10 mt-3">
           <label
             htmlFor={`variant-${service.slug}`}
             className="block font-sans text-xs font-medium text-muted"
@@ -201,12 +204,12 @@ function ServiceRow({
       )}
 
       {service.description && (
-        <div className="mt-3">
+        <div className="relative z-10 mt-3">
           <button
             type="button"
             aria-expanded={expanded}
             onClick={() => setExpanded((e) => !e)}
-            className="inline-flex items-center gap-1 font-sans text-xs font-medium text-accent-sage transition-colors duration-200 hover:text-ink"
+            className="inline-flex cursor-pointer items-center gap-1 font-sans text-xs font-medium text-accent-sage transition-colors duration-200 hover:text-ink"
           >
             Details
             <CaretDown
