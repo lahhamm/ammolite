@@ -8,6 +8,9 @@
     "dev:server": "tsx server/index.ts",
     "dev:app": "vite",
     "build": "vite build",
+    "start": "NODE_ENV=production tsx server/index.ts",
+    "start:fresh": "npm run build && npm start",
+    "up": "bash scripts/up.sh",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -2,11 +2,14 @@ import Database from 'better-sqlite3';
 import fs from 'node:fs';
 import path from 'node:path';
 import { DATA_DIR } from './config.js';
+import { log } from './logger.js';
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
 
 export const db = new Database(path.join(DATA_DIR, 'jarvis.db'));
 db.pragma('journal_mode = WAL');
+db.pragma('busy_timeout = 5000');
+db.pragma('synchronous = NORMAL');
 
 db.exec(`
 CREATE TABLE IF NOT EXISTS projects (
@@ -153,10 +156,155 @@ const stmts = {
   ),
   getEscalation: db.prepare(`SELECT * FROM escalations WHERE id = ?`),
   pendingEscalations: db.prepare(`SELECT * FROM escalations WHERE status = 'pending' ORDER BY created_at`),
+  totalCost: db.prepare(
+    `SELECT COALESCE(SUM(CAST(json_extract(payload, '$.cost') AS REAL)), 0) AS total
+     FROM events WHERE type = 'result'`
+  ),
 };
 
 export const q = stmts;
 
+// --- crash-proof event writes ---
+// Every SQLite failure (ENOSPC, SQLITE_BUSY, etc.) must degrade gracefully
+// instead of throwing through the hot paths in workers/jarvis/tools. We buffer
+// failed events in memory and retry-flush them on a timer.
+
+interface QueuedEvent {
+  agentId: string;
+  type: string;
+  payload: string;
+  ts: number;
+}
+
+let dbHealthy = true;
+let lastDbError: string | null = null;
+const pending: QueuedEvent[] = [];
+const MAX_PENDING = 5000; // cap memory: drop oldest beyond this
+let flushTimer: NodeJS.Timeout | null = null;
+
+function markDbState(ok: boolean, err?: unknown) {
+  if (ok && !dbHealthy) {
+    log.warn('db recovered — write path healthy again', { pendingDrained: pending.length });
+  }
+  if (!ok) {
+    lastDbError = err instanceof Error ? err.message : String(err);
+  }
+  dbHealthy = ok;
+}
+
+function tryInsert(ev: QueuedEvent): boolean {
+  try {
+    stmts.insertEvent.run(ev.agentId, ev.type, ev.payload, ev.ts);
+    return true;
+  } catch (err) {
+    markDbState(false, err);
+    return false;
+  }
+}
+
+function scheduleFlush() {
+  if (flushTimer) return;
+  flushTimer = setInterval(() => {
+    if (pending.length === 0) {
+      if (flushTimer) {
+        clearInterval(flushTimer);
+        flushTimer = null;
+      }
+      return;
+    }
+    // Attempt to drain in order; stop on first failure and retry next tick.
+    let drained = 0;
+    while (pending.length > 0) {
+      const ev = pending[0];
+      if (tryInsert(ev)) {
+        pending.shift();
+        drained += 1;
+      } else {
+        break; // still unhealthy — wait for next tick
+      }
+    }
+    if (drained > 0 && pending.length === 0) {
+      markDbState(true);
+      if (flushTimer) {
+        clearInterval(flushTimer);
+        flushTimer = null;
+      }
+    }
+  }, 3000);
+  // Do not keep the process alive solely for the flush timer.
+  flushTimer.unref?.();
+}
+
 export function logEvent(agentId: string, type: string, payload: Record<string, unknown>) {
-  stmts.insertEvent.run(agentId, type, JSON.stringify(payload), Date.now());
+  let serialized: string;
+  try {
+    serialized = JSON.stringify(payload);
+  } catch {
+    serialized = JSON.stringify({ error: 'unserializable payload' });
+  }
+  const ev: QueuedEvent = { agentId, type, payload: serialized, ts: Date.now() };
+
+  // Fast path: if we have a backlog, don't jump the queue — preserve order.
+  if (pending.length === 0 && tryInsert(ev)) {
+    if (!dbHealthy) markDbState(true);
+    return;
+  }
+
+  // Degrade: buffer in memory and retry on a timer.
+  pending.push(ev);
+  if (pending.length > MAX_PENDING) {
+    pending.splice(0, pending.length - MAX_PENDING);
+  }
+  if (dbHealthy) {
+    // First failure — log it loudly (once) with the reason.
+    log.error('db write failed — buffering events in memory and degrading', lastDbError ?? 'unknown', {
+      pending: pending.length,
+    });
+  }
+  scheduleFlush();
+}
+
+/**
+ * Run a DB write that must never throw through a hot path. On failure it logs,
+ * flips db health, and returns undefined instead of propagating. Use for
+ * non-event writes (status/task/agent mutations) that would otherwise crash the
+ * process on ENOSPC/SQLITE_BUSY. Reads should stay direct so callers still see
+ * real errors where they can handle them.
+ */
+export function safeRun<T>(label: string, fn: () => T): T | undefined {
+  try {
+    const out = fn();
+    if (!dbHealthy) markDbState(true);
+    return out;
+  } catch (err) {
+    if (dbHealthy) log.error(`db write failed (${label}) — degrading`, err);
+    markDbState(false, err);
+    return undefined;
+  }
+}
+
+/** Health snapshot for /api/health. Runs a trivial read to confirm the DB responds. */
+export function dbStatus(): { ok: boolean; pending: number; lastError: string | null } {
+  let ok = dbHealthy;
+  try {
+    db.prepare('SELECT 1').get();
+  } catch (err) {
+    ok = false;
+    lastDbError = err instanceof Error ? err.message : String(err);
+  }
+  return { ok: ok && pending.length < MAX_PENDING, pending: pending.length, lastError: ok ? null : lastDbError };
+}
+
+/** Free space (MB) on the data-dir filesystem. Returns null if unavailable. */
+export function diskFreeMB(): number | null {
+  try {
+    // statfsSync available on Node 18.15+/20+. bavail * bsize = free bytes for non-root.
+    const st = (fs as unknown as { statfsSync?: (p: string) => { bsize: number; bavail: number } }).statfsSync?.(
+      DATA_DIR
+    );
+    if (!st) return null;
+    return Math.round((st.bsize * st.bavail) / (1024 * 1024));
+  } catch {
+    return null;
+  }
 }

@@ -5,12 +5,13 @@ import {
   type PermissionResult,
 } from '@anthropic-ai/claude-agent-sdk';
 import { MODELS, PROJECTS_ROOT, WORKSPACE_ROOT, VAULT_PATH, MAX_CONCURRENT_WORKERS } from './config.js';
-import { q, logEvent, type AgentRow } from './db.js';
+import { q, logEvent, safeRun, type AgentRow } from './db.js';
 import { AsyncQueue, summarizeToolCall, trim } from './util.js';
 import { broadcast, activity } from './bus.js';
 import { registerJarvisNotify } from './jarvisLink.js';
 import { jarvisToolServer, JARVIS_TOOL_NAMES } from './tools.js';
 import { classifyToolUse } from './workers.js';
+import { log } from './logger.js';
 
 const SYSTEM_PROMPT = `You are JARVIS — Adam's personal AI chief of staff, running inside Jarvis OS, a local mission-control he built on his Mac. You are the orchestrator; worker agents do the heavy lifting.
 
@@ -67,11 +68,16 @@ class Jarvis {
   /** Agents left 'running' in the DB from a previous server process are dead. */
   private reapOrphans() {
     const agents = q.allAgents.all() as AgentRow[];
+    let reaped = 0;
     for (const agent of agents) {
       if (['running', 'queued', 'waiting', 'starting'].includes(agent.status)) {
-        q.updateAgentStatus.run('stopped', 'lost on server restart', Date.now(), agent.id);
+        safeRun('reapOrphan', () =>
+          q.updateAgentStatus.run('stopped', 'lost on server restart', Date.now(), agent.id)
+        );
+        reaped += 1;
       }
     }
+    if (reaped) log.info('reaped orphan agents from previous process', { reaped });
   }
 
   private setState(state: JarvisState) {
@@ -168,6 +174,7 @@ class Jarvis {
 
       broadcast('jarvis.status', { state: 'idle', booted: true });
       activity('JARVIS online');
+      log.info('jarvis session online', { gen: myGen });
 
       for await (const msg of handle) {
         if (this.gen !== myGen) return; // superseded by a fresh session
@@ -199,6 +206,7 @@ class Jarvis {
     } catch (err) {
       if (this.gen !== myGen) return; // stale session tearing down — not an error
       const message = err instanceof Error ? err.message : String(err);
+      log.error('jarvis session error', err, { restarts: this.restarts });
       activity(`JARVIS session error: ${trim(message, 160)}`);
       broadcast('jarvis.status', { state: 'error', message });
       this.restarts += 1;

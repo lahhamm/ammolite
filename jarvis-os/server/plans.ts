@@ -1,4 +1,4 @@
-import { q, type ProjectRow, type TaskRow } from './db.js';
+import { q, safeRun, type ProjectRow, type TaskRow } from './db.js';
 import { broadcast, activity } from './bus.js';
 import { notifyJarvis } from './jarvisLink.js';
 
@@ -26,17 +26,19 @@ export function approvePlan(projectId: string, edits: Record<string, TaskEdit> =
   for (const task of plan.tasks) {
     const edit = edits[task.id];
     if (edit) {
-      q.updateTask.run(
-        edit.title ?? task.title,
-        edit.prompt ?? task.prompt,
-        edit.model ?? task.model,
-        edit.cwd ?? task.cwd,
-        task.id
+      safeRun('updateTask', () =>
+        q.updateTask.run(
+          edit.title ?? task.title,
+          edit.prompt ?? task.prompt,
+          edit.model ?? task.model,
+          edit.cwd ?? task.cwd,
+          task.id
+        )
       );
     }
-    q.updateTaskStatus.run('approved', null, task.id);
+    safeRun('updateTaskStatus', () => q.updateTaskStatus.run('approved', null, task.id));
   }
-  q.updateProjectStatus.run('active', projectId);
+  safeRun('updateProjectStatus', () => q.updateProjectStatus.run('active', projectId));
   const updated = getPlanPayload(projectId)!;
   broadcast('plan.updated', { plan: updated });
   activity(`plan approved: ${updated.project.name}`);
@@ -56,8 +58,9 @@ export function approvePlan(projectId: string, edits: Record<string, TaskEdit> =
 export function rejectPlan(projectId: string, reason: string) {
   const plan = getPlanPayload(projectId);
   if (!plan || plan.project.status !== 'pending_approval') return false;
-  q.updateProjectStatus.run('rejected', projectId);
-  for (const task of plan.tasks) q.updateTaskStatus.run('rejected', null, task.id);
+  safeRun('updateProjectStatus', () => q.updateProjectStatus.run('rejected', projectId));
+  for (const task of plan.tasks)
+    safeRun('updateTaskStatus', () => q.updateTaskStatus.run('rejected', null, task.id));
   broadcast('plan.updated', { plan: getPlanPayload(projectId) });
   activity(`plan rejected: ${plan.project.name}`);
   notifyJarvis(

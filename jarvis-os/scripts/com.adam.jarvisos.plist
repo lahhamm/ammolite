@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.adam.jarvisos</string>
+
+    <!-- Run the supervisor, which owns the restart loop. KeepAlive gives us a
+         second layer: if the supervisor itself ever dies, launchd relaunches it. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/adamlahham/Desktop/IVY AI/jarvis-os/scripts/supervise.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/adamlahham/Desktop/IVY AI/jarvis-os</string>
+
+    <!-- Ensure Homebrew/nvm node is on PATH for launchd's minimal environment.
+         Adjust these paths if your node lives elsewhere (run `which node`). -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>NODE_ENV</key>
+        <string>production</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/adamlahham/Desktop/IVY AI/jarvis-os/logs/launchd.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/adamlahham/Desktop/IVY AI/jarvis-os/logs/launchd.err.log</string>
+
+    <!-- Don't hammer restarts. -->
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+</dict>
+</plist>

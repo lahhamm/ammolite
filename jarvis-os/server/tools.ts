@@ -3,7 +3,7 @@ import { z } from 'zod';
 import fs from 'node:fs';
 import path from 'node:path';
 import { WORKSPACE_ROOT } from './config.js';
-import { q, logEvent, type TaskRow } from './db.js';
+import { q, logEvent, safeRun, type TaskRow } from './db.js';
 import { shortId } from './util.js';
 import { broadcast, activity } from './bus.js';
 import { getPlanPayload } from './plans.js';
@@ -66,20 +66,24 @@ const proposePlan = tool(
   async (args) => {
     const projectId = shortId('p');
     const slug = slugify(args.project_name);
-    q.insertProject.run(projectId, args.project_name, 'pending_approval', args.workspace_dir ?? null, Date.now());
+    safeRun('insertProject', () =>
+      q.insertProject.run(projectId, args.project_name, 'pending_approval', args.workspace_dir ?? null, Date.now())
+    );
     for (const t of args.tasks) {
       const taskId = `${projectId}.${t.id}`;
       const cwd = t.cwd ?? args.workspace_dir ?? path.join(WORKSPACE_ROOT, slug);
-      q.insertTask.run(
-        taskId,
-        projectId,
-        t.title,
-        t.prompt,
-        t.model,
-        cwd,
-        JSON.stringify((t.depends_on ?? []).map((d) => `${projectId}.${d}`)),
-        'proposed',
-        Date.now()
+      safeRun('insertTask', () =>
+        q.insertTask.run(
+          taskId,
+          projectId,
+          t.title,
+          t.prompt,
+          t.model,
+          cwd,
+          JSON.stringify((t.depends_on ?? []).map((d) => `${projectId}.${d}`)),
+          'proposed',
+          Date.now()
+        )
       );
     }
     const plan = getPlanPayload(projectId)!;

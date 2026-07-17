@@ -5,10 +5,11 @@ import {
   type PermissionResult,
 } from '@anthropic-ai/claude-agent-sdk';
 import { MAX_CONCURRENT_WORKERS, WORKER_MAX_TURNS, resolveModel } from './config.js';
-import { db, q, logEvent, type AgentRow } from './db.js';
+import { q, logEvent, safeRun, type AgentRow } from './db.js';
 import { AsyncQueue, shortId, trim, summarizeToolCall } from './util.js';
 import { broadcast, activity } from './bus.js';
 import { notifyJarvis } from './jarvisLink.js';
+import { log } from './logger.js';
 
 interface LiveWorker {
   id: string;
@@ -74,8 +75,11 @@ export function createEscalation(
   options: string[] | null
 ): string {
   const id = shortId('esc');
-  q.insertEscalation.run(id, agentId, question, context, options ? JSON.stringify(options) : null, Date.now());
+  safeRun('insertEscalation', () =>
+    q.insertEscalation.run(id, agentId, question, context, options ? JSON.stringify(options) : null, Date.now())
+  );
   const row = q.getEscalation.get(id);
+  log.info('escalation created', { escId: id, agentId });
   broadcast('escalation.new', { escalation: row });
   activity(`escalation: ${trim(question, 90)}`);
   return id;
@@ -84,7 +88,7 @@ export function createEscalation(
 export function resolveEscalation(id: string, answer: string, approved: boolean) {
   const row = q.getEscalation.get(id) as { agent_id: string; question: string; status: string } | undefined;
   if (!row || row.status !== 'pending') return;
-  q.resolveEscalation.run(approved ? 'approved' : 'denied', answer, Date.now(), id);
+  safeRun('resolveEscalation', () => q.resolveEscalation.run(approved ? 'approved' : 'denied', answer, Date.now(), id));
   broadcast('escalation.resolved', { id, answer, approved });
   activity(`escalation ${approved ? 'approved' : 'denied'}: ${trim(row.question, 70)}`);
 
@@ -106,7 +110,7 @@ export function resolveEscalation(id: string, answer: string, approved: boolean)
 
 function setAgentStatus(id: string, status: string, summary?: string) {
   const done = ['completed', 'failed', 'stopped'].includes(status);
-  q.updateAgentStatus.run(status, summary ?? null, done ? Date.now() : null, id);
+  safeRun('updateAgentStatus', () => q.updateAgentStatus.run(status, summary ?? null, done ? Date.now() : null, id));
   broadcast('agents.update', { agent: q.getAgent.get(id) });
 }
 
@@ -122,11 +126,14 @@ export interface SpawnSpec {
 
 export function spawnAgent(spec: SpawnSpec): string {
   const id = shortId('a');
-  q.insertAgent.run(id, spec.taskId ?? null, spec.title, spec.model, spec.cwd, 'queued', Date.now());
-  if (spec.taskId) q.updateTaskStatus.run('running', id, spec.taskId);
+  safeRun('insertAgent', () =>
+    q.insertAgent.run(id, spec.taskId ?? null, spec.title, spec.model, spec.cwd, 'queued', Date.now())
+  );
+  if (spec.taskId) safeRun('updateTaskStatus', () => q.updateTaskStatus.run('running', id, spec.taskId!));
   logEvent(id, 'spawned', { title: spec.title, model: spec.model, cwd: spec.cwd, prompt: spec.prompt });
   broadcast('agents.update', { agent: q.getAgent.get(id) });
   activity(`agent ${id} queued: ${spec.title} [${spec.model}]`);
+  log.info('worker spawned', { agentId: id, title: spec.title, model: spec.model });
 
   const running = [...live.values()].filter((w) => !w.stopping).length;
   if (running >= MAX_CONCURRENT_WORKERS) {
@@ -217,7 +224,7 @@ async function runWorker(id: string, spec: SpawnSpec) {
   try {
     for await (const msg of handle) {
       if (msg.type === 'system' && msg.subtype === 'init') {
-        q.setAgentSession.run(msg.session_id, id);
+        safeRun('setAgentSession', () => q.setAgentSession.run(msg.session_id, id));
       } else if (msg.type === 'assistant') {
         for (const block of msg.message.content) {
           if (block.type === 'text' && block.text.trim()) {
@@ -244,6 +251,7 @@ async function runWorker(id: string, spec: SpawnSpec) {
     if (agent.status !== 'stopped') finishWorker(id, spec, 'stopped', 'stream closed', 0, 0);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
+    log.error('worker crashed', err, { agentId: id, title: spec.title });
     emit('error', { message });
     finishWorker(id, spec, 'failed', `crashed: ${trim(message, 400)}`, 0, 0);
   }
@@ -263,9 +271,13 @@ function finishWorker(
     live.delete(id);
   }
   setAgentStatus(id, status, summary);
-  if (spec.taskId) q.updateTaskStatus.run(status === 'completed' ? 'completed' : 'failed', id, spec.taskId);
+  if (spec.taskId)
+    safeRun('updateTaskStatus', () =>
+      q.updateTaskStatus.run(status === 'completed' ? 'completed' : 'failed', id, spec.taskId!)
+    );
   const costLine = cost ? ` · $${cost.toFixed(2)} · ${turns} turns` : '';
   activity(`agent ${id} ${status}: ${spec.title}${costLine}`);
+  log.info('worker finished', { agentId: id, status, cost, turns });
   notifyJarvis(
     `Agent ${id} ("${spec.title}"${spec.taskId ? `, task ${spec.taskId}` : ''}) ${status.toUpperCase()}${costLine}. Report: ${trim(summary, 1200)}`
   );
