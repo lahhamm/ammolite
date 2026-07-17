@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useApp } from '../store';
 import { api } from '../ws';
 
-export function PlanCard() {
+export function PlanCard({ inline = false }: { inline?: boolean }) {
   const plan = useApp((s) => s.plan);
   const summary = useApp((s) => s.planSummary);
   const [edits, setEdits] = useState<Record<string, { model?: string; cwd?: string }>>({});
@@ -16,7 +16,7 @@ export function PlanCard() {
     setEdits((e) => ({ ...e, [taskId]: { ...e[taskId], ...patch } }));
 
   return (
-    <div className="plan-card">
+    <div className={`plan-card ${inline ? 'inline' : ''}`}>
       <div className="plan-head">
         <div>
           <div className="pane-label accent">Plan · awaiting your approval</div>

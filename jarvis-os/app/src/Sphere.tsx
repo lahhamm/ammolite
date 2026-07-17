@@ -4,7 +4,8 @@ import { useApp } from './store';
 import { onPulse } from './sphereBus';
 import type { SphereMode } from './types';
 
-const COUNT = 14000;
+const COUNT_HI = 14000;
+const COUNT_LO = 8000; // narrow hosts (< 700px) get fewer particles
 
 const VERT = /* glsl */ `
 uniform float uTime;
@@ -128,7 +129,8 @@ export function Sphere() {
     const group = new THREE.Group();
     scene.add(group);
 
-    // particles on a fibonacci sphere
+    // particles on a fibonacci sphere; fewer on narrow hosts to save the GPU
+    const COUNT = host.clientWidth < 700 ? COUNT_LO : COUNT_HI;
     const positions = new Float32Array(COUNT * 3);
     const seeds = new Float32Array(COUNT);
     const golden = Math.PI * (3 - Math.sqrt(5));
@@ -221,6 +223,11 @@ export function Sphere() {
 
     const tick = () => {
       raf = requestAnimationFrame(tick);
+      // Skip all GPU/animation work while the tab is hidden.
+      if (document.hidden) {
+        clock.getDelta(); // drain so dt doesn't spike on resume
+        return;
+      }
       const dt = Math.min(clock.getDelta(), 0.05);
       uniforms.uTime.value += dt;
       breath += dt;

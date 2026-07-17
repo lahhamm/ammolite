@@ -58,8 +58,11 @@ input, select { font: inherit; color: var(--text); }
   justify-content: space-between;
   padding: 0 18px;
   border-bottom: 1px solid var(--hairline);
-  background: rgba(6, 10, 18, 0.6);
-  backdrop-filter: blur(12px);
+  /* solid fill (no backdrop blur) — the topbar sits over the animated canvas
+     where blur is GPU-expensive and barely visible. */
+  background: #060a12;
+  position: relative;
+  z-index: 5;
 }
 .brand { font-size: 13px; letter-spacing: 3px; font-weight: 600; }
 .brand-mark { color: var(--cyan); margin-right: 6px; }
@@ -89,6 +92,97 @@ input, select { font: inherit; color: var(--text); }
 .conn-dot.off { background: var(--red); animation: blink 1s infinite; }
 .clock { font-family: var(--mono); font-size: 12px; color: var(--dim); }
 .muted-on { opacity: 0.45; }
+
+/* ── offline banner ── */
+.offline-banner {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #1a1206;
+  background: var(--red);
+  font-weight: 700;
+  position: relative;
+  z-index: 6;
+}
+.offline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1a1206;
+  animation: blink 0.9s infinite;
+}
+.offline-attempts {
+  font-weight: 500;
+  opacity: 0.75;
+  text-transform: none;
+  letter-spacing: 1px;
+}
+
+/* ── disk-low warning chip (topbar) ── */
+.disk-chip {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.5px;
+  color: var(--amber);
+  border: 1px solid rgba(245, 166, 35, 0.5);
+  background: var(--amber-soft);
+  border-radius: 20px;
+  padding: 3px 10px;
+  animation: pulse 2.4s infinite;
+}
+
+/* ── layout toggle (focus / work) ── */
+.layout-toggle {
+  display: inline-flex;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.layout-opt {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding: 4px 10px;
+  transition: background 0.15s, color 0.15s;
+}
+.layout-opt:hover { color: var(--text); }
+.layout-opt.active { background: var(--cyan-soft); color: var(--cyan); }
+
+/* ── status strip ── */
+.status-strip {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 26px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--hairline);
+  background: #05080f;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--text);
+  position: relative;
+  z-index: 4;
+}
+.status-strip .ss-item { display: inline-flex; align-items: baseline; gap: 6px; }
+.status-strip .ss-key {
+  color: var(--dimmer);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-size: 9.5px;
+}
+.status-strip .ss-item.amber { color: var(--amber); }
+.status-strip .ss-item.amber .ss-key { color: rgba(245, 166, 35, 0.6); }
+.status-strip .ss-item.dim { color: var(--dim); }
+.status-strip .ss-item.red { color: var(--red); }
+.status-strip .ss-spacer { flex: 1; }
 
 /* ── columns ── */
 .columns {
@@ -147,6 +241,49 @@ input, select { font: inherit; color: var(--text); }
 .agent-card-title { font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .agent-card-sub { font-family: var(--mono); font-size: 10px; color: var(--dim); }
 .status-completed .agent-card-title, .status-stopped .agent-card-title { color: var(--dim); }
+.agent-card-action {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dimmer);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  margin-top: 2px;
+}
+.status-running .agent-card-action { color: var(--dim); }
+
+/* ── roster: per-project grouping ── */
+.agent-group {
+  border: 1px solid var(--hairline);
+  border-radius: 9px;
+  padding: 7px 7px 4px;
+  margin-bottom: 8px;
+  background: rgba(72, 216, 255, 0.02);
+}
+.agent-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0 4px 6px;
+}
+.agent-group-name {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: var(--cyan);
+  opacity: 0.75;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.agent-group-progress {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--dim);
+  flex-shrink: 0;
+  margin-left: 8px;
+}
 
 .model-badge {
   font-family: var(--mono);
@@ -170,9 +307,17 @@ input, select { font: inherit; color: var(--text); }
   overflow: hidden;
   position: relative;
 }
-.sphere-zone { flex: 1; min-height: 260px; position: relative; }
+.sphere-zone { flex: 1; min-height: 260px; position: relative; transition: flex-basis 0.4s ease, min-height 0.4s ease; }
 .sphere-host { position: absolute; inset: 0; }
 .sphere-host canvas { display: block; width: 100%; height: 100%; }
+
+/* work mode: sphere shrinks to a compact state-reactive orb strip at the top,
+   transcript takes the rest of the column, input stays pinned at the bottom. */
+.stage.work-mode .sphere-zone {
+  flex: 0 0 160px;
+  min-height: 160px;
+  height: 160px;
+}
 
 .chat-feed {
   max-height: 30vh;
@@ -182,6 +327,14 @@ input, select { font: inherit; color: var(--text); }
   flex-direction: column;
   gap: 8px;
   mask-image: linear-gradient(to bottom, transparent, black 12%);
+}
+/* work mode: full-height scrollable conversation with all history */
+.chat-feed.work {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+  mask-image: none;
+  padding-top: 16px;
 }
 .chat-feed::-webkit-scrollbar { width: 3px; }
 .chat-feed::-webkit-scrollbar-thumb { background: var(--hairline-strong); }
@@ -231,14 +384,22 @@ input, select { font: inherit; color: var(--text); }
   flex: 1;
   background: rgba(10, 16, 28, 0.8);
   border: 1px solid var(--hairline);
-  border-radius: 24px;
-  padding: 11px 18px;
+  border-radius: 20px;
+  padding: 10px 18px;
   font-size: 13.5px;
+  font-family: var(--sans);
+  line-height: 1.4;
   outline: none;
+  resize: none;
+  overflow-y: auto;
+  max-height: 108px;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .directive-input:focus { border-color: rgba(72, 216, 255, 0.45); box-shadow: 0 0 0 3px rgba(72, 216, 255, 0.07); }
 .directive-input::placeholder { color: var(--dimmer); }
+.directive-input::-webkit-scrollbar { width: 3px; }
+.directive-input::-webkit-scrollbar-thumb { background: var(--hairline-strong); }
+.input-bar { align-items: flex-end; }
 
 /* ── buttons ── */
 .btn {
@@ -273,14 +434,27 @@ input, select { font: inherit; color: var(--text); }
   width: min(620px, calc(100% - 48px));
   max-height: 72%;
   overflow-y: auto;
-  background: rgba(8, 13, 24, 0.92);
+  background: #080d18;
   border: 1px solid rgba(72, 216, 255, 0.35);
   border-radius: 14px;
   padding: 18px 20px;
-  backdrop-filter: blur(18px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(72, 216, 255, 0.08);
   animation: rise 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+  z-index: 3;
 }
+/* inline (work mode): flows between transcript and input, scrollable */
+.plan-card.inline {
+  position: relative;
+  left: auto;
+  bottom: auto;
+  transform: none;
+  width: auto;
+  margin: 0 22px 4px;
+  max-height: 46vh;
+  animation-name: rise;
+}
+.plan-card.inline::-webkit-scrollbar { width: 3px; }
+.plan-card.inline::-webkit-scrollbar-thumb { background: var(--hairline-strong); }
 .plan-name { font-size: 16px; font-weight: 600; margin: 2px 0 4px; }
 .plan-summary { font-size: 12.5px; color: var(--dim); line-height: 1.5; }
 .plan-tasks { margin: 14px 0; display: flex; flex-direction: column; gap: 8px; }
@@ -343,7 +517,8 @@ input, select { font: inherit; color: var(--text); }
   margin-bottom: 10px;
   animation: rise 0.3s ease;
 }
-.escalation-from { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 5px; }
+.escalation-from { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 5px; display: flex; justify-content: space-between; align-items: baseline; }
+.escalation-time { color: rgba(245, 166, 35, 0.55); letter-spacing: 0.5px; }
 .escalation-q { font-size: 12.5px; line-height: 1.5; }
 .escalation-ctx {
   margin-top: 7px;
@@ -395,6 +570,14 @@ input, select { font: inherit; color: var(--text); }
   justify-content: center;
   animation: fade 0.2s ease;
 }
+/* side variant: dim scrim only (no blur), panel slides in from the right so the
+   roster + feed stay watchable while reading a transcript. */
+.overlay-backdrop.side {
+  background: rgba(2, 4, 8, 0.5);
+  backdrop-filter: none;
+  justify-content: flex-end;
+  align-items: stretch;
+}
 .overlay-panel {
   width: min(860px, 92vw);
   height: min(640px, 86vh);
@@ -406,6 +589,29 @@ input, select { font: inherit; color: var(--text); }
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7);
   animation: rise 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
+.overlay-panel.side {
+  width: min(520px, 96vw);
+  height: 100%;
+  border-radius: 0;
+  border: none;
+  border-left: 1px solid var(--hairline-strong);
+  background: #080d18;
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.6);
+  animation: slide-in 0.26s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+.load-earlier {
+  display: block;
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.5px;
+  color: var(--dim);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 6px;
+  margin-bottom: 12px;
+}
+.load-earlier:hover { color: var(--cyan); border-color: var(--hairline-strong); }
 .overlay-head {
   display: flex;
   justify-content: space-between;
@@ -475,8 +681,7 @@ input, select { font: inherit; color: var(--text); }
     bottom: 0;
     width: min(330px, 88vw);
     z-index: 30;
-    background: rgba(7, 11, 20, 0.97);
-    backdrop-filter: blur(14px);
+    background: #070b14;
     transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
   }
   .roster { left: 0; transform: translateX(-102%); border-right: 1px solid var(--hairline-strong); }
@@ -513,6 +718,10 @@ input, select { font: inherit; color: var(--text); }
 @keyframes rise {
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 .plan-card { animation-fill-mode: both; }
 .plan-card, .overlay-panel { transform-origin: bottom center; }

@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { setState, useApp } from '../store';
 import { api } from '../ws';
 import type { AgentEvent } from '../types';
+
+const WINDOW = 300; // render only the most recent N events by default
 
 function EventLine({ event }: { event: AgentEvent }) {
   switch (event.type) {
@@ -36,18 +38,63 @@ function EventLine({ event }: { event: AgentEvent }) {
   }
 }
 
+const MemoEventLine = memo(EventLine);
+
 const NO_EVENTS: AgentEvent[] = [];
+
+function transcriptText(events: AgentEvent[]): string {
+  return events
+    .map((e) => {
+      switch (e.type) {
+        case 'text':
+          return String(e.text ?? '');
+        case 'tool':
+          return `[tool] ${String(e.summary ?? e.name ?? '')}`;
+        case 'steer':
+          return `[steer ${String(e.from ?? '')}] ${String(e.message ?? '')}`;
+        case 'guarded':
+          return `[guarded] ${String(e.danger ?? '')}`;
+        case 'result':
+          return `[${e.ok ? 'done' : 'failed'}] ${String(e.summary ?? '')}`;
+        case 'error':
+          return `[error] ${String(e.message ?? '')}`;
+        case 'spawned':
+          return `[spawned] model ${String(e.model ?? '')} cwd ${String(e.cwd ?? '')}`;
+        default:
+          return '';
+      }
+    })
+    .filter(Boolean)
+    .join('\n');
+}
 
 export function AgentOverlay() {
   const openId = useApp((s) => s.openAgentId);
   const agent = useApp((s) => s.agents.find((a) => a.id === s.openAgentId));
   const events = useApp((s) => (s.openAgentId ? (s.agentEvents[s.openAgentId] ?? NO_EVENTS) : NO_EVENTS));
   const [steer, setSteer] = useState('');
+  const [showAll, setShowAll] = useState(false);
+  const [copied, setCopied] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const pinnedRef = useRef(true);
 
+  // Reset the window + copied flag when switching agents.
   useEffect(() => {
-    bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight });
-  }, [events.length, openId]);
+    setShowAll(false);
+    setCopied(false);
+    pinnedRef.current = true;
+  }, [openId]);
+
+  const onScroll = () => {
+    const el = bodyRef.current;
+    if (!el) return;
+    pinnedRef.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+  };
+
+  useLayoutEffect(() => {
+    const el = bodyRef.current;
+    if (el && pinnedRef.current) el.scrollTop = el.scrollHeight;
+  }, [events.length, openId, showAll]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -60,10 +107,23 @@ export function AgentOverlay() {
   if (!openId || !agent) return null;
 
   const running = ['running', 'waiting', 'queued'].includes(agent.status);
+  const hidden = Math.max(0, events.length - WINDOW);
+  const shown = showAll ? events : events.slice(-WINDOW);
+
+  const copyTranscript = () => {
+    const text = transcriptText(events);
+    navigator.clipboard?.writeText(text).then(
+      () => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      },
+      () => {}
+    );
+  };
 
   return (
-    <div className="overlay-backdrop" onClick={() => setState({ openAgentId: null })}>
-      <div className="overlay-panel" onClick={(e) => e.stopPropagation()}>
+    <div className="overlay-backdrop side" onClick={() => setState({ openAgentId: null })}>
+      <div className="overlay-panel side" onClick={(e) => e.stopPropagation()}>
         <div className="overlay-head">
           <div>
             <div className="overlay-title">
@@ -76,6 +136,9 @@ export function AgentOverlay() {
             </div>
           </div>
           <div className="overlay-controls">
+            <button className="btn ghost small" onClick={copyTranscript} title="Copy full transcript">
+              {copied ? 'copied' : 'copy'}
+            </button>
             {running && (
               <button className="btn danger small" onClick={() => api.stopAgent(agent.id)}>
                 Stop
@@ -87,10 +150,15 @@ export function AgentOverlay() {
           </div>
         </div>
 
-        <div className="overlay-body" ref={bodyRef}>
+        <div className="overlay-body" ref={bodyRef} onScroll={onScroll}>
           {events.length === 0 && <div className="empty-hint">No events yet…</div>}
-          {events.map((e, i) => (
-            <EventLine key={i} event={e} />
+          {hidden > 0 && !showAll && (
+            <button className="load-earlier" onClick={() => setShowAll(true)}>
+              load {hidden} earlier event{hidden === 1 ? '' : 's'}
+            </button>
+          )}
+          {shown.map((e, i) => (
+            <MemoEventLine key={(showAll ? 0 : hidden) + i} event={e} />
           ))}
         </div>
 

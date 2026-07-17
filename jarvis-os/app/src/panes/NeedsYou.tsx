@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { useApp } from '../store';
 import { api } from '../ws';
 import type { Escalation } from '../types';
@@ -9,10 +9,13 @@ function EscalationCard({ escalation }: { escalation: Escalation }) {
 
   const respond = (text: string, approved: boolean) => api.answerEscalation(escalation.id, text, approved);
 
+  const when = new Date(escalation.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
   return (
     <div className="escalation-card">
       <div className="escalation-from">
-        {escalation.agent_id === 'jarvis' ? 'JARVIS asks' : `agent ${escalation.agent_id}`}
+        <span>{escalation.agent_id === 'jarvis' ? 'JARVIS asks' : `agent ${escalation.agent_id}`}</span>
+        <span className="escalation-time">{when}</span>
       </div>
       <div className="escalation-q">{escalation.question}</div>
       {escalation.context && (
@@ -47,18 +50,23 @@ function EscalationCard({ escalation }: { escalation: Escalation }) {
   );
 }
 
-export function NeedsYou() {
+const Escalations = memo(function Escalations() {
   const escalations = useApp((s) => s.escalations);
-  const activity = useApp((s) => s.activity);
-
   return (
-    <aside className="pane needs-you">
+    <>
       <div className="pane-label amber">Needs you {escalations.length > 0 && `· ${escalations.length}`}</div>
       {escalations.length === 0 && <div className="empty-hint small">Nothing needs you. Autopilot.</div>}
       {escalations.map((e) => (
         <EscalationCard key={e.id} escalation={e} />
       ))}
+    </>
+  );
+});
 
+const ActivityFeed = memo(function ActivityFeed() {
+  const activity = useApp((s) => s.activity);
+  return (
+    <>
       <div className="pane-label dim spaced">Activity</div>
       <div className="activity-feed">
         {activity.map((a, i) => (
@@ -70,6 +78,15 @@ export function NeedsYou() {
           </div>
         ))}
       </div>
+    </>
+  );
+});
+
+export function NeedsYou() {
+  return (
+    <aside className="pane needs-you">
+      <Escalations />
+      <ActivityFeed />
     </aside>
   );
 }

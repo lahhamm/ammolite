@@ -7,11 +7,26 @@ import {
   setState,
   upsertAgent,
 } from './store';
-import type { Agent, AgentEvent, Escalation, Plan } from './types';
+import type { Agent, AgentEvent, Escalation, Health, Plan } from './types';
 import { speak } from './voice';
 
 let socket: WebSocket | null = null;
 let retryMs = 800;
+
+// --- coalesced delta streaming: at most one store update per animation frame ---
+let deltaBuffer = '';
+let deltaRaf = 0;
+function flushDeltas() {
+  deltaRaf = 0;
+  if (!deltaBuffer) return;
+  const chunk = deltaBuffer;
+  deltaBuffer = '';
+  mutate((s) => ({ streamingText: s.streamingText + chunk, jarvisState: 'thinking' }));
+}
+function queueDelta(text: string) {
+  deltaBuffer += text;
+  if (!deltaRaf) deltaRaf = requestAnimationFrame(flushDeltas);
+}
 
 export function connect() {
   const proto = location.protocol === 'https:' ? 'wss' : 'ws';
@@ -19,13 +34,17 @@ export function connect() {
 
   socket.onopen = () => {
     retryMs = 800;
-    setState({ connected: true });
+    setState({ connected: true, connectAttempts: 0 });
   };
 
   socket.onclose = () => {
-    setState({ connected: false });
+    mutate((s) => ({ connected: false, connectAttempts: s.connectAttempts + 1 }));
     setTimeout(connect, retryMs);
     retryMs = Math.min(retryMs * 1.6, 8000);
+  };
+
+  socket.onerror = () => {
+    // onclose will follow; nothing extra to do.
   };
 
   socket.onmessage = (raw) => {
@@ -39,6 +58,21 @@ export function connect() {
   };
 }
 
+// --- health polling: drives the disk-warning chip in the topbar ---
+async function pollHealth() {
+  try {
+    const res = await fetch('/api/health', { cache: 'no-store' });
+    if (res.ok) setState({ health: (await res.json()) as Health });
+  } catch {
+    // Server down — the WS banner already covers this; leave stale health.
+  }
+}
+
+export function startHealthPolling() {
+  void pollHealth();
+  setInterval(pollHealth, 15_000);
+}
+
 function handle(msg: { type: string; [k: string]: unknown }) {
   switch (msg.type) {
     case 'hello': {
@@ -48,6 +82,7 @@ function handle(msg: { type: string; [k: string]: unknown }) {
         plan: Plan | null;
         transcript: { role: 'adam' | 'jarvis'; text: string; ts: number }[];
         jarvisState: 'idle' | 'thinking' | 'error';
+        sessionCost?: number;
       };
       setState({
         agents: s.agents,
@@ -55,11 +90,12 @@ function handle(msg: { type: string; [k: string]: unknown }) {
         plan: s.plan && s.plan.project.status === 'pending_approval' ? s.plan : null,
         transcript: s.transcript,
         jarvisState: s.jarvisState,
+        sessionCost: typeof s.sessionCost === 'number' ? s.sessionCost : 0,
       });
       break;
     }
     case 'jarvis.delta':
-      mutate((s) => ({ streamingText: s.streamingText + String(msg.text ?? ''), jarvisState: 'thinking' }));
+      queueDelta(String(msg.text ?? ''));
       break;
     case 'jarvis.message': {
       const role = msg.role as 'adam' | 'jarvis';
@@ -83,9 +119,14 @@ function handle(msg: { type: string; [k: string]: unknown }) {
     case 'agents.update':
       upsertAgent(msg.agent as Agent);
       break;
-    case 'agent.event':
-      pushAgentEvent(String(msg.agentId), msg.event as AgentEvent);
+    case 'agent.event': {
+      const event = msg.event as AgentEvent;
+      pushAgentEvent(String(msg.agentId), event);
+      if (event.type === 'result' && typeof event.cost === 'number' && event.cost > 0) {
+        mutate((s) => ({ sessionCost: s.sessionCost + (event.cost as number) }));
+      }
       break;
+    }
     case 'escalation.new':
       mutate((s) => ({ escalations: [...s.escalations, normalizeEscalation(msg.escalation as Escalation)] }));
       break;

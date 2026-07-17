@@ -55,5 +55,19 @@ export interface ActivityLine {
   ts: number;
 }
 
+export interface Health {
+  ok: boolean;
+  uptime: number;
+  jarvisState: string;
+  workersRunning: number;
+  dbOk: boolean;
+  dbPending: number;
+  diskFreeMB: number | null;
+  diskLow: boolean;
+  lowDiskThresholdMB: number;
+  mode: string;
+}
+
 export type JarvisState = 'idle' | 'thinking' | 'error';
 export type SphereMode = 'idle' | 'listening' | 'thinking' | 'speaking' | 'alert';
+export type LayoutMode = 'focus' | 'work';
