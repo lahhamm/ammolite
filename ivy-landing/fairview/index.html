@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>166 Fairview — Laguna Beach</title>
+<meta name="description" content="166 Fairview St, Laguna Beach. Reimagined North Laguna ocean-view duplex steps from Shaw's Cove. Offered at $4,995,000." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper: oklch(0.972 0.005 230);
+    --ink: oklch(0.25 0.02 240);
+    --ink-soft: oklch(0.47 0.018 238);
+    --pacific: oklch(0.52 0.09 235);
+    --deep: oklch(0.21 0.03 245);
+    --cream: oklch(0.96 0.006 230);
+    --line: oklch(0.86 0.01 230);
+    --line-dark: oklch(0.96 0.006 230 / .16);
+    --serif: "Fraunces", serif;
+    --sans: "Instrument Sans", sans-serif;
+    --pad: clamp(24px, 5vw, 88px);
+    --ease: cubic-bezier(.19,.6,.22,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  ::selection{background:var(--pacific);color:var(--paper)}
+  .caps{font-size:11px;letter-spacing:.32em;text-transform:uppercase;font-weight:600}
+  .kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;font-weight:600;color:var(--pacific)}
+  .serif{font-family:var(--serif);font-weight:300}
+
+  /* grain */
+  body::after{content:"";position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E")}
+
+  /* ---------- PRELOADER ---------- */
+  .loader{position:fixed;inset:0;z-index:200;background:var(--paper);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:26px;transition:transform 1s var(--ease), visibility 0s 1s}
+  .loader.done{transform:translateY(-101%);visibility:hidden}
+  .loader .word{font-family:var(--serif);font-weight:300;font-size:clamp(28px,4vw,44px);letter-spacing:.02em;display:flex;overflow:hidden}
+  .loader .word span{display:inline-block;transform:translateY(110%);animation:ldUp .8s var(--ease) forwards}
+  .loader .rule{width:min(280px,60vw);height:1px;background:var(--line);position:relative;overflow:hidden}
+  .loader .rule i{position:absolute;inset:0;background:var(--ink);transform:scaleX(0);transform-origin:left;animation:ldRule 1.2s var(--ease) .2s forwards}
+  .loader .caps{color:var(--ink-soft);opacity:0;animation:ldFade .6s ease .55s forwards}
+  @keyframes ldUp{to{transform:translateY(0)}}
+  @keyframes ldRule{to{transform:scaleX(1)}}
+  @keyframes ldFade{to{opacity:1}}
+
+  /* ---------- NAV ---------- */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px var(--pad);color:oklch(0.985 0.003 230);transition:background .45s ease, color .45s ease, box-shadow .45s ease}
+  .nav .mono{font-family:var(--serif);font-weight:400;font-size:21px;letter-spacing:.02em;text-decoration:none;color:inherit}
+  .nav .mid{position:absolute;left:50%;transform:translateX(-50%)}
+  .nav .cta{font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:inherit;text-decoration:none;border:1px solid currentColor;padding:11px 22px;border-radius:99px;transition:background .3s,color .3s}
+  .nav.scrolled{background:oklch(0.972 0.005 230 / .88);backdrop-filter:blur(14px);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+  .nav .cta:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .nav.scrolled .cta:hover{background:var(--ink);color:var(--paper)}
+  @media (max-width:760px){.nav .mid{display:none}}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;height:100dvh;min-height:640px;overflow:hidden;color:oklch(0.985 0.003 230)}
+  .hero-media{position:absolute;inset:0;overflow:hidden}
+  .hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 68%;transform-origin:center 60%}
+  @keyframes heroDrift{from{transform:scale(1.07)}to{transform:scale(1.0)}}
+  .hero-media img{animation:heroDrift 10s var(--ease) forwards}
+  .hero-scrim{position:absolute;inset:0;background:
+    linear-gradient(to top, oklch(0.2 0.03 245 / .88) 0%, oklch(0.2 0.03 245 / .38) 42%, transparent 74%),
+    linear-gradient(to bottom, oklch(0.2 0.03 245 / .42), transparent 24%)}
+  .hero-inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--pad) clamp(22px,3.4vw,44px);text-shadow:0 1px 30px oklch(0.2 0.03 245 / .55)}
+  .hero-kicker{font-size:11px;letter-spacing:.4em;text-transform:uppercase;font-weight:600;opacity:.9}
+  .hero-title{font-family:var(--serif);font-weight:300;font-size:clamp(64px,12.5vw,196px);line-height:.92;letter-spacing:-0.02em;margin:16px 0 clamp(20px,3vw,40px);display:flex;align-items:baseline;gap:.18em;flex-wrap:wrap}
+  .hero-title .num{-webkit-text-stroke:1.5px oklch(0.985 0.003 230);color:transparent;font-style:normal;text-shadow:none}
+  .hero-title em{font-style:italic;font-weight:300}
+  .hero-fact-row{display:flex;align-items:center;justify-content:space-between;gap:18px;border-top:1px solid oklch(0.985 0.003 230 / .35);padding-top:18px;flex-wrap:wrap}
+  .hero-fact-row .f{font-size:12px;letter-spacing:.26em;text-transform:uppercase;font-weight:500;opacity:.92}
+  .hero-fact-row .f b{font-family:var(--serif);font-weight:400;font-size:20px;letter-spacing:.01em;text-transform:none;margin-right:10px}
+  .hero-fact-row a.f{color:inherit;text-decoration:none;border-bottom:1px solid oklch(0.985 0.003 230 / .5);padding-bottom:3px}
+  @media (max-width:760px){.hero-fact-row .f:nth-child(3){display:none}}
+
+  /* reveal helpers */
+  .clip{overflow:hidden}
+  .clip>img{transition:none}
+  .wipe{clip-path:inset(100% 0 0 0)}
+  .wipe.on{clip-path:inset(0% 0 0 0);transition:clip-path 1.25s var(--ease)}
+  @media (prefers-reduced-motion: reduce){.wipe{clip-path:inset(0 0 0 0)}}
+
+  /* ---------- INTRO ---------- */
+  .intro{padding:clamp(110px,14vw,210px) var(--pad) clamp(80px,10vw,150px);max-width:1560px;margin:0 auto}
+  .intro .idx{display:flex;align-items:center;gap:18px;margin-bottom:clamp(40px,5vw,70px)}
+  .intro .idx .no{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink-soft)}
+  .intro .idx .ln{height:1px;flex:0 0 64px;background:var(--line)}
+  .intro h2{font-family:var(--serif);font-weight:300;font-size:clamp(36px,5vw,74px);line-height:1.08;letter-spacing:-0.015em;max-width:20ch;text-wrap:balance}
+  .intro h2 em{font-style:italic}
+  .intro h2 .blue{color:var(--pacific)}
+  .intro-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(48px,7vw,130px);margin-top:clamp(56px,7vw,110px);align-items:start}
+  .intro-photos{position:relative;padding-bottom:clamp(70px,8vw,120px)}
+  .intro-photos figure{margin:0}
+  .intro-photos .ph-a{width:88%}
+  .intro-photos .ph-a img{aspect-ratio:4/4.7;object-fit:cover;width:100%}
+  .intro-photos .ph-b{position:absolute;width:56%;right:0;bottom:0}
+  .intro-photos .ph-b img{aspect-ratio:4/3;object-fit:cover;width:100%}
+  figcaption{font-size:10px;letter-spacing:.3em;text-transform:uppercase;font-weight:600;color:var(--ink-soft);margin-top:14px;display:flex;align-items:center;gap:12px}
+  figcaption::before{content:"";width:26px;height:1px;background:var(--line)}
+  .intro-copy p{color:var(--ink-soft);font-size:17px;max-width:42ch}
+  .intro-copy p+p{margin-top:22px}
+  .intro-copy .lead{font-family:var(--serif);font-size:23px;line-height:1.5;color:var(--ink);font-weight:300;margin-bottom:26px}
+
+  /* ---------- STATS ---------- */
+  .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stats-inner{max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+  .stat{padding:clamp(40px,4.5vw,72px) clamp(20px,2.5vw,44px);border-left:1px solid var(--line)}
+  .stat:first-child{border-left:none}
+  .stat .n{font-family:var(--serif);font-weight:300;font-size:clamp(30px,3.6vw,58px);letter-spacing:-0.015em;font-variant-numeric:tabular-nums}
+  .stat .n i{font-style:italic}
+  .stat .l{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);margin-top:12px;font-weight:600}
+  @media (max-width:880px){.stats-inner{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:none}.stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line)}}
+
+  /* ---------- PIN SCALE (signature) ---------- */
+  .pin{height:230vh;position:relative}
+  .pin-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .pin-media{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+  .pin-media img{width:100%;height:100%;object-fit:cover}
+  .pin-cap{position:absolute;z-index:3;bottom:clamp(28px,4vw,56px);left:var(--pad);color:oklch(0.985 0.003 230);display:flex;flex-direction:column;gap:8px}
+  .pin-cap .caps{opacity:.85}
+  .pin-cap .big{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(26px,3.4vw,46px)}
+  .pin-shade{position:absolute;inset:0;z-index:2;background:linear-gradient(to top, oklch(0.2 0.03 245 / .5), transparent 42%)}
+
+  /* ---------- MARQUEE ---------- */
+  .marq{padding:clamp(70px,9vw,130px) 0;border-bottom:1px solid var(--line);overflow:hidden}
+  .marq-track{display:flex;gap:0;width:max-content;animation:marq 46s linear infinite}
+  .marq span{font-family:var(--serif);font-weight:300;font-size:clamp(54px,8vw,120px);line-height:1;white-space:nowrap;padding-right:.6em}
+  .marq .o{-webkit-text-stroke:1px var(--ink);color:transparent}
+  .marq .i{font-style:italic;color:var(--ink)}
+  .marq .d{color:var(--pacific);font-size:.5em;align-self:center;padding:0 .5em}
+  @keyframes marq{to{transform:translateX(-50%)}}
+
+  /* ---------- RESIDENCES ---------- */
+  .res{padding:clamp(100px,13vw,190px) var(--pad);max-width:1560px;margin:0 auto}
+  .res-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:clamp(48px,6vw,84px)}
+  .res-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(34px,4.4vw,64px);letter-spacing:-0.015em;line-height:1.06;max-width:16ch;text-wrap:balance}
+  .res-head h2 em{font-style:italic}
+  .res-head .caps{color:var(--ink-soft);padding-bottom:10px;white-space:nowrap}
+  .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,2.6vw,44px)}
+  .res-card{border:1px solid var(--line);padding:clamp(18px,2vw,30px)}
+  .res-card .clip img{aspect-ratio:4/2.9;object-fit:cover;width:100%}
+  .res-card .rc-head{display:flex;justify-content:space-between;align-items:baseline;margin:clamp(20px,2.4vw,30px) 0 6px}
+  .res-card .rc-head .no{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--pacific)}
+  .res-card h3{font-family:var(--serif);font-weight:300;font-size:clamp(24px,2.4vw,34px);letter-spacing:-0.01em}
+  .res-card ul{list-style:none;margin-top:16px}
+  .res-card li{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid var(--line);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--ink-soft)}
+  .res-card li b{color:var(--ink);font-weight:500}
+  @media (max-width:880px){.res-grid{grid-template-columns:1fr}.res-head{flex-direction:column;align-items:flex-start}}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{padding:0 var(--pad) clamp(100px,13vw,180px);max-width:1560px;margin:0 auto}
+  .gallery-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:clamp(40px,4.5vw,64px);gap:24px}
+  .gallery-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(34px,4.2vw,60px);letter-spacing:-0.015em}
+  .gallery-head h2 em{font-style:italic}
+  .gallery-head button{background:none;border:1px solid var(--ink);color:var(--ink);font:inherit;font-size:11px;letter-spacing:.26em;text-transform:uppercase;font-weight:600;padding:14px 26px;border-radius:99px;cursor:pointer;transition:background .3s,color .3s;white-space:nowrap}
+  .gallery-head button:hover{background:var(--ink);color:var(--paper)}
+  .ggrid{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(12px,1.4vw,22px)}
+  .gcell{position:relative;overflow:hidden;cursor:none;background:oklch(0.9 0.01 230)}
+  .gcell img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+  .gcell:hover img{transform:scale(1.05)}
+  .gcell:focus-visible{outline:2px solid var(--pacific);outline-offset:3px}
+  .gcell .gwrap{position:relative;height:100%}
+  .gcell .tag{position:absolute;left:14px;bottom:12px;color:oklch(0.985 0.003 230);font-size:10px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;text-shadow:0 1px 10px oklch(0.2 0.03 245/.6);display:flex;gap:10px;align-items:center}
+  .tag .no{font-family:var(--serif);font-style:italic}
+  .g1{grid-column:span 4;aspect-ratio:16/9.4}
+  .g2{grid-column:span 2;aspect-ratio:4/4.72}
+  .g3{grid-column:span 2;aspect-ratio:4/3.3}
+  .g4{grid-column:span 2;aspect-ratio:4/3.3}
+  .g5{grid-column:span 2;aspect-ratio:4/3.3}
+  .g6{grid-column:span 3;aspect-ratio:16/9.8}
+  .g7{grid-column:span 3;aspect-ratio:16/9.8}
+  .cursor{position:fixed;z-index:120;top:0;left:0;width:84px;height:84px;border-radius:50%;background:oklch(0.972 0.005 230 / .92);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.3em;text-transform:uppercase;font-weight:600;pointer-events:none;transform:translate(-50%,-50%)}
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox{position:fixed;inset:0;z-index:150;background:oklch(0.16 0.02 245 / .97);display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,64px);animation:lbIn .25s ease-out}
+  .lightbox img{max-height:82vh;max-width:100%;object-fit:contain;box-shadow:0 40px 90px oklch(0 0 0 / .5);animation:lbImg .35s var(--ease)}
+  @keyframes lbIn{from{opacity:0}}
+  @keyframes lbImg{from{opacity:0;transform:scale(.985)}}
+  .lb-btn{position:absolute;background:none;border:1px solid oklch(0.985 0.003 230 / .35);color:oklch(0.985 0.003 230);width:52px;height:52px;border-radius:50%;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s}
+  .lb-btn:hover{border-color:oklch(0.985 0.003 230)}
+  .lb-prev{left:clamp(10px,2.5vw,40px)}
+  .lb-next{right:clamp(10px,2.5vw,40px)}
+  .lb-close{top:clamp(10px,2.5vw,32px);right:clamp(10px,2.5vw,40px)}
+  .lb-count{position:absolute;bottom:clamp(14px,2.5vw,32px);left:50%;transform:translateX(-50%);color:oklch(0.985 0.003 230 / .8);font-size:12px;letter-spacing:.3em}
+
+  /* ---------- BLEED QUOTE ---------- */
+  .bleed{position:relative;height:min(94vh,880px);overflow:hidden;display:flex;align-items:center;color:oklch(0.985 0.003 230)}
+  .bleed img{position:absolute;inset:-12% 0;width:100%;height:124%;object-fit:cover}
+  .bleed::after{content:"";position:absolute;inset:0;background:linear-gradient(to right, oklch(0.2 0.03 245/.62), oklch(0.2 0.03 245/.2) 60%)}
+  .bleed-inner{position:relative;z-index:2;padding:0 var(--pad);max-width:1560px;margin:0 auto;width:100%}
+  .bleed blockquote{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(32px,5vw,72px);line-height:1.14;max-width:16ch;letter-spacing:-0.015em;text-indent:-.45em}
+  .bleed .attr{margin-top:28px;display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;font-weight:600;opacity:.9}
+  .bleed .attr::before{content:"";width:44px;height:1px;background:oklch(0.985 0.003 230/.6)}
+
+  /* ---------- NEIGHBORHOOD ---------- */
+  .hood{padding:clamp(100px,13vw,190px) var(--pad);max-width:1560px;margin:0 auto}
+  .hood-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(48px,7vw,130px);align-items:center}
+  .hood h2{font-family:var(--serif);font-weight:300;font-size:clamp(32px,4.2vw,58px);line-height:1.1;letter-spacing:-0.015em;margin-top:22px;text-wrap:balance}
+  .hood h2 em{font-style:italic}
+  .hood-copy{color:var(--ink-soft);margin-top:24px;max-width:44ch;font-size:17px}
+  .hood-list{list-style:none;margin-top:34px}
+  .hood-list li{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--line);font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+  .hood-list li i{font-family:var(--serif);font-style:italic;text-transform:none;letter-spacing:0;font-size:15px;color:var(--ink-soft)}
+  .hood-photos{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,1.8vw,24px)}
+  .hood-photos figure{margin:0}
+  .hood-photos img{width:100%;aspect-ratio:4/5.1;object-fit:cover}
+  .hood-photos figure:last-child{transform:translateY(clamp(26px,3.5vw,54px))}
+  @media (max-width:880px){.hood-grid{grid-template-columns:1fr}.hood-photos figure:last-child{transform:none}}
+
+  /* ---------- SHOWING ---------- */
+  .showing{background:var(--deep);color:var(--cream);padding:clamp(110px,13vw,190px) var(--pad) clamp(90px,10vw,150px)}
+  .showing-inner{max-width:1560px;margin:0 auto;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(56px,8vw,140px)}
+  .showing h2{font-family:var(--serif);font-weight:300;font-size:clamp(40px,5.4vw,84px);line-height:1.02;letter-spacing:-0.018em;margin-top:22px;text-wrap:balance}
+  .showing h2 em{font-style:italic}
+  .agent{margin-top:clamp(38px,4.5vw,64px);padding:26px 28px;border:1px solid var(--line-dark);display:flex;flex-direction:column;gap:4px;max-width:420px}
+  .agent .name{font-family:var(--serif);font-size:24px;font-weight:300}
+  .agent .muted{color:oklch(0.96 0.006 230 / .6);font-size:14px}
+  .agent .mls{margin-top:12px;padding-top:12px;border-top:1px solid var(--line-dark);font-size:10px;letter-spacing:.3em;text-transform:uppercase;font-weight:600;color:oklch(0.96 0.006 230 / .5)}
+  form{display:flex;flex-direction:column;gap:26px}
+  .field label{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;font-weight:600;color:oklch(0.96 0.006 230 / .55);margin-bottom:6px}
+  .field input,.field textarea{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line-dark);color:inherit;font:inherit;font-size:17px;padding:10px 2px 14px;border-radius:0;transition:border-color .25s}
+  .field input:focus,.field textarea:focus{outline:none;border-color:oklch(0.96 0.006 230 / .75)}
+  .field textarea{min-height:78px;resize:vertical}
+  .submit{margin-top:14px;background:var(--cream);color:var(--deep);border:none;font:inherit;font-weight:600;font-size:12px;letter-spacing:.3em;text-transform:uppercase;padding:20px 36px;cursor:pointer;border-radius:99px;transition:opacity .25s;display:flex;justify-content:center;align-items:center;gap:12px}
+  .submit:hover{opacity:.88}
+  .sent{border:1px solid var(--line-dark);padding:36px;font-size:17px;line-height:1.7}
+  .sent .serif{font-size:28px;display:block;margin-bottom:12px;font-style:italic}
+  @media (max-width:880px){.showing-inner{grid-template-columns:1fr}}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--deep);color:oklch(0.96 0.006 230 / .55);padding:0 var(--pad) 42px;font-size:13px}
+  .foot-inner{max-width:1560px;margin:0 auto;border-top:1px solid var(--line-dark);padding-top:44px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+  .foot-inner .mono{font-family:var(--serif);font-weight:300;font-size:30px;color:var(--cream)}
+  .foot-col .caps{color:oklch(0.96 0.006 230 / .4);display:block;margin-bottom:12px}
+  footer a{color:oklch(0.96 0.006 230 / .8);text-decoration:none;border-bottom:1px solid oklch(0.96 0.006 230 / .25)}
+  .legal{max-width:1560px;margin:44px auto 0;padding-top:20px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:11px;color:oklch(0.96 0.006 230 / .38)}
+  @media (max-width:880px){.foot-inner{grid-template-columns:1fr}}
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-media img{animation:none;transform:scale(1)}
+    .gcell img{transition:none}
+    .marq-track{animation:none}
+    .loader{display:none}
+    html{scroll-behavior:auto}
+  }
+  @media (max-width:880px){
+    .intro-grid{grid-template-columns:1fr}
+    .ggrid{grid-template-columns:repeat(2,1fr)}
+    .g1,.g2,.g3,.g4,.g5,.g6,.g7{grid-column:span 2;aspect-ratio:16/10}
+    .pin{height:170vh}
+  }
+</style>
+<script type="importmap">
+{"imports":{
+  "react":"https://esm.sh/react@18.3.1",
+  "react-dom/client":"https://esm.sh/react-dom@18.3.1/client",
+  "framer-motion":"https://esm.sh/framer-motion@11.11.0?deps=react@18.3.1",
+  "htm":"https://esm.sh/htm@3.1.1"
+}}
+</script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module">
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { createRoot } from "react-dom/client";
+import { motion, useReducedMotion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
+import htm from "htm";
+const html = htm.bind(React.createElement);
+
+const EASE = [0.19, 0.6, 0.22, 1];
+const ALL_PHOTOS = Array.from({length: 55}, (_, i) => `photos/${String(i+1).padStart(2,"0")}.webp`);
+
+const rise = (reduce, delay = 0) => ({
+  initial: { opacity: 0, y: reduce ? 0 : 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.3 },
+  transition: { duration: 1.05, ease: EASE, delay }
+});
+function useWipe() {
+  const ref = useRef(null);
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { setOn(true); return; }
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setOn(true); io.disconnect(); }
+    }, { threshold: 0.18 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return [ref, on];
+}
+
+function WipeFig({ cls = "", delay = 0, img, alt, caption }) {
+  const [ref, on] = useWipe();
+  return html`
+    <figure class=${cls} ref=${ref}>
+      <div class=${"clip wipe" + (on ? " on" : "")} style=${{ transitionDelay: on ? delay + "s" : "0s" }}>
+        <img src=${img} alt=${alt} loading="lazy" />
+      </div>
+      ${caption && html`<figcaption>${caption}</figcaption>`}
+    </figure>
+  `;
+}
+
+function Loader({ done }) {
+  const word = "166 Fairview";
+  return html`
+    <div class=${"loader" + (done ? " done" : "")} aria-hidden="true">
+      <div class="word">
+        ${[...word].map((ch, i) => html`<span key=${i} style=${{ animationDelay: `${0.05 * i}s`, fontStyle: i > 3 ? "italic" : "normal" }}>${ch === " " ? " " : ch}</span>`)}
+      </div>
+      <div class="rule"><i></i></div>
+      <div class="caps">North Laguna · California</div>
+    </div>
+  `;
+}
+
+function Nav() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 90);
+    on(); window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
+  return html`
+    <header class=${"nav" + (scrolled ? " scrolled" : "")}>
+      <a class="mono" href="#top" aria-label="166 Fairview">166<em style=${{fontStyle:"italic"}}>F</em></a>
+      <span class="mid caps" style=${{fontSize:"10px",opacity:.85}}>North Laguna · Laguna Beach</span>
+      <a class="cta" href="#showing">Request Showing</a>
+    </header>
+  `;
+}
+
+function Hero({ base }) {
+  const reduce = useReducedMotion();
+  const line = (delay) => ({
+    initial: { opacity: 0, y: reduce ? 0 : 30 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 1.1, ease: EASE, delay: base + delay }
+  });
+  return html`
+    <section class="hero" id="top">
+      <div class="hero-media">
+        <img src="photos/53.webp" alt="Ocean view over North Laguna rooftops toward the Pacific" fetchpriority="high" />
+      </div>
+      <div class="hero-scrim"></div>
+      <div class="hero-inner">
+        <${motion.p} class="hero-kicker" ...${line(0.15)}>North Laguna · Steps to Shaw's Cove<//>
+        <${motion.h1} class="hero-title" ...${line(0.32)}>
+          <span class="num">166</span><em>Fairview</em>
+        <//>
+        <${motion.div} class="hero-fact-row" ...${line(0.55)}>
+          <span class="f"><b>$4,995,000</b>Offered</span>
+          <span class="f"><b>2,595</b>Sq Ft</span>
+          <span class="f"><b>Two</b>Ocean-View Residences</span>
+          <a class="f" href="#showing">Private Showings ↗</a>
+        <//>
+      </div>
+    </section>
+  `;
+}
+
+function Intro() {
+  const reduce = useReducedMotion();
+  return html`
+    <section class="intro">
+      <div class="idx"><span class="no">( 01 )</span><span class="ln"></span><span class="kicker">The Residence</span></div>
+      <${motion.h2} ...${rise(reduce)}>White light, pale oak, and the <em class="blue">Pacific</em> at the end of every sightline.<//>
+      <div class="intro-grid">
+        <div class="intro-photos">
+          <${WipeFig} cls="ph-a" delay=${0.05} img="photos/37.webp"
+            alt="Open-plan great room with white kitchen" caption="The great room" />
+          <${WipeFig} cls="ph-b" delay=${0.22} img="photos/25.webp"
+            alt="Ocean-view deck with lounge seating" caption="One of the view decks" />
+        </div>
+        <${motion.div} class="intro-copy" ...${rise(reduce, 0.15)}>
+          <p class="lead">Steps from Shaw's Cove, 166 and 168 Fairview are one address holding two complete, ocean-view homes.</p>
+          <p>
+            Reimagined in 2018 with quality craftsmanship throughout, each residence opens
+            through LaCantina walls of glass to nearly 500 square feet of combined view
+            decks — indoor-outdoor living pointed straight at the blue horizon.
+          </p>
+          <p>
+            Live in one and let the other earn its keep, keep both for the family, or
+            hold the rare North Laguna investment that never sits empty. Designer
+            finishes, integrated smart home, central air — turnkey in every direction.
+          </p>
+        <//>
+      </div>
+    </section>
+  `;
+}
+
+function Stats() {
+  const reduce = useReducedMotion();
+  const items = [
+    ["$4.995", "m — offered at", true],
+    ["2,595", "interior sq ft", false],
+    ["Two", "ocean-view residences", false],
+    ["2018", "fully reimagined", false],
+  ];
+  return html`
+    <section class="stats">
+      <div class="stats-inner">
+        ${items.map(([n, l, it], i) => html`
+          <${motion.div} class="stat" key=${l} ...${rise(reduce, i * 0.08)}>
+            <div class="n">${it ? html`${n}<i>m</i>` : n}</div>
+            <div class="l">${it ? l.slice(4) : l}</div>
+          <//>
+        `)}
+      </div>
+    </section>
+  `;
+}
+
+function PinScale() {
+  const ref = useRef(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const scale = useTransform(scrollYProgress, [0, 0.75], reduce ? [1, 1] : [0.58, 1]);
+  const capOp = useTransform(scrollYProgress, [0.55, 0.8], [0, 1]);
+  return html`
+    <section class="pin" ref=${ref} aria-label="Living room opening to the ocean-view deck">
+      <div class="pin-sticky">
+        <${motion.div} class="pin-media" style=${{ scale }}>
+          <img src="photos/30.webp" alt="Living room opening through sliding glass to a covered ocean-view deck" loading="lazy" />
+        <//>
+        <div class="pin-shade"></div>
+        <${motion.div} class="pin-cap" style=${{ opacity: capOp }}>
+          <span class="caps">( 02 ) — Indoor · Outdoor</span>
+          <span class="big">The walls fold away.</span>
+        <//>
+      </div>
+    </section>
+  `;
+}
+
+function Marquee() {
+  const items = ["Shaw's Cove", "North Laguna", "Two Residences", "Ocean Views", "Reimagined 2018"];
+  const seq = [...items, ...items];
+  return html`
+    <div class="marq" aria-hidden="true">
+      <div class="marq-track">
+        ${seq.map((t, i) => html`<span key=${i} class=${i % 2 ? "i" : "o"}>${t}<span class="d"> ● </span></span>`)}
+      </div>
+    </div>
+  `;
+}
+
+function Residences() {
+  const reduce = useReducedMotion();
+  return html`
+    <section class="res">
+      <div class="res-head">
+        <${motion.h2} ...${rise(reduce)}>One address. <em>Two complete homes.</em><//>
+        <span class="caps">( 03 ) — The Residences</span>
+      </div>
+      <div class="res-grid">
+        <${motion.div} class="res-card" ...${rise(reduce, 0.05)}>
+          <div class="clip"><img src="photos/37.webp" alt="Lower residence great room" loading="lazy" /></div>
+          <div class="rc-head"><h3>The Lower Residence</h3><span class="no">No. 166</span></div>
+          <ul>
+            <li><span>Bedrooms</span><b>Three</b></li>
+            <li><span>Bathrooms</span><b>Three</b></li>
+            <li><span>Outdoors</span><b>Deck + private garden retreat</b></li>
+          </ul>
+        <//>
+        <${motion.div} class="res-card" ...${rise(reduce, 0.15)}>
+          <div class="clip"><img src="photos/05.webp" alt="Upper residence ocean-view corner" loading="lazy" /></div>
+          <div class="rc-head"><h3>The Upper Residence</h3><span class="no">No. 168</span></div>
+          <ul>
+            <li><span>Living</span><b>Ocean-view great room</b></li>
+            <li><span>Outdoors</span><b>Wraparound view decks</b></li>
+            <li><span>Character</span><b>Light on three sides</b></li>
+          </ul>
+        <//>
+      </div>
+    </section>
+  `;
+}
+
+function GCell({ src, cls, label, i, onOpen }) {
+  const [ref, on] = useWipe();
+  return html`
+    <div class=${"gcell " + cls} ref=${ref} tabIndex="0" role="button"
+      aria-label=${"Open photo: " + label}
+      onClick=${onOpen}
+      onKeyDown=${(e) => { if (e.key === "Enter") onOpen(); }}>
+      <div class=${"gwrap wipe" + (on ? " on" : "")} style=${{ transitionDelay: on ? ((i % 3) * 0.08) + "s" : "0s" }}>
+        <img src=${src} alt=${label} loading="lazy" />
+        <span class="tag"><span class="no">${String(i + 1).padStart(2, "0")}</span>${label}</span>
+      </div>
+    </div>
+  `;
+}
+
+const GALLERY = [
+  ["photos/30.webp", "g1", "Living to deck"],
+  ["photos/21.webp", "g2", "Marble bath"],
+  ["photos/39.webp", "g3", "Kitchen"],
+  ["photos/47.webp", "g4", "Bedroom"],
+  ["photos/10.webp", "g5", "Dining"],
+  ["photos/02.webp", "g6", "The address"],
+  ["photos/53.webp", "g7", "The view"],
+];
+
+function Gallery({ onOpen }) {
+  const reduce = useReducedMotion();
+  const cx = useMotionValue(-200), cy = useMotionValue(-200);
+  const sx = useSpring(cx, { stiffness: 320, damping: 28 });
+  const sy = useSpring(cy, { stiffness: 320, damping: 28 });
+  const [cursorOn, setCursorOn] = useState(false);
+  const fine = typeof window !== "undefined" && matchMedia("(pointer:fine)").matches;
+  return html`
+    <section class="gallery"
+      onMouseMove=${fine ? ((e) => { cx.set(e.clientX); cy.set(e.clientY); }) : undefined}>
+      <div class="gallery-head">
+        <${motion.h2} ...${rise(reduce)}>The <em>photographs</em><//>
+        <${motion.button} onClick=${() => onOpen(0)} ...${rise(reduce, 0.1)}>View all 55<//>
+      </div>
+      <div class="ggrid"
+        onMouseEnter=${fine ? (() => setCursorOn(true)) : undefined}
+        onMouseLeave=${fine ? (() => setCursorOn(false)) : undefined}>
+        ${GALLERY.map(([src, cls, label], i) => html`
+          <${GCell} key=${src + cls} src=${src} cls=${cls} label=${label} i=${i}
+            onOpen=${() => onOpen(ALL_PHOTOS.indexOf(src))} />
+        `)}
+      </div>
+      ${fine && cursorOn && html`<${motion.div} class="cursor" style=${{ x: sx, y: sy }}>View<//>`}
+    </section>
+  `;
+}
+
+function Lightbox({ index, setIndex, onClose }) {
+  const step = useCallback((d) => {
+    setIndex((i) => (i + d + ALL_PHOTOS.length) % ALL_PHOTOS.length);
+  }, [setIndex]);
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+  }, [step, onClose]);
+  return html`
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onClick=${onClose}>
+      <img key=${index} src=${ALL_PHOTOS[index]} alt=${"Photo " + (index + 1) + " of 55"}
+        onClick=${(e) => e.stopPropagation()} />
+      <button class="lb-btn lb-prev" aria-label="Previous photo" onClick=${(e) => { e.stopPropagation(); step(-1); }}>←</button>
+      <button class="lb-btn lb-next" aria-label="Next photo" onClick=${(e) => { e.stopPropagation(); step(1); }}>→</button>
+      <button class="lb-btn lb-close" aria-label="Close viewer" onClick=${onClose}>✕</button>
+      <div class="lb-count">${index + 1} / ${ALL_PHOTOS.length}</div>
+    </div>
+  `;
+}
+
+function Bleed() {
+  const ref = useRef(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], reduce ? ["0%", "0%"] : ["-7%", "7%"]);
+  return html`
+    <section class="bleed" ref=${ref}>
+      <${motion.img} src="photos/25.webp" alt="" aria-hidden="true" style=${{ y }} />
+      <div class="bleed-inner">
+        <${motion.blockquote}
+          initial=${{ opacity: 0, y: reduce ? 0 : 34 }}
+          whileInView=${{ opacity: 1, y: 0 }}
+          viewport=${{ once: true, amount: 0.5 }}
+          transition=${{ duration: 1.15, ease: EASE }}>
+          “Nearly five hundred square feet of deck, and every inch of it faces the water.”
+        <//>
+        <${motion.p} class="attr"
+          initial=${{ opacity: 0 }} whileInView=${{ opacity: 1 }}
+          viewport=${{ once: true, amount: 0.5 }} transition=${{ duration: 1, delay: 0.3 }}>
+          From the view decks
+        <//>
+      </div>
+    </section>
+  `;
+}
+
+function Hood() {
+  const reduce = useReducedMotion();
+  const spots = [
+    ["Shaw's Cove", "tide pools below the bluff"],
+    ["Fisherman's Cove", "the quiet swim"],
+    ["Heisler Park", "blufftop gardens & paths"],
+    ["Gallery Row", "openings & late dinners"],
+    ["Main Beach", "minutes along the coast"],
+  ];
+  return html`
+    <section class="hood">
+      <div class="hood-grid">
+        <div>
+          <div class="idx" style=${{display:"flex",alignItems:"center",gap:"18px"}}>
+            <span class="no serif" style=${{fontStyle:"italic",fontSize:"15px",color:"var(--ink-soft)"}}>( 04 )</span>
+            <span style=${{height:"1px",width:"64px",background:"var(--line)"}}></span>
+            <span class="kicker">North Laguna</span>
+          </div>
+          <${motion.h2} ...${rise(reduce)}>Shaw's Cove mornings, <em>gallery-row evenings.</em><//>
+          <${motion.p} class="hood-copy" ...${rise(reduce, 0.1)}>
+            North Laguna is the coast's quiet side — coves and blufftop paths below,
+            the galleries and restaurants of downtown a few minutes along the water.
+            Fairview sits steps above the sand. Close enough to hear it.
+          <//>
+          <${motion.ul} class="hood-list" ...${rise(reduce, 0.18)}>
+            ${spots.map(([a, b]) => html`<li key=${a}><span>${a}</span><i>${b}</i></li>`)}
+          <//>
+        </div>
+        <div class="hood-photos">
+          <${WipeFig} delay=${0.08} img="photos/02.webp"
+            alt="Street facade of 166-168 Fairview" caption="The address" />
+          <${WipeFig} delay=${0.2} img="photos/47.webp"
+            alt="Bedroom with view window" caption="Morning light" />
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function Showing() {
+  const reduce = useReducedMotion();
+  const [sent, setSent] = useState(false);
+  const submit = (e) => { e.preventDefault(); setSent(true); };
+  return html`
+    <section class="showing" id="showing">
+      <div class="showing-inner">
+        <div>
+          <span class="caps" style=${{color:"oklch(0.96 0.006 230 / .5)"}}>( 05 ) — Private Showings<//>
+          <${motion.h2} ...${rise(reduce, 0.05)}>See the light for <em>yourself.</em><//>
+          <${motion.div} class="agent" ...${rise(reduce, 0.15)}>
+            <div class="name">Andrea Ballesteros</div>
+            <div class="muted">Listing Agent · Coldwell Banker Realty</div>
+            <div class="muted">(949) 690-5159</div>
+            <div class="mls">MLS® LG26150245 · CRMLS</div>
+          <//>
+        </div>
+        <${motion.div} ...${rise(reduce, 0.12)}>
+          ${sent ? html`
+            <div class="sent">
+              <span class="serif">Thank you.</span>
+              Your request has been received — Andrea's team will reach out shortly
+              to arrange a private showing of 166 Fairview.
+            </div>
+          ` : html`
+            <form onSubmit=${submit}>
+              <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required /></div>
+              <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required /></div>
+              <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" /></div>
+              <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="Preferred days and times…"></textarea></div>
+              <button class="submit" type="submit">Request a private showing <span aria-hidden="true">→</span></button>
+            </form>
+          `}
+        <//>
+      </div>
+    </section>
+  `;
+}
+
+function Footer() {
+  return html`
+    <footer>
+      <div class="foot-inner">
+        <div class="foot-col">
+          <div class="mono">166 <em style=${{fontStyle:"italic"}}>Fairview</em></div>
+          <p style=${{marginTop:"14px",maxWidth:"36ch"}}>166 Fairview St, Laguna Beach, CA 92651.<br/>Offered at $4,995,000.</p>
+        </div>
+        <div class="foot-col">
+          <span class="caps">Showings</span>
+          <p>Andrea Ballesteros<br/>Coldwell Banker Realty<br/>(949) 690-5159</p>
+        </div>
+        <div class="foot-col">
+          <span class="caps">Site</span>
+          <p><a href="/">Ammolite</a><br/>Listing sites for<br/>Orange County agents</p>
+        </div>
+      </div>
+      <div class="legal">
+        <span>Photography via CRMLS listing LG26150245. Marketing concept prepared for the listing agent.</span>
+        <span>© 2026 Ammolite</span>
+      </div>
+    </footer>
+  `;
+}
+
+function App() {
+  const reduce = useReducedMotion();
+  const [loaded, setLoaded] = useState(false);
+  const [lb, setLb] = useState(null);
+  useEffect(() => {
+    const t = setTimeout(() => setLoaded(true), reduce ? 0 : 1500);
+    return () => clearTimeout(t);
+  }, [reduce]);
+  const base = reduce ? 0.1 : 1.55;
+  return html`
+    <${Loader} done=${loaded} />
+    <${Nav} />
+    <${Hero} base=${base} />
+    <${Intro} />
+    <${Stats} />
+    <${PinScale} />
+    <${Marquee} />
+    <${Residences} />
+    <${Gallery} onOpen=${(i) => setLb(Math.max(0, i))} />
+    <${Bleed} />
+    <${Hood} />
+    <${Showing} />
+    <${Footer} />
+    ${lb !== null && html`<${Lightbox} key="lb" index=${lb} setIndex=${(fn) => setLb(fn)} onClose=${() => setLb(null)} />`}
+  `;
+}
+createRoot(document.getElementById("root")).render(html`<${App} />`);
+</script>
+</body>
+</html>
