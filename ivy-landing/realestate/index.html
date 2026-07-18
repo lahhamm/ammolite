@@ -311,14 +311,13 @@ function WipeFig({ cls = "", delay = 0, img, alt, caption }) {
 }
 
 function Loader({ done }) {
-  const word = "166 Fairview";
+  const word = "Demo site by Ammolite Studio";
   return html`
     <div class=${"loader" + (done ? " done" : "")} aria-hidden="true">
       <div class="word">
-        ${[...word].map((ch, i) => html`<span key=${i} style=${{ animationDelay: `${0.05 * i}s`, fontStyle: i > 3 ? "italic" : "normal" }}>${ch === " " ? " " : ch}</span>`)}
+        ${[...word].map((ch, i) => html`<span key=${i} style=${{ animationDelay: `${0.028 * i}s`, fontStyle: i >= 13 ? "italic" : "normal" }}>${ch === " " ? " " : ch}</span>`)}
       </div>
       <div class="rule"><i></i></div>
-      <div class="caps">North Laguna · California</div>
     </div>
   `;
 }
