@@ -27,3 +27,6 @@
 # their content is standard Vite boilerplate already covered above
 /roofer-demo-site/.gitignore
 /new-look-barbershop-demo-site/.gitignore
+
+# Local Netlify folder
+.netlify

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>166 Fairview — Laguna Beach</title>
-<meta name="description" content="166 Fairview St, Laguna Beach. Reimagined North Laguna ocean-view duplex steps from Shaw's Cove. Offered at $4,995,000." />
+<title>17 Cliffside Terrace — Laguna Beach</title>
+<meta name="description" content="17 Cliffside Terrace, Laguna Beach. Modern ocean-view villa and guest house above Crescent Bay. Offered at $4,850,000." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -274,7 +274,7 @@ import htm from "htm";
 const html = htm.bind(React.createElement);
 
 const EASE = [0.19, 0.6, 0.22, 1];
-const ALL_PHOTOS = Array.from({length: 55}, (_, i) => `photos/${String(i+1).padStart(2,"0")}.webp`);
+const ALL_PHOTOS = Array.from({length: 10}, (_, i) => `/realestate/photos/${String(i+1).padStart(2,"0")}.jpg`);
 
 const rise = (reduce, delay = 0) => ({
   initial: { opacity: 0, y: reduce ? 0 : 40 },
@@ -331,7 +331,7 @@ function Nav() {
   }, []);
   return html`
     <header class=${"nav" + (scrolled ? " scrolled" : "")}>
-      <a class="mono" href="#top" aria-label="166 Fairview">166<em style=${{fontStyle:"italic"}}>F</em></a>
+      <a class="mono" href="#top" aria-label="17 Cliffside Terrace">17<em style=${{fontStyle:"italic"}}>C</em></a>
       <span class="mid caps" style=${{fontSize:"10px",opacity:.85}}>North Laguna · Laguna Beach</span>
       <a class="cta" href="#showing">Request Showing</a>
     </header>
@@ -348,18 +348,18 @@ function Hero({ base }) {
   return html`
     <section class="hero" id="top">
       <div class="hero-media">
-        <img src="photos/53.webp" alt="Ocean view over North Laguna rooftops toward the Pacific" fetchpriority="high" />
+        <img src="/realestate/photos/01.jpg" alt="Modern white villa and pool at dusk, 17 Cliffside Terrace" fetchpriority="high" />
       </div>
       <div class="hero-scrim"></div>
       <div class="hero-inner">
-        <${motion.p} class="hero-kicker" ...${line(0.15)}>North Laguna · Steps to Shaw's Cove<//>
+        <${motion.p} class="hero-kicker" ...${line(0.15)}>North Laguna · Above Crescent Bay<//>
         <${motion.h1} class="hero-title" ...${line(0.32)}>
-          <span class="num">166</span><em>Fairview</em>
+          <span class="num">17</span><em>Cliffside</em>
         <//>
         <${motion.div} class="hero-fact-row" ...${line(0.55)}>
-          <span class="f"><b>$4,995,000</b>Offered</span>
-          <span class="f"><b>2,595</b>Sq Ft</span>
-          <span class="f"><b>Two</b>Ocean-View Residences</span>
+          <span class="f"><b>$4,850,000</b>Offered</span>
+          <span class="f"><b>3,120</b>Sq Ft</span>
+          <span class="f"><b>Villa +</b>Guest House</span>
           <a class="f" href="#showing">Private Showings ↗</a>
         <//>
       </div>
@@ -375,22 +375,22 @@ function Intro() {
       <${motion.h2} ...${rise(reduce)}>White light, pale oak, and the <em class="blue">Pacific</em> at the end of every sightline.<//>
       <div class="intro-grid">
         <div class="intro-photos">
-          <${WipeFig} cls="ph-a" delay=${0.05} img="photos/37.webp"
-            alt="Open-plan great room with white kitchen" caption="The great room" />
-          <${WipeFig} cls="ph-b" delay=${0.22} img="photos/25.webp"
-            alt="Ocean-view deck with lounge seating" caption="One of the view decks" />
+          <${WipeFig} cls="ph-a" delay=${0.05} img="/realestate/photos/02.jpg"
+            alt="Great room opening through black-framed glass to the terrace" caption="The great room" />
+          <${WipeFig} cls="ph-b" delay=${0.22} img="/realestate/photos/03.jpg"
+            alt="Pool terrace beside the glass-walled villa" caption="The pool terrace" />
         </div>
         <${motion.div} class="intro-copy" ...${rise(reduce, 0.15)}>
-          <p class="lead">Steps from Shaw's Cove, 166 and 168 Fairview are one address holding two complete, ocean-view homes.</p>
+          <p class="lead">Above Crescent Bay, 17 Cliffside Terrace holds a main villa and a complete guest house behind one gate.</p>
           <p>
-            Reimagined in 2018 with quality craftsmanship throughout, each residence opens
-            through LaCantina walls of glass to nearly 500 square feet of combined view
-            decks — indoor-outdoor living pointed straight at the blue horizon.
+            Reimagined in 2021 with quality craftsmanship throughout, the villa opens
+            through walls of glass to a heated pool terrace and ocean-view lounge —
+            indoor-outdoor living pointed straight at the blue horizon.
           </p>
           <p>
-            Live in one and let the other earn its keep, keep both for the family, or
-            hold the rare North Laguna investment that never sits empty. Designer
-            finishes, integrated smart home, central air — turnkey in every direction.
+            Live in the villa and let the guest house host family, friends or an
+            office with its own front door. Designer finishes, integrated smart
+            home, central air — turnkey in every direction.
           </p>
         <//>
       </div>
@@ -401,10 +401,10 @@ function Intro() {
 function Stats() {
   const reduce = useReducedMotion();
   const items = [
-    ["$4.995", "m — offered at", true],
-    ["2,595", "interior sq ft", false],
-    ["Two", "ocean-view residences", false],
-    ["2018", "fully reimagined", false],
+    ["$4.85", "m — offered at", true],
+    ["3,120", "interior sq ft", false],
+    ["Two", "complete residences", false],
+    ["2021", "fully reimagined", false],
   ];
   return html`
     <section class="stats">
@@ -430,7 +430,7 @@ function PinScale() {
     <section class="pin" ref=${ref} aria-label="Living room opening to the ocean-view deck">
       <div class="pin-sticky">
         <${motion.div} class="pin-media" style=${{ scale }}>
-          <img src="photos/30.webp" alt="Living room opening through sliding glass to a covered ocean-view deck" loading="lazy" />
+          <img src="/realestate/photos/02.jpg" alt="Great room opening through sliding glass walls to the terrace" loading="lazy" />
         <//>
         <div class="pin-shade"></div>
         <${motion.div} class="pin-cap" style=${{ opacity: capOp }}>
@@ -443,7 +443,7 @@ function PinScale() {
 }
 
 function Marquee() {
-  const items = ["Shaw's Cove", "North Laguna", "Two Residences", "Ocean Views", "Reimagined 2018"];
+  const items = ["Crescent Bay", "North Laguna", "Villa + Guest House", "Ocean Views", "Reimagined 2021"];
   const seq = [...items, ...items];
   return html`
     <div class="marq" aria-hidden="true">
@@ -464,20 +464,20 @@ function Residences() {
       </div>
       <div class="res-grid">
         <${motion.div} class="res-card" ...${rise(reduce, 0.05)}>
-          <div class="clip"><img src="photos/37.webp" alt="Lower residence great room" loading="lazy" /></div>
-          <div class="rc-head"><h3>The Lower Residence</h3><span class="no">No. 166</span></div>
+          <div class="clip"><img src="/realestate/photos/07.jpg" alt="Main villa kitchen in white and marble" loading="lazy" /></div>
+          <div class="rc-head"><h3>The Main Villa</h3><span class="no">Residence I</span></div>
           <ul>
             <li><span>Bedrooms</span><b>Three</b></li>
             <li><span>Bathrooms</span><b>Three</b></li>
-            <li><span>Outdoors</span><b>Deck + private garden retreat</b></li>
+            <li><span>Outdoors</span><b>Pool terrace + ocean-view lounge</b></li>
           </ul>
         <//>
         <${motion.div} class="res-card" ...${rise(reduce, 0.15)}>
-          <div class="clip"><img src="photos/05.webp" alt="Upper residence ocean-view corner" loading="lazy" /></div>
-          <div class="rc-head"><h3>The Upper Residence</h3><span class="no">No. 168</span></div>
+          <div class="clip"><img src="/realestate/photos/05.jpg" alt="Guest house ocean-view corner room" loading="lazy" /></div>
+          <div class="rc-head"><h3>The Guest House</h3><span class="no">Residence II</span></div>
           <ul>
             <li><span>Living</span><b>Ocean-view great room</b></li>
-            <li><span>Outdoors</span><b>Wraparound view decks</b></li>
+            <li><span>Entry</span><b>Private, off the side lane</b></li>
             <li><span>Character</span><b>Light on three sides</b></li>
           </ul>
         <//>
@@ -502,13 +502,13 @@ function GCell({ src, cls, label, i, onOpen }) {
 }
 
 const GALLERY = [
-  ["photos/30.webp", "g1", "Living to deck"],
-  ["photos/21.webp", "g2", "Marble bath"],
-  ["photos/39.webp", "g3", "Kitchen"],
-  ["photos/47.webp", "g4", "Bedroom"],
-  ["photos/10.webp", "g5", "Dining"],
-  ["photos/02.webp", "g6", "The address"],
-  ["photos/53.webp", "g7", "The view"],
+  ["/realestate/photos/02.jpg", "g1", "Living to terrace"],
+  ["/realestate/photos/08.jpg", "g2", "The bath"],
+  ["/realestate/photos/07.jpg", "g3", "Kitchen"],
+  ["/realestate/photos/06.jpg", "g4", "The stair"],
+  ["/realestate/photos/09.jpg", "g5", "Dining"],
+  ["/realestate/photos/03.jpg", "g6", "The address"],
+  ["/realestate/photos/04.jpg", "g7", "The view"],
 ];
 
 function Gallery({ onOpen }) {
@@ -523,7 +523,7 @@ function Gallery({ onOpen }) {
       onMouseMove=${fine ? ((e) => { cx.set(e.clientX); cy.set(e.clientY); }) : undefined}>
       <div class="gallery-head">
         <${motion.h2} ...${rise(reduce)}>The <em>photographs</em><//>
-        <${motion.button} onClick=${() => onOpen(0)} ...${rise(reduce, 0.1)}>View all 55<//>
+        <${motion.button} onClick=${() => onOpen(0)} ...${rise(reduce, 0.1)}>View all ${ALL_PHOTOS.length}<//>
       </div>
       <div class="ggrid"
         onMouseEnter=${fine ? (() => setCursorOn(true)) : undefined}
@@ -554,7 +554,7 @@ function Lightbox({ index, setIndex, onClose }) {
   }, [step, onClose]);
   return html`
     <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onClick=${onClose}>
-      <img key=${index} src=${ALL_PHOTOS[index]} alt=${"Photo " + (index + 1) + " of 55"}
+      <img key=${index} src=${ALL_PHOTOS[index]} alt=${"Photo " + (index + 1) + " of " + ALL_PHOTOS.length}
         onClick=${(e) => e.stopPropagation()} />
       <button class="lb-btn lb-prev" aria-label="Previous photo" onClick=${(e) => { e.stopPropagation(); step(-1); }}>←</button>
       <button class="lb-btn lb-next" aria-label="Next photo" onClick=${(e) => { e.stopPropagation(); step(1); }}>→</button>
@@ -571,19 +571,19 @@ function Bleed() {
   const y = useTransform(scrollYProgress, [0, 1], reduce ? ["0%", "0%"] : ["-7%", "7%"]);
   return html`
     <section class="bleed" ref=${ref}>
-      <${motion.img} src="photos/25.webp" alt="" aria-hidden="true" style=${{ y }} />
+      <${motion.img} src="/realestate/photos/04.jpg" alt="" aria-hidden="true" style=${{ y }} />
       <div class="bleed-inner">
         <${motion.blockquote}
           initial=${{ opacity: 0, y: reduce ? 0 : 34 }}
           whileInView=${{ opacity: 1, y: 0 }}
           viewport=${{ once: true, amount: 0.5 }}
           transition=${{ duration: 1.15, ease: EASE }}>
-          “Nearly five hundred square feet of deck, and every inch of it faces the water.”
+          “Down the lane, through the gate, and your feet are in the sand.”
         <//>
         <${motion.p} class="attr"
           initial=${{ opacity: 0 }} whileInView=${{ opacity: 1 }}
           viewport=${{ once: true, amount: 0.5 }} transition=${{ duration: 1, delay: 0.3 }}>
-          From the view decks
+          Crescent Bay, four minutes on foot
         <//>
       </div>
     </section>
@@ -593,8 +593,8 @@ function Bleed() {
 function Hood() {
   const reduce = useReducedMotion();
   const spots = [
-    ["Shaw's Cove", "tide pools below the bluff"],
-    ["Fisherman's Cove", "the quiet swim"],
+    ["Crescent Bay", "the cove below the bluff"],
+    ["Shaw's Cove", "tide pools & the quiet swim"],
     ["Heisler Park", "blufftop gardens & paths"],
     ["Gallery Row", "openings & late dinners"],
     ["Main Beach", "minutes along the coast"],
@@ -608,21 +608,21 @@ function Hood() {
             <span style=${{height:"1px",width:"64px",background:"var(--line)"}}></span>
             <span class="kicker">North Laguna</span>
           </div>
-          <${motion.h2} ...${rise(reduce)}>Shaw's Cove mornings, <em>gallery-row evenings.</em><//>
+          <${motion.h2} ...${rise(reduce)}>Crescent Bay mornings, <em>gallery-row evenings.</em><//>
           <${motion.p} class="hood-copy" ...${rise(reduce, 0.1)}>
             North Laguna is the coast's quiet side — coves and blufftop paths below,
             the galleries and restaurants of downtown a few minutes along the water.
-            Fairview sits steps above the sand. Close enough to hear it.
+            Cliffside sits steps above the sand. Close enough to hear it.
           <//>
           <${motion.ul} class="hood-list" ...${rise(reduce, 0.18)}>
             ${spots.map(([a, b]) => html`<li key=${a}><span>${a}</span><i>${b}</i></li>`)}
           <//>
         </div>
         <div class="hood-photos">
-          <${WipeFig} delay=${0.08} img="photos/02.webp"
-            alt="Street facade of 166-168 Fairview" caption="The address" />
-          <${WipeFig} delay=${0.2} img="photos/47.webp"
-            alt="Bedroom with view window" caption="Morning light" />
+          <${WipeFig} delay=${0.08} img="/realestate/photos/03.jpg"
+            alt="Villa facade with palm and pool" caption="The address" />
+          <${WipeFig} delay=${0.2} img="/realestate/photos/06.jpg"
+            alt="Oak stair under pendant lights" caption="Morning light" />
         </div>
       </div>
     </section>
@@ -640,10 +640,10 @@ function Showing() {
           <span class="caps" style=${{color:"oklch(0.96 0.006 230 / .5)"}}>( 05 ) — Private Showings<//>
           <${motion.h2} ...${rise(reduce, 0.05)}>See the light for <em>yourself.</em><//>
           <${motion.div} class="agent" ...${rise(reduce, 0.15)}>
-            <div class="name">Jane Hartley</div>
-            <div class="muted">Listing Agent · Coastline Premier Properties</div>
+            <div class="name">Vivienne Marsh</div>
+            <div class="muted">Listing Agent · Coastal Orange County</div>
             <div class="muted">(949) 555-0134</div>
-            <div class="mls">MLS® 00000000 · CRMLS</div>
+            <div class="mls">DRE #00000000 · Demonstration listing</div>
           <//>
         </div>
         <${motion.div} ...${rise(reduce, 0.12)}>
@@ -651,7 +651,7 @@ function Showing() {
             <div class="sent">
               <span class="serif">Thank you.</span>
               Your request has been received — the listing team will reach out shortly
-              to arrange a private showing of 166 Fairview.
+              to arrange a private showing of 17 Cliffside Terrace.
             </div>
           ` : html`
             <form onSubmit=${submit}>
@@ -673,12 +673,12 @@ function Footer() {
     <footer>
       <div class="foot-inner">
         <div class="foot-col">
-          <div class="mono">166 <em style=${{fontStyle:"italic"}}>Fairview</em></div>
-          <p style=${{marginTop:"14px",maxWidth:"36ch"}}>166 Fairview St, Laguna Beach, CA 92651.<br/>Offered at $4,995,000.</p>
+          <div class="mono">17 <em style=${{fontStyle:"italic"}}>Cliffside</em></div>
+          <p style=${{marginTop:"14px",maxWidth:"36ch"}}>17 Cliffside Terrace, Laguna Beach, CA 92651.<br/>Offered at $4,850,000.</p>
         </div>
         <div class="foot-col">
           <span class="caps">Showings</span>
-          <p>Jane Hartley<br/>Coastline Premier Properties<br/>(949) 555-0134</p>
+          <p>Vivienne Marsh<br/>Coastal Orange County<br/>(949) 555-0134</p>
         </div>
         <div class="foot-col">
           <span class="caps">Site</span>
@@ -721,5 +721,6 @@ function App() {
 }
 createRoot(document.getElementById("root")).render(html`<${App} />`);
 </script>
+<a href="/" style="position:fixed;bottom:1.1rem;left:1.1rem;z-index:9999;display:inline-flex;align-items:center;gap:.5rem;padding:.55rem .95rem;border-radius:100px;background:oklch(0.972 0.005 230 / .82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid oklch(0.86 0.01 230);color:oklch(0.25 0.02 240);font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:.85rem;text-decoration:none;box-shadow:0 4px 18px rgba(20,30,40,.12)">← Ammolite demo</a>
 </body>
 </html>

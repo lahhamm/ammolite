@@ -3,616 +3,956 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Ammolite · Websites, Staffed by AI</title>
-<meta name="description" content="Ammolite builds handsome, custom websites and quietly staffs them: voice receptionists, SMS follow-up, website chat and the automations that keep your business running." />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23241a12'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-style='italic' font-size='42' fill='%23e3c288' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+<title>Ammolite Studio — Websites & AI for Real Estate</title>
+<meta name="description" content="Ammolite Studio builds premium websites for real estate: single-property listing sites, agent and team brand sites, plus AI chatbots trained on your listings that capture and qualify leads around the clock." />
+<meta name="theme-color" content="#f4f0e8" />
+<meta property="og:title" content="Ammolite Studio — Websites & AI for Real Estate" />
+<meta property="og:description" content="Premium listing sites, agent brand sites, and AI chatbots trained on your listings. Built for realtors." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231b1a17'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='40' fill='%23f4f0e8' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lora:ital,wght@0,400..600;1,400..600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/base.css" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
-  /* ---------- hero (home-only) ---------- */
-  .hero {
-    position: relative;
-    min-height: 100svh;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    /* top padding keeps the eyebrow clear of the fixed nav on short viewports;
-       bottom padding lifts the footer row off the exact viewport edge */
-    padding: 6.5rem clamp(1.4rem, 4vw, 3.5rem) clamp(4rem, 12vh, 9rem);
-  }
-  /* the gem lives on a fixed canvas and travels with you; sections stack above it */
-  #gl {
-    position: fixed; inset: 0;
-    width: 100%; height: 100%;
-    z-index: 1;
-    pointer-events: none;
-  }
-  .marquee, .work, .services, .manifesto, .footer {
-    position: relative; z-index: 2;
-  }
-  .hero-glow {
-    position: absolute; z-index: 0;
-    top: 8%; right: -5%;
-    width: 55vw; height: 55vw;
-    max-width: 900px; max-height: 900px;
-    border-radius: 50%;
-    background: radial-gradient(circle, color-mix(in oklch, var(--accent) 10%, transparent) 0%, transparent 62%);
-    pointer-events: none;
-  }
-  .hero-inner { position: relative; z-index: 2; pointer-events: none; }
-  .hero-inner a, .hero-inner .btn { pointer-events: auto; }
+  /* =========================================================
+     Ammolite Studio — real-estate websites & AI
+     Modern, minimalist, editorial. Warm ivory + ink + clay.
+     Self-contained: one real page.
+     ========================================================= */
 
-  .hero-eyebrow {
-    display: flex; align-items: center; gap: 0.9rem;
-    font-family: var(--font-mono);
-    font-size: 0.8rem; font-weight: 400;
-    letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--ink-dim);
-    margin-bottom: clamp(1.2rem, 3vh, 2.4rem);
+  :root {
+    --paper: #f4f0e8;          /* warm ivory base */
+    --paper-2: #eee9de;        /* slightly deeper panel */
+    --ink: #1b1a17;            /* near-black, warm */
+    --ink-2: #4a4740;          /* secondary text */
+    --ink-3: #8c877b;          /* muted / labels */
+    --clay: #a6553a;           /* restrained terracotta accent */
+    --clay-soft: #c07d5f;
+    --line: #d8d1c2;           /* hairline on paper */
+    --line-2: #cbc3b1;
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Inter Tight", -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --pad: clamp(1.4rem, 5vw, 5.5rem);
+    --measure: 1440px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--clay); color: var(--paper); }
+
+  a { color: inherit; text-decoration: none; }
+
+  img { max-width: 100%; display: block; }
+
+  /* thin paper grain, extremely subtle, to kill the flat-digital look */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 1;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { max-width: var(--measure); margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+
+  /* ---------- shared type ---------- */
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-3);
+    display: inline-flex; align-items: center; gap: 0.8rem;
+  }
+  .eyebrow::before {
+    content: ""; width: 1.9rem; height: 1px; background: var(--clay);
+    display: inline-block;
+  }
+
+  em, .it { font-style: italic; }
+
+  /* =========================================================
+     Nav
+     ========================================================= */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.35rem var(--pad);
+    transition: background-color .5s ease, box-shadow .5s ease, backdrop-filter .5s ease;
     opacity: 0;
   }
-  .hero-eyebrow::before {
-    content: ""; width: 2.6rem; height: 1px;
-    background: var(--accent); display: inline-block;
+  .nav.ready { opacity: 1; }
+  .nav.scrolled {
+    background: color-mix(in srgb, var(--paper) 82%, transparent);
+    backdrop-filter: blur(16px) saturate(1.1);
+    -webkit-backdrop-filter: blur(16px) saturate(1.1);
+    box-shadow: 0 1px 0 var(--line);
   }
+  .brand {
+    font-family: var(--serif);
+    font-weight: 400; font-size: 1.42rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .brand .studio {
+    font-family: var(--sans);
+    font-size: 0.66rem; font-weight: 500;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-3);
+    display: block; margin-top: -0.15rem;
+  }
+  .nav-links { display: flex; align-items: center; gap: 2.1rem; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.02em; color: var(--ink-2);
+    transition: color .3s ease;
+    position: relative;
+  }
+  .nav-links a:not(.nav-cta)::after {
+    content: ""; position: absolute; left: 0; bottom: -3px;
+    width: 100%; height: 1px; background: var(--ink);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .nav-links a:not(.nav-cta):hover { color: var(--ink); }
+  .nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); transform-origin: left; }
+  .nav-cta {
+    border: 1px solid var(--ink); border-radius: 100px;
+    padding: 0.5rem 1.1rem; color: var(--ink);
+    transition: background-color .35s ease, color .35s ease;
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--paper); }
+  @media (max-width: 720px) {
+    .nav-links a.desktop-only { display: none; }
+  }
+
+  /* =========================================================
+     Hero
+     ========================================================= */
+  .hero {
+    position: relative; z-index: 2;
+    min-height: 100svh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 8rem; padding-bottom: 3rem;
+  }
+  .hero-inner { max-width: var(--measure); margin: 0 auto; width: 100%; padding: 0 var(--pad); }
+
+  .hero-eyebrow { margin-bottom: clamp(1.6rem, 4vh, 2.6rem); opacity: 0; }
 
   .hero h1 {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    font-size: clamp(3.4rem, 9.2vw, 9rem);
-    line-height: 1.0;
-    letter-spacing: -0.01em;
+    font-family: var(--serif);
+    font-weight: 340;
+    font-size: clamp(2.9rem, 8.2vw, 8.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
     text-wrap: balance;
+    max-width: 15ch;
   }
-  .hero h1 .line { display: block; overflow: hidden; }
-  .hero h1 .line > span { display: inline-block; will-change: transform; }
-  .hero h1 em {
-    font-family: var(--font-serif);
-    font-style: italic; font-weight: 400;
-    letter-spacing: -0.01em;
-    color: var(--accent);
-  }
-  .hero h1 .indent { padding-left: clamp(2rem, 12vw, 14rem); }
+  .hero h1 .row { display: block; overflow: hidden; }
+  .hero h1 .row > span { display: block; will-change: transform; }
+  .hero h1 em { color: var(--clay); font-weight: 340; }
 
   .hero-foot {
+    margin-top: clamp(2.4rem, 6vh, 4.2rem);
     display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    gap: 2rem;
-    padding: clamp(2rem, 5vh, 4rem) 0 2.2rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end; gap: 2rem clamp(2rem, 6vw, 5rem);
   }
   .hero-sub {
-    max-width: 34ch;
-    color: var(--ink-dim);
-    font-size: clamp(0.95rem, 1.2vw, 1.12rem);
-    line-height: 1.55;
+    max-width: 46ch;
+    font-size: clamp(1rem, 1.35vw, 1.18rem);
+    line-height: 1.6; color: var(--ink-2);
     opacity: 0;
   }
   .hero-sub strong { color: var(--ink); font-weight: 500; }
+  .hero-actions { display: flex; align-items: center; gap: 1.6rem; opacity: 0; }
 
-  .hero-meta {
-    display: flex; justify-content: space-between; align-items: center;
-    border-top: 1px solid var(--hairline);
-    padding: 1.1rem 0 1.4rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem; font-weight: 400;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--ink-dim);
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.65rem;
+    font-family: var(--sans); font-size: 0.9rem; font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 0.95rem 1.6rem; border-radius: 100px;
+    cursor: pointer; border: 1px solid transparent;
+    transition: background-color .35s ease, color .35s ease, border-color .35s ease, transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .btn .arw { transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+  .btn:hover .arw { transform: translateX(4px); }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: var(--clay); }
+  .btn-ghost { color: var(--ink); border-color: var(--line-2); }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .link-quiet {
+    font-size: 0.9rem; font-weight: 500; color: var(--ink);
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding-bottom: 2px; border-bottom: 1px solid var(--line-2);
+    transition: border-color .3s ease;
+  }
+  .link-quiet:hover { border-color: var(--ink); }
+  .link-quiet .arw { transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+  .link-quiet:hover .arw { transform: translateX(3px); }
+
+  .hero-scroll {
+    margin-top: clamp(3rem, 8vh, 5rem);
+    display: flex; align-items: center; gap: 0.9rem;
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-3);
     opacity: 0;
   }
-  .hero-meta .scroll-hint { display: flex; align-items: center; gap: 0.7rem; }
-  .scroll-line {
-    width: 1px; height: 2.2rem;
-    background: var(--hairline);
+  .hero-scroll .rail {
+    width: 1px; height: 2.4rem; background: var(--line-2);
     position: relative; overflow: hidden;
   }
-  .scroll-line::after {
-    content: ""; position: absolute; left: 0; top: -100%;
-    width: 100%; height: 100%;
-    background: var(--accent);
-    animation: scrollhint 2.2s cubic-bezier(.65,0,.35,1) infinite;
+  .hero-scroll .rail::after {
+    content: ""; position: absolute; inset: 0; top: -100%;
+    background: var(--clay);
+    animation: rail 2.4s cubic-bezier(.6,0,.4,1) infinite;
   }
-  @keyframes scrollhint { 0% { top: -100%; } 55% { top: 0; } 100% { top: 100%; } }
-  @media (prefers-reduced-motion: reduce) {
-    .scroll-line::after { animation: none; }
-  }
-  @media (max-width: 760px) {
-    .hero-foot { grid-template-columns: 1fr; }
-    .hero-meta span:nth-child(2) { display: none; }
-  }
-  .marquee { margin-top: 4rem; }
+  @keyframes rail { 0% { top: -100%; } 55% { top: 0; } 100% { top: 100%; } }
 
-  /* ---------- work teaser (light proof strip, full live demos live on /work) ---------- */
-  .work { padding-top: clamp(6rem, 16vh, 11rem); padding-bottom: clamp(4rem, 10vh, 7rem); }
-  .work-teaser {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: start;
-    padding: 0 clamp(1.4rem, 4vw, 3.5rem);
+  @media (max-width: 720px) {
+    .hero-foot { grid-template-columns: 1fr; align-items: start; }
+    .hero-actions { flex-wrap: wrap; }
   }
-  .work-teaser-copy p {
-    color: var(--ink-dim);
-    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
-    line-height: 1.6;
-    max-width: 46ch;
-    margin-bottom: 2rem;
+
+  /* =========================================================
+     Section scaffolding
+     ========================================================= */
+  section { position: relative; z-index: 2; }
+  .band { padding-top: clamp(6rem, 15vh, 11rem); padding-bottom: clamp(6rem, 15vh, 11rem); }
+  .sec-head { display: grid; gap: 1.4rem; margin-bottom: clamp(3rem, 7vh, 5rem); }
+  .sec-head h2 {
+    font-family: var(--serif); font-weight: 340;
+    font-size: clamp(2.1rem, 4.6vw, 3.9rem);
+    line-height: 1.05; letter-spacing: -0.02em;
+    max-width: 20ch; text-wrap: balance;
   }
-  .work-teaser-list {
-    list-style: none;
-    border-top: 1px solid var(--hairline);
+  .sec-head h2 em { color: var(--clay); }
+  .sec-head .lead {
+    max-width: 52ch; font-size: clamp(1rem, 1.3vw, 1.12rem);
+    color: var(--ink-2); line-height: 1.6;
   }
-  .work-teaser-list li { border-bottom: 1px solid var(--hairline); }
-  .work-teaser-list a {
+
+  .reveal { opacity: 0; transform: translateY(26px); }
+
+  /* ---------- What we build (two flagship offers) ---------- */
+  .build-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(1.2rem, 2.5vw, 2rem);
+  }
+  .offer {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: clamp(2rem, 4vw, 3.4rem);
+    display: flex; flex-direction: column;
+    min-height: clamp(20rem, 40vh, 30rem);
+    transition: border-color .5s ease, transform .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .offer:hover { border-color: var(--line-2); transform: translateY(-3px); }
+  .offer-num {
+    font-family: var(--sans); font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.18em; color: var(--clay);
+  }
+  .offer h3 {
+    font-family: var(--serif); font-weight: 360;
+    font-size: clamp(1.7rem, 2.9vw, 2.5rem);
+    line-height: 1.05; letter-spacing: -0.02em;
+    margin-top: auto; margin-bottom: 0.9rem;
+  }
+  .offer p { color: var(--ink-2); max-width: 40ch; line-height: 1.6; margin-bottom: 1.6rem; }
+  .offer .link-quiet { align-self: flex-start; margin-top: 0; }
+  @media (max-width: 720px) { .build-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- Chatbot feature ---------- */
+  .feature {
+    display: grid; grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2.5rem, 6vw, 6rem); align-items: center;
+  }
+  .feature-copy h2 {
+    font-family: var(--serif); font-weight: 340;
+    font-size: clamp(2rem, 4.2vw, 3.6rem);
+    line-height: 1.06; letter-spacing: -0.02em;
+    margin: 1.4rem 0 1.4rem; text-wrap: balance; max-width: 16ch;
+  }
+  .feature-copy h2 em { color: var(--clay); }
+  .feature-copy p { color: var(--ink-2); max-width: 46ch; line-height: 1.65; font-size: 1.05rem; }
+  .feature-list { list-style: none; margin-top: 2.2rem; display: grid; gap: 0; }
+  .feature-list li {
+    display: flex; gap: 1rem; align-items: baseline;
+    padding: 1.05rem 0; border-top: 1px solid var(--line);
+    color: var(--ink); font-size: 1rem;
+  }
+  .feature-list li:last-child { border-bottom: 1px solid var(--line); }
+  .feature-list .k {
+    font-family: var(--sans); font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.12em; color: var(--clay); min-width: 2.2rem;
+  }
+
+  /* the chat mock — the one signature interactive moment */
+  .chat {
+    background: var(--ink); border-radius: 14px;
+    padding: 1.5rem 1.5rem 1.7rem;
+    box-shadow: 0 30px 60px -30px rgba(27,26,23,0.55), 0 2px 6px rgba(27,26,23,0.08);
+    position: relative;
+  }
+  .chat-top {
+    display: flex; align-items: center; gap: 0.7rem;
+    padding-bottom: 1.1rem; margin-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(244,240,232,0.12);
+  }
+  .chat-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--clay), var(--clay-soft));
+    display: grid; place-items: center;
+    font-family: var(--serif); color: var(--paper); font-size: 1rem;
+  }
+  .chat-who { line-height: 1.2; }
+  .chat-who b { color: var(--paper); font-size: 0.9rem; font-weight: 600; }
+  .chat-who span { display: block; font-size: 0.72rem; color: #a7a294; }
+  .chat-dot { width: 7px; height: 7px; border-radius: 50%; background: #6fbf8b; margin-left: auto; box-shadow: 0 0 0 3px rgba(111,191,139,0.18); }
+  .chat-log { display: flex; flex-direction: column; gap: 0.7rem; min-height: 12.5rem; }
+  .bubble {
+    max-width: 82%; padding: 0.7rem 0.95rem; border-radius: 14px;
+    font-size: 0.9rem; line-height: 1.45;
+    opacity: 0; transform: translateY(8px);
+  }
+  .bubble.show { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+  .bubble.them {
+    align-self: flex-start; background: #2b2925; color: #ece7dc;
+    border-bottom-left-radius: 4px;
+  }
+  .bubble.me {
+    align-self: flex-end; background: var(--paper); color: var(--ink);
+    border-bottom-right-radius: 4px;
+  }
+  .bubble.typing { display: inline-flex; gap: 4px; align-self: flex-start; background: #2b2925; }
+  .bubble.typing i {
+    width: 6px; height: 6px; border-radius: 50%; background: #8c877b;
+    display: inline-block; animation: blink 1.2s infinite;
+  }
+  .bubble.typing i:nth-child(2) { animation-delay: .2s; }
+  .bubble.typing i:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 60%, 100% { opacity: .3; } 30% { opacity: 1; } }
+
+  @media (max-width: 860px) {
+    .feature { grid-template-columns: 1fr; }
+    .chat { order: -1; max-width: 460px; }
+  }
+
+  /* ---------- Also build (add-ons) ---------- */
+  .addons { border-top: 1px solid var(--line); }
+  .addon {
+    display: grid; grid-template-columns: 3rem 1fr auto;
+    gap: 1.5rem; align-items: baseline;
+    padding: clamp(1.5rem, 3vh, 2.2rem) 0;
+    border-bottom: 1px solid var(--line);
+    transition: padding-left .45s cubic-bezier(.2,.8,.2,1);
+  }
+  .addon:hover { padding-left: 0.8rem; }
+  .addon .n {
+    font-family: var(--sans); font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.14em; color: var(--ink-3);
+  }
+  .addon h4 {
+    font-family: var(--serif); font-weight: 380;
+    font-size: clamp(1.35rem, 2.4vw, 1.95rem); letter-spacing: -0.01em;
+  }
+  .addon p { color: var(--ink-2); margin-top: 0.35rem; max-width: 52ch; line-height: 1.55; }
+  .addon .tag {
+    font-family: var(--sans); font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3);
+    white-space: nowrap;
+  }
+  @media (max-width: 720px) {
+    .addon { grid-template-columns: 2rem 1fr; }
+    .addon .tag { grid-column: 2; }
+  }
+
+  /* ---------- Selected work (live previews) ---------- */
+  .pf-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(1.2rem, 2.5vw, 2rem);
+  }
+  .pf-card { display: block; }
+  .pf-cover {
+    display: block; position: relative; overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--paper-2);
+    transition: border-color .5s ease, transform .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .pf-card:hover .pf-cover { border-color: var(--line-2); transform: translateY(-3px); }
+  .pf-frame {
+    position: absolute; top: 0; left: 0;
+    width: 1600px; height: 1000px;
+    transform-origin: top left;
+    pointer-events: none;
+  }
+  .pf-frame iframe { width: 1600px; height: 1000px; border: 0; display: block; background: var(--paper-2); }
+  .pf-load {
+    position: absolute; inset: 0; z-index: 1;
+    display: grid; place-items: center;
+    background: var(--paper-2);
+    transition: opacity .5s ease;
+  }
+  .pf-load i {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1.5px solid var(--line-2); border-top-color: var(--clay);
+    animation: pfspin 0.8s linear infinite;
+  }
+  @keyframes pfspin { to { transform: rotate(360deg); } }
+  .pf-cover.is-loaded .pf-load { opacity: 0; pointer-events: none; }
+  .pf-meta {
     display: flex; justify-content: space-between; align-items: baseline;
-    padding: 1.3rem 0;
-    color: var(--ink); text-decoration: none;
-    font-family: var(--font-serif); font-size: clamp(1.3rem, 2.4vw, 1.7rem);
-    transition: color .3s ease;
+    gap: 1rem; padding-top: 1.05rem;
   }
-  .work-teaser-list a:hover { color: var(--accent); }
-  .work-teaser-list a span {
-    font-family: var(--font-mono);
-    font-size: 0.7rem; font-weight: 400;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--ink-dim);
+  .pf-meta h3 { font-family: var(--serif); font-weight: 380; font-size: clamp(1.3rem, 2.2vw, 1.7rem); letter-spacing: -0.01em; }
+  .pf-meta .tag {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-3); white-space: nowrap;
   }
-  @media (max-width: 760px) {
-    .work-teaser { grid-template-columns: 1fr; }
+  @media (max-width: 860px) { .pf-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- Statement ---------- */
+  .statement { padding-top: clamp(7rem, 18vh, 13rem); padding-bottom: clamp(7rem, 18vh, 13rem); }
+  .statement p {
+    font-family: var(--serif); font-weight: 330;
+    font-size: clamp(1.9rem, 4.6vw, 4rem);
+    line-height: 1.18; letter-spacing: -0.02em;
+    max-width: 22ch; text-wrap: balance;
+  }
+  .statement p em { color: var(--clay); }
+  .statement .word { display: inline-block; }
+  .statement .sig {
+    margin-top: 2.6rem; font-size: 0.74rem; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3);
   }
 
-  /* ---------- pillars (what we build) ---------- */
-  .services { padding: clamp(6rem, 16vh, 11rem) 0 0; }
-  .pillars {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    border-top: 1px solid var(--hairline);
-    border-left: 1px solid var(--hairline);
+  /* =========================================================
+     Contact / footer
+     ========================================================= */
+  .foot {
+    background: var(--ink); color: var(--paper);
+    position: relative; z-index: 2;
+    border-top-left-radius: 22px; border-top-right-radius: 22px;
+    padding-top: clamp(4.5rem, 12vh, 8rem); padding-bottom: 2.2rem;
+    margin-top: clamp(2rem, 5vh, 4rem);
   }
-  .pillar {
-    padding: clamp(2.2rem, 5vh, 3.4rem) clamp(1.6rem, 4vw, 3rem);
-    border-right: 1px solid var(--hairline);
-    border-bottom: 1px solid var(--hairline);
+  .foot ::selection { background: var(--paper); color: var(--ink); }
+  .foot .kicker {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #a7a294; margin-bottom: 1.2rem;
   }
-  .pillar-num {
+  .foot h2 {
+    font-family: var(--serif); font-weight: 330;
+    font-size: clamp(2.6rem, 8vw, 6.5rem); line-height: 0.98;
+    letter-spacing: -0.025em; text-wrap: balance; max-width: 14ch;
+  }
+  .foot h2 em { color: var(--clay-soft); }
+
+  .contact-form {
+    margin-top: clamp(2.8rem, 6vh, 4rem);
+    max-width: 680px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.7rem 2rem;
+  }
+  .contact-form .full { grid-column: 1 / -1; }
+  .contact-form label {
     display: block;
-    font-family: var(--font-mono);
-    font-size: 0.74rem; font-weight: 400;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.1rem;
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #a7a294; margin-bottom: 0.5rem;
   }
-  .pillar h3 {
-    font-family: var(--font-serif);
-    font-size: clamp(1.7rem, 3vw, 2.4rem);
-    font-weight: 400;
-    margin-bottom: 0.8rem;
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    background: transparent; border: none;
+    border-bottom: 1px solid rgba(244,240,232,0.24);
+    color: var(--paper); font-family: var(--sans); font-size: 1rem;
+    padding: 0.55rem 0; border-radius: 0;
+    transition: border-color .35s ease;
   }
-  .pillar p {
-    color: var(--ink-dim); font-size: 0.98rem; line-height: 1.6;
-    max-width: 34ch;
+  .contact-form textarea { resize: vertical; min-height: 3rem; }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: #6f6b60; }
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none; border-bottom-color: var(--clay-soft);
   }
-  .suite-cta { margin: clamp(2.5rem, 6vh, 4rem) clamp(1.4rem, 4vw, 3.5rem) 0; }
-  @media (max-width: 760px) {
-    .pillars { grid-template-columns: 1fr; }
+  .contact-form .btn-primary {
+    background: var(--paper); color: var(--ink);
+    justify-self: start; margin-top: 0.4rem;
+  }
+  .contact-form .btn-primary:hover { background: var(--clay-soft); color: var(--paper); }
+  .contact-form button:disabled { opacity: 0.55; cursor: default; }
+  .hp-field {
+    position: absolute !important; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+  .form-status {
+    grid-column: 1 / -1; min-height: 1.2em;
+    font-size: 0.82rem; letter-spacing: 0.02em; color: #a7a294;
+  }
+  .form-status.is-ok { color: #8fd6a6; }
+  .form-status.is-error { color: #e0917a; }
+  @media (max-width: 560px) { .contact-form { grid-template-columns: 1fr; } }
+
+  .foot-grid {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.2rem;
+    margin-top: clamp(4rem, 10vh, 7rem);
+    padding-top: 1.5rem; border-top: 1px solid rgba(244,240,232,0.14);
+    font-size: 0.76rem; letter-spacing: 0.04em; color: #a7a294;
+  }
+  .foot-grid a { color: #a7a294; transition: color .3s ease; }
+  .foot-grid a:hover { color: var(--paper); }
+  .foot-grid .set { display: flex; gap: 1.6rem; flex-wrap: wrap; }
+
+  /* =========================================================
+     Reduced motion
+     ========================================================= */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+    .hero-eyebrow, .hero-sub, .hero-actions, .hero-scroll, .nav { opacity: 1 !important; }
+    .hero h1 .row > span, .reveal { opacity: 1 !important; transform: none !important; }
+    .bubble { opacity: 1 !important; transform: none !important; }
+    .hero-scroll .rail::after { display: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="grain" aria-hidden="true"></div>
-<div class="vignette" aria-hidden="true"></div>
-<div class="candle" aria-hidden="true"></div>
-<div class="cursor-dot" aria-hidden="true"></div>
-<div class="cursor-ring" aria-hidden="true"></div>
-
-<div class="preloader" aria-hidden="true">
-  <div class="mark"><span>Ammolite</span></div>
-</div>
-
-<header class="nav">
-  <a class="wordmark" href="/" data-hover>Ammolite</a>
-  <nav class="nav-links">
-    <a href="/work" data-hover>Work</a>
-    <a href="/suite" data-hover>Suite</a>
-    <a href="/#studio" data-hover>Studio</a>
-    <a href="#contact" data-hover>Contact</a>
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="Ammolite Studio, home">
+    Ammolite
+    <span class="studio">Studio</span>
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#portfolio" class="desktop-only">Work</a>
+    <a href="#chatbot" class="desktop-only">AI Chatbot</a>
+    <a href="#build" class="desktop-only">Solutions</a>
+    <a href="#contact" class="nav-cta">Start a project</a>
   </nav>
 </header>
 
-<section class="hero" id="top">
-  <div class="hero-glow" aria-hidden="true"></div>
-  <canvas id="gl" aria-hidden="true"></canvas>
+<main id="top">
 
-  <div class="hero-inner">
-    <p class="hero-eyebrow">A bespoke web &amp; AI studio</p>
-    <h1>
-      <span class="line"><span>A handsome website,</span></span>
-      <span class="line indent"><span>and the <em>staff</em> behind it.</span></span>
-    </h1>
-
-    <div class="hero-foot">
-      <p class="hero-sub">
-        Ammolite builds your website, then quietly staffs it: <strong>a
-        receptionist who never misses a call</strong>, an assistant who
-        texts your leads back in seconds, and the small automations that
-        keep everything running while you work.
-      </p>
+  <!-- ======================= HERO ======================= -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow hero-eyebrow">Websites &amp; AI for real estate</p>
+      <h1>
+        <span class="row"><span>Listings that</span></span>
+        <span class="row"><span>look <em>worth</em> it.</span></span>
+      </h1>
+      <div class="hero-foot">
+        <p class="hero-sub">
+          Ammolite Studio builds premium websites for real estate:
+          <strong>single-property listing sites</strong> and
+          <strong>agent brand sites</strong>, each paired with an
+          <strong>AI chatbot trained on your listings</strong> that captures
+          and qualifies leads around the clock.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Start a project <span class="arw">→</span></a>
+          <a href="#work" class="link-quiet">See what we build <span class="arw">→</span></a>
+        </div>
+      </div>
+      <div class="hero-scroll"><span class="rail"></span> Scroll</div>
     </div>
+  </section>
 
-    <div class="hero-meta">
-      <span class="scroll-hint"><span class="scroll-line"></span> Scroll</span>
-      <span>Bespoke Websites + Full AI Suite</span>
-      <span>Now booking <em style="font-family:var(--font-serif);text-transform:none;font-size:1.15em;color:var(--accent)">new clients</em></span>
+  <!-- ======================= WHAT WE BUILD ======================= -->
+  <section class="band" id="work">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">What we build</p>
+        <h2>Two ways to make a listing, or an agent, <em>unforgettable.</em></h2>
+      </div>
+      <div class="build-grid" id="build">
+        <article class="offer reveal">
+          <span class="offer-num">01 / Listing sites</span>
+          <h3>Single-property sites that sell the address.</h3>
+          <p>A dedicated site for one listing: cinematic photography, the
+             floor plan, the neighborhood, the story. The kind of page that
+             makes a buyer feel the home before they ever walk it.</p>
+          <a href="#contact" class="link-quiet">Build a listing site <span class="arw">→</span></a>
+        </article>
+        <article class="offer reveal">
+          <span class="offer-num">02 / Brand sites</span>
+          <h3>Agent and team sites that earn the referral.</h3>
+          <p>A brand home for your whole book of business: active listings,
+             past sales, testimonials and a clear next step, all designed to
+             make you the obvious choice in your market.</p>
+          <a href="#contact" class="link-quiet">Build a brand site <span class="arw">→</span></a>
+        </article>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>Web design</span><span class="dot">✦</span><span><em>Voice agents</em></span><span class="dot">✦</span>
-    <span>SMS</span><span class="dot">✦</span><span><em>Automation</em></span><span class="dot">✦</span>
-    <span>Web design</span><span class="dot">✦</span><span><em>Voice agents</em></span><span class="dot">✦</span>
-    <span>SMS</span><span class="dot">✦</span><span><em>Automation</em></span><span class="dot">✦</span>
-    <span>Web design</span><span class="dot">✦</span><span><em>Voice agents</em></span><span class="dot">✦</span>
-    <span>SMS</span><span class="dot">✦</span><span><em>Automation</em></span><span class="dot">✦</span>
-  </div>
-</div>
+  <!-- ======================= SELECTED WORK (live previews) ======================= -->
+  <section class="band" id="portfolio" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Selected work</p>
+        <h2>Proof you can <em>walk through.</em></h2>
+        <p class="lead">Both sites below are live. Click into either one and look around.</p>
+      </div>
+      <div class="pf-grid">
+        <a class="pf-card reveal" href="/realestate">
+          <span class="pf-cover">
+            <span class="pf-load" aria-hidden="true"><i></i></span>
+            <span class="pf-frame"><iframe src="/realestate" loading="lazy" tabindex="-1" title="17 Cliffside Terrace, single-property listing site, live preview"></iframe></span>
+          </span>
+          <span class="pf-meta">
+            <h3>17 Cliffside Terrace</h3>
+            <span class="tag">Single-property listing site</span>
+          </span>
+        </a>
+        <a class="pf-card reveal" href="/marsh">
+          <span class="pf-cover">
+            <span class="pf-load" aria-hidden="true"><i></i></span>
+            <span class="pf-frame"><iframe src="/marsh" loading="lazy" tabindex="-1" title="Vivienne Marsh, agent brand site, live preview"></iframe></span>
+          </span>
+          <span class="pf-meta">
+            <h3>Vivienne Marsh</h3>
+            <span class="tag">Agent brand site</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-<section class="work" id="work">
-  <div class="section-head">
-    <span class="section-label">Proof, not promises</span>
-    <h2 class="section-title">Built to <em>convert</em></h2>
-  </div>
-  <div class="work-teaser">
-    <div class="work-teaser-copy">
-      <p>Three businesses, three industries. Each one got a website built to
-      be the obvious choice the moment it loads, and we're happy to walk
-      you through exactly how they work on a call.</p>
-      <a class="btn btn-outline" href="/work" data-hover data-magnetic>See the full work <span class="arrow">→</span></a>
+  <!-- ======================= AI CHATBOT (signature) ======================= -->
+  <section class="band" id="chatbot" style="background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+    <div class="wrap">
+      <div class="feature">
+        <div class="feature-copy reveal">
+          <p class="eyebrow">The AI chatbot</p>
+          <h2>A concierge on every page, <em>trained on your listings.</em></h2>
+          <p>It reads your listings, your neighborhoods and your process, then
+             answers buyer questions the moment they land. It never sleeps, so
+             a 2am inquiry becomes a qualified lead in your inbox by morning.</p>
+          <ul class="feature-list">
+            <li><span class="k">01</span> Answers questions on price, features and neighborhoods instantly.</li>
+            <li><span class="k">02</span> Captures the name, number and intent behind every visitor.</li>
+            <li><span class="k">03</span> Qualifies and books showings while you are with other clients.</li>
+          </ul>
+        </div>
+        <div class="chat reveal" aria-hidden="true">
+          <div class="chat-top">
+            <span class="chat-avatar">A</span>
+            <span class="chat-who"><b>Listing Assistant</b><span>Online now</span></span>
+            <span class="chat-dot"></span>
+          </div>
+          <div class="chat-log" id="chatLog">
+            <div class="bubble them" data-step="0">Hi! I can help with 17 Cliffside Terrace. What would you like to know?</div>
+            <div class="bubble me" data-step="1">Is the pool heated? And how private is the guest house?</div>
+            <div class="bubble them" data-step="2">Heated and salt-water. The guest house has its own entry off the side lane, fully separate. Want me to send the floor plan?</div>
+            <div class="bubble me" data-step="3">Yes please, and can I see it Saturday?</div>
+            <div class="bubble them" data-step="4">Booked, Saturday 11am. What is the best number to text you the confirmation?</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <ul class="work-teaser-list">
-      <li><a href="/ironvein" data-hover>Ironvein Plumbing <span>Trade services</span></a></li>
-      <li><a href="/meridian" data-hover>Meridian <span>Longevity clinic</span></a></li>
-      <li><a href="/lumen" data-hover>Lumen <span>Photography studio</span></a></li>
-    </ul>
-  </div>
-</section>
+  </section>
 
-<section class="services" id="services">
-  <div class="section-head">
-    <span class="section-label">The Full AI Suite</span>
-    <h2 class="section-title">One team, <em>every channel</em></h2>
-  </div>
-  <div class="pillars" data-reveal-batch>
-    <div class="pillar">
-      <span class="pillar-num">Websites</span>
-      <h3>The storefront.</h3>
-      <p>A custom site designed and shipped end-to-end, built to be the obvious choice the moment someone lands on it.</p>
+  <!-- ======================= ALSO BUILD (add-ons) ======================= -->
+  <section class="band">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">We also build</p>
+        <h2>Quiet systems that follow up so <em>you</em> don't have to.</h2>
+        <p class="lead">Add-ons, custom-fit per client and wired into your site
+           and your day. Take the ones that fit, leave the ones that don't.</p>
+      </div>
+      <div class="addons reveal">
+        <div class="addon">
+          <span class="n">01</span>
+          <div>
+            <h4>Instant lead follow-up by text</h4>
+            <p>Every new inquiry gets a warm, on-brand text back within seconds, not hours.</p>
+          </div>
+          <span class="tag">SMS</span>
+        </div>
+        <div class="addon">
+          <span class="n">02</span>
+          <div>
+            <h4>Showing &amp; appointment booking</h4>
+            <p>Buyers pick a time that fits your calendar, no back-and-forth, no missed slots.</p>
+          </div>
+          <span class="tag">Scheduling</span>
+        </div>
+        <div class="addon">
+          <span class="n">03</span>
+          <div>
+            <h4>Google review automation</h4>
+            <p>Happy clients are asked at the right moment, so your reputation compounds on its own.</p>
+          </div>
+          <span class="tag">Reputation</span>
+        </div>
+        <div class="addon">
+          <span class="n">04</span>
+          <div>
+            <h4>Listing &amp; new-property alerts</h4>
+            <p>Matched buyers hear about the right home first, keeping your pipeline warm.</p>
+          </div>
+          <span class="tag">Nurture</span>
+        </div>
+      </div>
     </div>
-    <div class="pillar">
-      <span class="pillar-num">Voice &amp; SMS</span>
-      <h3>The receptionist.</h3>
-      <p>An AI that answers every call, texts every lead back in seconds, and never once clocks out.</p>
-    </div>
-    <div class="pillar">
-      <span class="pillar-num">Chat &amp; reviews</span>
-      <h3>The reputation.</h3>
-      <p>A website that talks back to visitors, and a system that quietly turns happy customers into five-star reviews.</p>
-    </div>
-    <div class="pillar">
-      <span class="pillar-num">Automation</span>
-      <h3>The follow-through.</h3>
-      <p>Bookings, reminders and nurture sequences running in the background, so nothing good ever slips through.</p>
-    </div>
-  </div>
-  <a class="btn btn-primary suite-cta" href="/suite" data-hover data-magnetic>See the full suite <span class="arrow">→</span></a>
-</section>
+  </section>
 
-<section class="manifesto" id="studio">
-  <p class="manifesto-text">Most websites are built to exist. Ours are built to <em>work</em>: every pixel, every word, every automation pulling toward the same thing, your next customer.</p>
-  <p class="sig">Ammolite, a bespoke studio</p>
-</section>
+  <!-- ======================= STATEMENT ======================= -->
+  <section class="statement">
+    <div class="wrap">
+      <p class="reveal" id="statement">Most real estate sites are built to list. Ours are built to <em>convince</em>, every photo, every word, every reply working toward your next closing.</p>
+      <p class="sig reveal">Ammolite Studio, for real estate</p>
+    </div>
+  </section>
 
-<footer class="footer" id="contact">
-  <p class="kicker">Have a project in mind?</p>
-  <h2 class="footer-cta">Let's talk <span class="arrow">→</span></h2>
-  <form class="contact-form" id="contact-form">
-    <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
-    <input type="text" name="name" placeholder="Your name" autocomplete="name" required data-hover />
-    <input type="email" name="email" placeholder="Email" autocomplete="email" required data-hover />
-    <input type="text" name="business" placeholder="Business (optional)" data-hover />
-    <textarea name="message" rows="3" placeholder="Tell us about the project" required data-hover></textarea>
-    <button class="btn btn-primary" type="submit" data-hover data-magnetic>Send it <span class="arrow">→</span></button>
-    <p class="form-status" aria-live="polite"></p>
-  </form>
-  <div class="footer-grid">
-    <span>© 2026 Ammolite Studio</span>
-    <a href="/work" data-hover>Work</a>
-    <a href="/suite" data-hover>Suite</a>
-    <a href="/privacy.html" data-hover>Privacy</a>
-    <span>Bespoke Websites + Full AI Suite</span>
-    <a href="#top" data-hover>Back to top ↑</a>
+</main>
+
+<!-- ======================= CONTACT / FOOTER ======================= -->
+<footer class="foot" id="contact">
+  <div class="wrap">
+    <p class="kicker">Have a listing or a brand in mind?</p>
+    <h2>Let's build the site that <em>closes it.</em></h2>
+
+    <form class="contact-form" id="contact-form" novalidate>
+      <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div>
+        <label for="cf-name">Your name</label>
+        <input id="cf-name" type="text" name="name" placeholder="Jane Rivera" autocomplete="name" required />
+      </div>
+      <div>
+        <label for="cf-email">Email</label>
+        <input id="cf-email" type="email" name="email" placeholder="jane@brokerage.com" autocomplete="email" required />
+      </div>
+      <div class="full">
+        <label for="cf-business">Brokerage or team (optional)</label>
+        <input id="cf-business" type="text" name="business" placeholder="Rivera &amp; Co. Real Estate" />
+      </div>
+      <div class="full">
+        <label for="cf-message">What are you building?</label>
+        <textarea id="cf-message" name="message" rows="3" placeholder="A listing site for a new $2.4M property, plus a chatbot trained on it." required></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Send it <span class="arw">→</span></button>
+      <p class="form-status" aria-live="polite"></p>
+    </form>
+
+    <div class="foot-grid">
+      <span>© 2026 Ammolite Studio</span>
+      <div class="set">
+        <a href="#portfolio">Work</a>
+        <a href="#chatbot">AI Chatbot</a>
+        <a href="/privacy.html">Privacy</a>
+      </div>
+      <a href="#top">Back to top ↑</a>
+    </div>
   </div>
 </footer>
 
-<!-- ============ three.js hero object (home-only) ============ -->
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
-    "simplex-noise": "https://cdn.jsdelivr.net/npm/simplex-noise@4.0.3/dist/esm/simplex-noise.js"
-  }
-}
-</script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(() => {
+  "use strict";
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-<script type="module">
-import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { createNoise4D } from 'simplex-noise';
+  /* ---- nav ready + scrolled state ---- */
+  const nav = document.getElementById("nav");
+  requestAnimationFrame(() => nav.classList.add("ready"));
+  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 60);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
 
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const canvas = document.getElementById('gl');
-// alpha:false + an opaque scene background matching --bg, rather than a
-// transparent canvas: UnrealBloomPass's additive compositing doesn't
-// reliably preserve alpha across browsers/GPUs, which was rendering as a
-// solid black canvas (hiding the page background) on some desktop setups.
-const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.1;
-
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x19120b); // matches --bg (oklch 19% 0.018 65)
-const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 50);
-camera.position.set(0, 0, 7);
-
-const pmrem = new THREE.PMREMGenerator(renderer);
-scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.02).texture;
-
-// faceted crystal: a low subdivision + flatShading gives real gemstone facets
-// rather than a smooth blob. mergeVertices keeps the deform coherent across
-// shared vertices; flatShading derives per-face normals in the shader, so we
-// no longer recompute vertex normals each frame (also cheaper).
-const meshDetail = window.matchMedia('(pointer: fine)').matches && window.innerWidth > 900 ? 4 : 3;
-const geo = BufferGeometryUtils.mergeVertices(new THREE.IcosahedronGeometry(1.1, meshDetail));
-const basePositions = geo.attributes.position.array.slice();
-// warm bronze base + a calmer iridescence reads as polished ammolite stone
-// without turning into a distracting glitter ball
-const mat = new THREE.MeshPhysicalMaterial({
-  color: 0x8f6f48,
-  metalness: 1.0,
-  roughness: 0.27,
-  clearcoat: 0.68,
-  clearcoatRoughness: 0.3,
-  iridescence: 0.7,
-  iridescenceIOR: 1.5,
-  envMapIntensity: 0.84,
-  flatShading: true
-});
-const blob = new THREE.Mesh(geo, mat);
-const rig = new THREE.Group(); // layout position/scale lives on the rig; tweens on the blob
-rig.add(blob);
-scene.add(rig);
-
-// candlelight key (its position follows the cursor in the tick)
-const key = new THREE.DirectionalLight(0xffd9a0, 1.7);
-key.position.set(3, 4, 5);
-scene.add(key);
-
-// subtle bloom on the brightest facets only — kept low so it reads as a
-// warm glow rather than a glittery, distracting flare
-const composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene, camera));
-const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.35, 0.55, 0.66);
-composer.addPass(bloom);
-composer.addPass(new OutputPass());
-
-const noise4D = createNoise4D();
-const pos = geo.attributes.position;
-const v = new THREE.Vector3();
-
-let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-
-// ---- grab-to-spin ----
-// rotY/rotX are the applied rotation; velY/velX carry drag momentum that
-// decays via friction (inertia). Idle adds a slow drift when at rest.
-const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-let rotY = 0, rotX = 0, velY = 0, velX = 0;
-let dragging = false, lastPX = 0, lastPY = 0, overGem = false;
-
-// is the pointer within the gem's projected silhouette on screen?
-function pointerOverGem(px, py) {
-  const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
-  const cx = (gemState.x * 0.5 + 0.5) * window.innerWidth;
-  const cy = (0.5 - gemState.y * 0.5) * window.innerHeight;
-  const worldR = 1.45 * gemState.s;                 // blob radius incl. deform
-  const pxPerWorld = window.innerHeight / (2 * halfH);
-  const rPx = worldR * pxPerWorld * 0.85;           // slightly tighter than full
-  return Math.hypot(px - cx, py - cy) < rPx;
-}
-
-window.addEventListener('pointermove', (e) => {
-  targetX = (e.clientX / window.innerWidth) * 2 - 1;
-  targetY = (e.clientY / window.innerHeight) * 2 - 1;
-  if (!finePointer) return;
-  if (dragging) {
-    velY = (e.clientX - lastPX) * 0.006;
-    velX = (e.clientY - lastPY) * 0.006;
-    rotY += velY;
-    rotX += velX;
-    lastPX = e.clientX; lastPY = e.clientY;
-  } else {
-    overGem = pointerOverGem(e.clientX, e.clientY);
-    document.body.classList.toggle('gem-grab', overGem);
-  }
-});
-
-if (finePointer) {
-  window.addEventListener('pointerdown', (e) => {
-    // don't hijack clicks on links / form fields that sit over the gem
-    if (e.target.closest && e.target.closest('a,button,input,textarea')) return;
-    if (!pointerOverGem(e.clientX, e.clientY)) return;
-    dragging = true;
-    lastPX = e.clientX; lastPY = e.clientY;
-    document.body.classList.add('gem-dragging');
-    document.body.style.userSelect = 'none';
-  });
-  window.addEventListener('pointerup', () => {
-    dragging = false;
-    document.body.classList.remove('gem-dragging');
-    document.body.style.userSelect = '';
-  });
-}
-
-// ---- gem journey ----
-// The gem is a persistent companion: its position is expressed in normalized
-// viewport coords (x, y as fractions of the visible half-width/half-height at
-// z = 0), plus scale and light intensity. Scroll choreography tweens this
-// state between per-section waypoints; the tick applies it every frame.
-const gemState = { x: 0.58, y: 0.10, s: 1.35, i: 1 };  // applied every frame
-const gemTarget = { ...gemState };                      // written by scroll triggers
-
-function wp(name) {
-  const w = window.innerWidth;
-  const m = w <= 760, t = !m && w <= 1100;
-  const W = {
-    hero:      m ? { x: 0.42, y: 0.62,  s: 0.62, i: 1 }
-             : t ? { x: 0.52, y: 0.28,  s: 1.05, i: 1 }
-                 : { x: 0.58, y: 0.10,  s: 1.35, i: 1 },
-    work:      m ? { x: 1.35, y: -0.55, s: 0.3, i: 0.8 }
-                 : { x: -0.78, y: -0.55, s: 0.50, i: 1 },
-    services:  m ? { x: 1.50, y: -0.10, s: 0.40, i: 0.85 }
-                 : { x: 0.97, y: -0.12, s: 0.45, i: 0.85 },
-    manifesto: m ? { x: 0.45, y: 0.18,  s: 0.75, i: 0.40 }
-                 : { x: 0.72, y: 0.03,  s: 0.95, i: 0.40 },
-    footer:    m ? { x: 0.55, y: -0.52, s: 0.40, i: 1.2 }
-                 : { x: 0.55, y: -0.15, s: 0.65, i: 1.2 }
-  };
-  return W[name];
-}
-
-function layout() {
-  const w = canvas.clientWidth, h = canvas.clientHeight;
-  renderer.setSize(w, h, false);
-  composer.setSize(w, h);
-  bloom.setSize(w, h);
-  camera.aspect = w / h;
-  camera.updateProjectionMatrix();
-  // above the fold on a resize, re-seat the gem at its hero waypoint
-  if (window.scrollY < window.innerHeight * 0.5) {
-    Object.assign(gemTarget, wp('hero'));
-    Object.assign(gemState, gemTarget);
-  }
-}
-layout();
-window.addEventListener('resize', layout);
-
-const AMP = 0.3, FREQ = 0.85, SPEED = 0.14;
-function deform(t) {
-  for (let i = 0; i < pos.count; i++) {
-    v.set(basePositions[i * 3], basePositions[i * 3 + 1], basePositions[i * 3 + 2]);
-    const n = noise4D(v.x * FREQ, v.y * FREQ, v.z * FREQ, t * SPEED);
-    v.normalize().multiplyScalar(1.1 + n * AMP);
-    pos.setXYZ(i, v.x, v.y, v.z);
-  }
-  pos.needsUpdate = true;
-  // no computeVertexNormals: flatShading derives face normals in the shader
-}
-
-// no explicit visibility pause: the browser already suspends rAF in hidden tabs
-const clock = new THREE.Clock();
-function tick() {
-  requestAnimationFrame(tick);
-  const t = clock.getElapsedTime();
-  mouseX += (targetX - mouseX) * 0.04;
-  mouseY += (targetY - mouseY) * 0.04;
-
-  if (!reduceMotion) deform(t);
-
-  // rotation = slow idle drift + drag momentum (inertia). Momentum decays with
-  // friction; X eases back toward level so the gem never tumbles upside-down.
-  if (!dragging) {
-    velY *= 0.95; velX *= 0.95;
-    if (!reduceMotion) rotY += 0.0011;   // lazy idle spin
-    rotY += velY;
-    rotX += velX;
-    rotX += (0 - rotX) * 0.03;
-  }
-  blob.rotation.y = rotY + (reduceMotion ? 0 : mouseX * 0.18);
-  blob.rotation.x = rotX + (reduceMotion ? 0 : mouseY * 0.14);
-
-  // candle: the key light drifts toward the cursor so the brightest glint
-  // tracks the pointer, like carrying a flame past the stone
-  if (!reduceMotion) {
-    key.position.x = 3 + mouseX * 3.2;
-    key.position.y = 4 - mouseY * 3.2;
-  }
-
-  // glide toward the journey target (static hero pose under reduced motion)
-  // low G = the gem trails lazily behind the scroll instead of tracking it
-  const G = 0.045;
-  gemState.x += (gemTarget.x - gemState.x) * G;
-  gemState.y += (gemTarget.y - gemState.y) * G;
-  gemState.s += (gemTarget.s - gemState.s) * G;
-  gemState.i += (gemTarget.i - gemState.i) * G;
-  const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
-  rig.position.set(gemState.x * halfH * camera.aspect, gemState.y * halfH, 0);
-  rig.scale.setScalar(gemState.s);
-  key.intensity = 1.7 * gemState.i;
-  composer.render();
-}
-deform(0);
-tick();
-
-// scale entrance lives here so the blob is guaranteed to exist;
-// timed to land as the preloader curtain lifts
-if (!reduceMotion && window.gsap) {
-  gsap.from(blob.scale, { x: 0.55, y: 0.55, z: 0.55, duration: 2.4, ease: "power3.out", delay: 1.5 });
-}
-
-// scroll choreography: each trigger writes an interpolated target pose and
-// the tick lerps toward it. Callbacks only fire inside their own range, so
-// a ScrollTrigger.refresh() can never stamp a later section's pose onto the
-// load state (which scrubbed fromTo tweens on a shared object are prone to).
-if (!reduceMotion && window.gsap && window.ScrollTrigger) {
-  const ez = (p) => p * p * (3 - 2 * p); // smoothstep between waypoints
-  const glide = (trigger, from, to, start, end) => {
-    ScrollTrigger.create({
-      trigger, start, end,
-      onUpdate: (self) => {
-        const a = wp(from), b = wp(to), p = ez(self.progress);
-        gemTarget.x = a.x + (b.x - a.x) * p;
-        gemTarget.y = a.y + (b.y - a.y) * p;
-        gemTarget.s = a.s + (b.s - a.s) * p;
-        gemTarget.i = a.i + (b.i - a.i) * p;
+  /* ---- smooth anchor scroll ---- */
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const id = a.getAttribute("href");
+      if (id === "#" || id === "#top") {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+        return;
       }
+      const t = document.querySelector(id);
+      if (!t) return;
+      e.preventDefault();
+      t.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    });
+  });
+
+  /* ---- live preview cards: scale the 1600px frames to fit, fade loader ---- */
+  const FRAME_W = 1600;
+  const frames = [...document.querySelectorAll(".pf-frame")];
+  const syncFrames = () => {
+    frames.forEach((f) => {
+      const cover = f.parentElement;
+      f.style.transform = `scale(${cover.clientWidth / FRAME_W})`;
     });
   };
-  glide(".work",      "hero",      "work",      "top bottom", "top top");
-  glide(".services",  "work",      "services",  "top bottom", "top 35%");
-  glide(".manifesto", "services",  "manifesto", "top bottom", "top 40%");
-  glide(".footer",    "manifesto", "footer",    "top bottom", "top 45%");
-}
+  syncFrames();
+  window.addEventListener("resize", syncFrames, { passive: true });
+  document.querySelectorAll(".pf-frame iframe").forEach((ifr) => {
+    ifr.addEventListener("load", () => {
+      ifr.closest(".pf-cover").classList.add("is-loaded");
+    }, { once: true });
+  });
 
-// expose for scroll choreography and debugging
-window.__ivyBlob = blob;
-window.__ivyRig = rig;
-window.__gem = { state: gemState, target: gemTarget };
+  if (reduce) return; // all entrance/scroll motion below is enhancement only
+
+  /* ---- hero entrance ---- */
+  const heroLines = document.querySelectorAll(".hero h1 .row > span");
+  heroLines.forEach((s) => { s.style.transform = "translateY(112%)"; });
+  const ease = "cubic-bezier(.2,.85,.25,1)";
+  requestAnimationFrame(() => {
+    heroLines.forEach((s, i) => {
+      s.style.transition = `transform 1.15s ${ease} ${0.15 + i * 0.09}s`;
+      s.style.transform = "translateY(0)";
+    });
+    const fade = [
+      [".hero-eyebrow", 0.15],
+      [".hero-sub", 0.5],
+      [".hero-actions", 0.62],
+      [".hero-scroll", 0.8],
+    ];
+    fade.forEach(([sel, d]) => {
+      const el = document.querySelector(sel);
+      if (!el) return;
+      el.style.transition = `opacity 1s ease ${d}s, transform 1s ${ease} ${d}s`;
+      el.style.opacity = "1";
+    });
+  });
+
+  /* ---- scroll reveals ---- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      const el = en.target;
+      el.style.transition = `opacity .9s ease, transform 1s ${ease}`;
+      el.style.opacity = "1";
+      el.style.transform = "none";
+      io.unobserve(el);
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+  /* ---- statement word-by-word (subtle) ---- */
+  const st = document.getElementById("statement");
+  if (st) {
+    const walk = (node) => {
+      [...node.childNodes].forEach((n) => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach((tok) => {
+            if (/^\s+$/.test(tok)) { frag.append(tok); return; }
+            if (!tok) return;
+            const s = document.createElement("span");
+            s.className = "word"; s.textContent = tok;
+            s.style.opacity = "0.16";
+            frag.append(s);
+          });
+          node.replaceChild(frag, n);
+        } else if (n.nodeType === 1) {
+          n.classList.add("word");
+          n.style.opacity = "0.16";
+        }
+      });
+    };
+    walk(st);
+    const words = st.querySelectorAll(".word");
+    const stObs = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        words.forEach((w, i) => {
+          w.style.transition = `opacity .5s ease ${i * 0.045}s`;
+          w.style.opacity = "1";
+        });
+        stObs.disconnect();
+      });
+    }, { threshold: 0.4 });
+    stObs.observe(st);
+  }
+
+  /* ---- chat mock: reveal bubbles in sequence, once, when in view ---- */
+  const log = document.getElementById("chatLog");
+  if (log) {
+    const bubbles = [...log.querySelectorAll(".bubble")];
+    let played = false;
+    const play = () => {
+      if (played) return; played = true;
+      let delay = 300;
+      bubbles.forEach((b, i) => {
+        const gap = i === 0 ? 0 : (b.classList.contains("me") ? 700 : 1100);
+        delay += gap;
+        setTimeout(() => {
+          // brief typing indicator before each "them" reply after the first
+          if (b.classList.contains("them") && i > 0) {
+            const typing = document.createElement("div");
+            typing.className = "bubble typing show";
+            typing.innerHTML = "<i></i><i></i><i></i>";
+            log.insertBefore(typing, b);
+            setTimeout(() => {
+              typing.remove();
+              b.classList.add("show");
+              log.scrollTop = log.scrollHeight;
+            }, 650);
+          } else {
+            b.classList.add("show");
+            log.scrollTop = log.scrollHeight;
+          }
+        }, delay);
+      });
+    };
+    const chatObs = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { if (en.isIntersecting) { play(); chatObs.disconnect(); } });
+    }, { threshold: 0.45 });
+    chatObs.observe(log);
+  }
+
+  /* ---- contact form (posts to existing Netlify function, unchanged endpoint) ---- */
+  const form = document.getElementById("contact-form");
+  if (form) {
+    const status = form.querySelector(".form-status");
+    const btn = form.querySelector('button[type="submit"]');
+    const renderedAt = Date.now();
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+      status.className = "form-status";
+      status.textContent = "Sending…";
+      const data = Object.fromEntries(new FormData(form));
+      data.startedAt = renderedAt;
+      try {
+        const res = await fetch("/.netlify/functions/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error("request failed");
+        status.className = "form-status is-ok";
+        status.textContent = "Sent. We'll be in touch soon.";
+        form.reset();
+      } catch {
+        status.className = "form-status is-error";
+        status.textContent = "Something went wrong. Please try again in a moment.";
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
+})();
 </script>
-
-<!-- ============ shared chrome (cursor, magnetic, entrance, reveals, contact form) ============ -->
-<script src="/assets/chrome.js"></script>
 
 </body>
 </html>

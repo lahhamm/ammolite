@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vivienne Marsh — Coastal Orange County Real Estate</title>
+<meta name="description" content="Vivienne Marsh represents buyers and sellers across Newport Beach, Corona del Mar and Laguna Beach. $184M closed, 14 years on the coast." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111813'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='30' fill='%23c8a660' text-anchor='middle'%3EVM%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* =====================================================
+     Vivienne Marsh — agent brand demo by Ammolite Studio
+     Dark evergreen, bone, champagne. Typographic, assured.
+     ===================================================== */
+  :root {
+    --pine: #111813;          /* deep evergreen ink */
+    --pine-2: #17201a;        /* raised panel */
+    --pine-3: #1e2921;        /* hover panel */
+    --bone: #ece6d9;          /* warm bone text */
+    --bone-2: #b3ad9f;        /* secondary */
+    --bone-3: #7d786c;        /* muted labels */
+    --gold: #c8a660;          /* champagne accent */
+    --gold-soft: #a98c52;
+    --hair: rgba(236,230,217,0.13);
+    --hair-2: rgba(236,230,217,0.22);
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans: "Figtree", -apple-system, sans-serif;
+    --pad: clamp(1.4rem, 5vw, 5.5rem);
+    --measure: 1360px;
+    --ease: cubic-bezier(.2,.8,.2,1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--pine);
+    color: var(--bone);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--gold); color: var(--pine); }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  /* faint grain so the dark field doesn't read flat-digital */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 1;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* width:100% matters: inside the hero's flex column, cross-axis auto margins
+     would otherwise shrink-wrap this to fit-content instead of stretching */
+  .wrap { width: 100%; max-width: var(--measure); margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+
+  .eyebrow {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--bone-3);
+    display: inline-flex; align-items: center; gap: 0.85rem;
+  }
+  .eyebrow::before {
+    content: ""; width: 2rem; height: 1px; background: var(--gold);
+  }
+
+  .reveal { opacity: 0; transform: translateY(26px); }
+
+  /* ---------------- nav ---------------- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.3rem var(--pad);
+    opacity: 0;
+    transition: background-color .5s ease, box-shadow .5s ease;
+  }
+  .nav.ready { opacity: 1; }
+  .nav.scrolled {
+    background: rgba(17,24,19,0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 var(--hair);
+  }
+  .brand { line-height: 1.15; }
+  .brand .name {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 1.45rem; letter-spacing: 0.02em;
+  }
+  .brand .sub {
+    display: block;
+    font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.34em; text-transform: uppercase;
+    color: var(--bone-3); margin-top: 0.1rem;
+  }
+  .nav-links { display: flex; align-items: center; gap: 2rem; }
+  .nav-links a {
+    font-size: 0.8rem; font-weight: 400; letter-spacing: 0.04em;
+    color: var(--bone-2); position: relative;
+    transition: color .3s ease;
+  }
+  .nav-links a:not(.cta)::after {
+    content: ""; position: absolute; left: 0; bottom: -3px;
+    width: 100%; height: 1px; background: var(--gold);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform .4s var(--ease);
+  }
+  .nav-links a:not(.cta):hover { color: var(--bone); }
+  .nav-links a:not(.cta):hover::after { transform: scaleX(1); transform-origin: left; }
+  .nav-links .cta {
+    border: 1px solid var(--hair-2); border-radius: 100px;
+    padding: 0.55rem 1.15rem; color: var(--bone);
+    transition: background-color .35s ease, color .35s ease, border-color .35s ease;
+  }
+  .nav-links .cta:hover { background: var(--bone); color: var(--pine); border-color: var(--bone); }
+  @media (max-width: 700px) { .nav-links a.dt { display: none; } }
+
+  /* ---------------- hero ---------------- */
+  .hero {
+    position: relative; z-index: 2;
+    min-height: 100svh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 7rem;
+  }
+  .hero-eyebrow { margin-bottom: clamp(1.6rem, 4vh, 2.6rem); opacity: 0; }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(3rem, 9vw, 8.8rem);
+    line-height: 1.0; letter-spacing: 0.005em;
+    max-width: 13ch; text-wrap: balance;
+  }
+  .hero h1 .row { display: block; overflow: hidden; }
+  .hero h1 .row > span { display: block; will-change: transform; }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-foot {
+    margin-top: clamp(2.6rem, 6vh, 4.4rem);
+    display: grid; grid-template-columns: minmax(0,1fr) auto;
+    gap: 2rem clamp(2rem, 6vw, 5rem); align-items: end;
+  }
+  .hero-sub {
+    max-width: 44ch; color: var(--bone-2);
+    font-size: clamp(0.98rem, 1.3vw, 1.14rem); line-height: 1.65;
+    opacity: 0;
+  }
+  .hero-sub strong { color: var(--bone); font-weight: 500; }
+  .hero-actions { display: flex; align-items: center; gap: 1.5rem; opacity: 0; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: 0.88rem; font-weight: 500; letter-spacing: 0.02em;
+    padding: 0.95rem 1.6rem; border-radius: 100px;
+    cursor: pointer; border: 1px solid transparent;
+    transition: background-color .35s ease, color .35s ease, border-color .35s ease;
+  }
+  .btn .arw { transition: transform .4s var(--ease); }
+  .btn:hover .arw { transform: translateX(4px); }
+  .btn-gold { background: var(--gold); color: var(--pine); }
+  .btn-gold:hover { background: var(--bone); }
+  .link-quiet {
+    font-size: 0.88rem; font-weight: 400; color: var(--bone);
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding-bottom: 2px; border-bottom: 1px solid var(--hair-2);
+    transition: border-color .3s ease;
+  }
+  .link-quiet:hover { border-color: var(--gold); }
+  @media (max-width: 700px) {
+    .hero-foot { grid-template-columns: 1fr; }
+  }
+
+  /* ---------------- stats ---------------- */
+  .stats {
+    border-top: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+    position: relative; z-index: 2;
+  }
+  .stats .row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  .stat {
+    padding: clamp(2rem, 4.5vh, 3.2rem) clamp(1rem, 2.5vw, 2.4rem);
+    border-left: 1px solid var(--hair);
+  }
+  .stat:first-child { border-left: none; padding-left: 0; }
+  .stat .num {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1;
+    color: var(--bone);
+  }
+  .stat .num em { font-style: normal; color: var(--gold); }
+  .stat .lbl {
+    margin-top: 0.6rem;
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--bone-3);
+  }
+  @media (max-width: 800px) {
+    .stats .row { grid-template-columns: 1fr 1fr; }
+    .stat:nth-child(3) { border-left: none; padding-left: 0; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--hair); }
+    .stat:nth-child(2n) { padding-left: clamp(1rem, 2.5vw, 2.4rem); }
+  }
+
+  /* ---------------- sections ---------------- */
+  section { position: relative; z-index: 2; }
+  .band { padding-top: clamp(6rem, 14vh, 10rem); padding-bottom: clamp(6rem, 14vh, 10rem); }
+  .sec-head { display: grid; gap: 1.3rem; margin-bottom: clamp(2.8rem, 7vh, 4.6rem); }
+  .sec-head h2 {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(2.2rem, 5vw, 4.2rem);
+    line-height: 1.04; letter-spacing: 0.005em;
+    max-width: 20ch; text-wrap: balance;
+  }
+  .sec-head h2 em { font-style: italic; color: var(--gold); }
+
+  /* ---------------- featured listing ---------------- */
+  .featured {
+    display: grid; grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2.5rem, 6vw, 6rem); align-items: center;
+  }
+  .feat-media {
+    position: relative; border-radius: 6px; overflow: hidden;
+    border: 1px solid var(--hair);
+    aspect-ratio: 4 / 3; background: var(--pine-2);
+  }
+  .feat-media img {
+    width: 100%; height: 100%; object-fit: cover;
+    transform: scale(1.06);
+    transition: transform 1.6s var(--ease);
+  }
+  .featured:hover .feat-media img { transform: scale(1.01); }
+  .feat-media .status {
+    position: absolute; top: 1rem; left: 1rem;
+    font-size: 0.64rem; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--pine); background: var(--gold);
+    padding: 0.4rem 0.75rem; border-radius: 100px;
+  }
+  .feat-copy .addr {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(1.9rem, 3.6vw, 3.1rem); line-height: 1.08;
+    letter-spacing: 0.005em; margin: 1.3rem 0 0.5rem;
+    text-wrap: balance;
+  }
+  .feat-copy .price {
+    font-family: var(--serif); font-style: italic; font-weight: 300;
+    font-size: clamp(1.3rem, 2.2vw, 1.8rem); color: var(--gold);
+  }
+  .feat-specs {
+    list-style: none; display: flex; flex-wrap: wrap;
+    gap: 0.5rem 1.8rem; margin: 1.6rem 0 2rem;
+    color: var(--bone-2); font-size: 0.9rem;
+  }
+  .feat-specs li { display: flex; align-items: baseline; gap: 0.5rem; }
+  .feat-specs b { color: var(--bone); font-weight: 500; }
+  @media (max-width: 860px) {
+    .featured { grid-template-columns: 1fr; }
+  }
+
+  /* ---------------- record (sold list) ---------------- */
+  .record { border-top: 1px solid var(--hair); }
+  .rec-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) auto auto;
+    gap: 1rem 2rem; align-items: baseline;
+    padding: clamp(1.4rem, 3vh, 2rem) 0;
+    border-bottom: 1px solid var(--hair);
+    transition: padding-left .45s var(--ease);
+  }
+  .rec-row:hover { padding-left: 0.8rem; }
+  .rec-row .addr {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.25rem, 2.3vw, 1.85rem); letter-spacing: 0.005em;
+  }
+  .rec-row .hood { color: var(--bone-3); font-size: 0.86rem; letter-spacing: 0.04em; }
+  .rec-row .price {
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(1.05rem, 1.8vw, 1.4rem); color: var(--bone-2);
+    transition: color .35s ease;
+  }
+  .rec-row:hover .price { color: var(--gold); }
+  .rec-row .st {
+    font-size: 0.64rem; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--bone-3); white-space: nowrap;
+  }
+  @media (max-width: 720px) {
+    .rec-row { grid-template-columns: 1fr auto; }
+    .rec-row .hood { grid-column: 1; }
+    .rec-row .st { display: none; }
+  }
+
+  /* ---------------- approach ---------------- */
+  .approach {
+    display: grid; grid-template-columns: auto 1fr;
+    gap: clamp(2.5rem, 7vw, 7rem); align-items: start;
+  }
+  .seal {
+    width: clamp(84px, 10vw, 120px); height: clamp(84px, 10vw, 120px);
+    border: 1px solid var(--hair-2); border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--serif); font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+    color: var(--gold); letter-spacing: 0.08em;
+    position: sticky; top: 7rem;
+  }
+  .approach blockquote {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(1.8rem, 4.2vw, 3.4rem);
+    line-height: 1.22; letter-spacing: 0.005em;
+    max-width: 24ch; text-wrap: balance;
+  }
+  .approach blockquote em { font-style: italic; color: var(--gold); }
+  .approach .body {
+    margin-top: 1.8rem; max-width: 52ch;
+    color: var(--bone-2); line-height: 1.7; font-size: 1rem;
+  }
+  .approach .body strong { color: var(--bone); font-weight: 500; }
+  @media (max-width: 700px) {
+    .approach { grid-template-columns: 1fr; }
+    .seal { position: static; }
+  }
+
+  /* ---------------- testimonial ---------------- */
+  .quote-band {
+    background: var(--pine-2);
+    border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+  }
+  .quote-band blockquote {
+    font-family: var(--serif); font-weight: 300; font-style: italic;
+    font-size: clamp(1.5rem, 3.4vw, 2.7rem);
+    line-height: 1.3; max-width: 30ch; text-wrap: balance;
+  }
+  .quote-band cite {
+    display: block; margin-top: 1.8rem; font-style: normal;
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--bone-3);
+  }
+
+  /* ---------------- contact ---------------- */
+  .contact h2 {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(2.6rem, 7vw, 5.6rem);
+    line-height: 1.0; letter-spacing: 0.005em;
+    max-width: 14ch; text-wrap: balance;
+  }
+  .contact h2 em { font-style: italic; color: var(--gold); }
+  .c-form {
+    margin-top: clamp(2.6rem, 6vh, 4rem);
+    max-width: 640px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.7rem 2rem;
+  }
+  .c-form .full { grid-column: 1 / -1; }
+  .c-form label {
+    display: block;
+    font-size: 0.66rem; font-weight: 500; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--bone-3); margin-bottom: 0.5rem;
+  }
+  .c-form input, .c-form textarea {
+    width: 100%; background: transparent; border: none;
+    border-bottom: 1px solid var(--hair-2);
+    color: var(--bone); font-family: var(--sans); font-size: 1rem;
+    padding: 0.55rem 0; border-radius: 0;
+    transition: border-color .35s ease;
+  }
+  .c-form textarea { resize: vertical; min-height: 3rem; }
+  .c-form input::placeholder, .c-form textarea::placeholder { color: var(--bone-3); }
+  .c-form input:focus, .c-form textarea:focus { outline: none; border-bottom-color: var(--gold); }
+  .c-form .btn-gold { justify-self: start; margin-top: 0.4rem; }
+  .c-status { grid-column: 1 / -1; min-height: 1.2em; font-size: 0.84rem; color: var(--bone-3); }
+  .c-status.ok { color: var(--gold); }
+  @media (max-width: 560px) { .c-form { grid-template-columns: 1fr; } }
+
+  /* ---------------- footer ---------------- */
+  .foot {
+    border-top: 1px solid var(--hair);
+    padding: 2rem var(--pad) 2.2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem 2rem;
+    font-size: 0.74rem; letter-spacing: 0.04em; color: var(--bone-3);
+    position: relative; z-index: 2;
+  }
+  .foot .disclaimer { max-width: 46ch; line-height: 1.6; }
+  .foot a { color: var(--bone-2); transition: color .3s ease; }
+  .foot a:hover { color: var(--bone); }
+
+  /* ---------------- back badge ---------------- */
+  .ammolite-back {
+    position: fixed; bottom: 1.1rem; left: 1.1rem; z-index: 60;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 0.95rem; border-radius: 100px;
+    background: rgba(17,24,19,0.78);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--hair-2); color: var(--bone);
+    font-family: var(--serif); font-style: italic; font-size: 0.85rem;
+    transition: border-color .3s ease;
+  }
+  .ammolite-back:hover { border-color: var(--gold); }
+
+  /* ---------------- reduced motion ---------------- */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+    .nav, .hero-eyebrow, .hero-sub, .hero-actions { opacity: 1 !important; }
+    .hero h1 .row > span, .reveal { opacity: 1 !important; transform: none !important; }
+    .feat-media img { transform: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="Vivienne Marsh, home">
+    <span class="name">Vivienne Marsh</span>
+    <span class="sub">Coastal Orange County</span>
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#listings" class="dt">Listings</a>
+    <a href="#record" class="dt">Record</a>
+    <a href="#approach" class="dt">Approach</a>
+    <a href="#contact" class="cta">Private consult</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow hero-eyebrow">Newport Beach · Corona del Mar · Laguna</p>
+      <h1>
+        <span class="row"><span>Where the <em>coast</em></span></span>
+        <span class="row"><span>changes hands.</span></span>
+      </h1>
+      <div class="hero-foot">
+        <p class="hero-sub">
+          Vivienne Marsh represents buyers and sellers across coastal Orange
+          County: <strong>fourteen years</strong>, <strong>$184M closed</strong>,
+          and a client list built almost entirely on referral.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-gold">Private consult <span class="arw">→</span></a>
+          <a href="#listings" class="link-quiet">Current listing <span class="arw">↓</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STATS ================= -->
+  <section class="stats" aria-label="Track record">
+    <div class="wrap">
+      <div class="row">
+        <div class="stat reveal"><span class="num">$<span data-count="184">184</span><em>M</em></span><span class="lbl">Career sales</span></div>
+        <div class="stat reveal"><span class="num"><span data-count="14">14</span></span><span class="lbl">Years on the coast</span></div>
+        <div class="stat reveal"><span class="num"><span data-count="96">96</span><em>%</em></span><span class="lbl">List-to-sale ratio</span></div>
+        <div class="stat reveal"><span class="num"><span data-count="71">71</span></span><span class="lbl">Homes closed</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURED LISTING ================= -->
+  <section class="band" id="listings">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Current listing</p>
+        <h2>One address at a time, <em>given its due.</em></h2>
+      </div>
+      <div class="featured reveal">
+        <a class="feat-media" href="/realestate" aria-label="Visit the listing site for 17 Cliffside Terrace">
+          <img src="/realestate/photos/02.jpg" alt="Great room opening to the terrace at 17 Cliffside Terrace, Laguna Beach" />
+          <span class="status">In escrow</span>
+        </a>
+        <div class="feat-copy">
+          <p class="eyebrow">Laguna Beach</p>
+          <h3 class="addr">17 Cliffside Terrace</h3>
+          <p class="price">$4,850,000</p>
+          <ul class="feat-specs">
+            <li><b>Two</b> Residences</li>
+            <li><b>3,120</b> Sq ft</li>
+            <li><b>Heated</b> Pool</li>
+            <li><b>Ocean</b> Views</li>
+          </ul>
+          <a href="/realestate" class="link-quiet">Visit the listing site <span class="arw">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RECORD ================= -->
+  <section class="band record" id="record" style="padding-top: clamp(4rem, 9vh, 6.5rem);">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Recent record</p>
+        <h2>Sold, quietly and <em>well.</em></h2>
+      </div>
+      <div class="reveal">
+        <div class="rec-row">
+          <span class="addr">2144 Bayside Drive</span>
+          <span class="hood">Corona del Mar</span>
+          <span class="price">$8,900,000</span>
+          <span class="st">Sold · Represented seller</span>
+        </div>
+        <div class="rec-row">
+          <span class="addr">31 Emerald Cove</span>
+          <span class="hood">Laguna Beach</span>
+          <span class="price">$12,450,000</span>
+          <span class="st">Sold · Represented buyer</span>
+        </div>
+        <div class="rec-row">
+          <span class="addr">409 Goldenrod Avenue</span>
+          <span class="hood">Corona del Mar</span>
+          <span class="price">$6,200,000</span>
+          <span class="st">Sold · Represented seller</span>
+        </div>
+        <div class="rec-row">
+          <span class="addr">1522 Ocean Boulevard</span>
+          <span class="hood">Newport Beach</span>
+          <span class="price">$9,750,000</span>
+          <span class="st">Sold · Off market</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= APPROACH ================= -->
+  <section class="band" id="approach">
+    <div class="wrap">
+      <div class="approach">
+        <div class="seal reveal" aria-hidden="true">VM</div>
+        <div>
+          <blockquote class="reveal">Most agents list homes. I <em>position</em> them.</blockquote>
+          <p class="body reveal">
+            Every home Vivienne represents gets the same treatment: honest
+            pricing built on fourteen years of coastal comps, photography and
+            presentation that respect the property, and a buyer pool cultivated
+            long before the sign goes up. <strong>No open-house theater, no
+            wasted weekends.</strong> Just a clear plan, executed quietly,
+            until the right buyer signs.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIAL ================= -->
+  <section class="band quote-band">
+    <div class="wrap">
+      <blockquote class="reveal">
+        "She told us the number, we didn't believe her, and thirty-one days
+        later we closed above it. I will never use another agent on this coast."
+      </blockquote>
+      <cite class="reveal">Seller, Corona del Mar</cite>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="band contact" id="contact">
+    <div class="wrap">
+      <p class="eyebrow reveal">Begin with a conversation</p>
+      <h2 class="reveal" style="margin-top: 1.3rem;">The coast moves. <em>Be ready.</em></h2>
+      <form class="c-form reveal" id="consult-form" novalidate>
+        <div>
+          <label for="vm-name">Your name</label>
+          <input id="vm-name" type="text" name="name" placeholder="Alexandra Chen" autocomplete="name" required />
+        </div>
+        <div>
+          <label for="vm-email">Email</label>
+          <input id="vm-email" type="email" name="email" placeholder="alex@email.com" autocomplete="email" required />
+        </div>
+        <div class="full">
+          <label for="vm-msg">What are you looking to do?</label>
+          <textarea id="vm-msg" name="message" rows="3" placeholder="Selling in Corona del Mar this fall, would like a valuation." required></textarea>
+        </div>
+        <button class="btn btn-gold" type="submit">Request a consult <span class="arw">→</span></button>
+        <p class="c-status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span>© 2026 Vivienne Marsh · Coastal Orange County</span>
+  <span class="disclaimer">Demonstration site by <a href="/">Ammolite Studio</a>. Agent, listings, results and testimonials shown are placeholders.</span>
+  <a href="#top">Back to top ↑</a>
+</footer>
+
+<a class="ammolite-back" href="/">← Ammolite demo</a>
+
+<script>
+(() => {
+  "use strict";
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* nav */
+  const nav = document.getElementById("nav");
+  requestAnimationFrame(() => nav.classList.add("ready"));
+  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 60);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  /* smooth anchors */
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const id = a.getAttribute("href");
+      if (id === "#" || id === "#top") {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+        return;
+      }
+      const t = document.querySelector(id);
+      if (!t) return;
+      e.preventDefault();
+      t.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    });
+  });
+
+  /* demo form: client-side success only, this is a demonstration site */
+  const form = document.getElementById("consult-form");
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const status = form.querySelector(".c-status");
+      status.classList.add("ok");
+      status.textContent = "Received. Vivienne will reach out within one business day.";
+      form.reset();
+    });
+  }
+
+  if (reduce) return;
+
+  /* hero entrance */
+  const lines = document.querySelectorAll(".hero h1 .row > span");
+  lines.forEach((s) => { s.style.transform = "translateY(112%)"; });
+  const ease = "cubic-bezier(.2,.85,.25,1)";
+  requestAnimationFrame(() => {
+    lines.forEach((s, i) => {
+      s.style.transition = `transform 1.15s ${ease} ${0.15 + i * 0.1}s`;
+      s.style.transform = "translateY(0)";
+    });
+    [[".hero-eyebrow", 0.15], [".hero-sub", 0.55], [".hero-actions", 0.7]].forEach(([sel, d]) => {
+      const el = document.querySelector(sel);
+      if (!el) return;
+      el.style.transition = `opacity 1s ease ${d}s`;
+      el.style.opacity = "1";
+    });
+  });
+
+  /* scroll reveals */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      const el = en.target;
+      el.style.transition = `opacity .9s ease, transform 1s ${ease}`;
+      el.style.opacity = "1";
+      el.style.transform = "none";
+      io.unobserve(el);
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+  /* stat count-up: communicates the record accruing, once, on view */
+  const nums = document.querySelectorAll("[data-count]");
+  const cObs = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      const el = en.target;
+      cObs.unobserve(el);
+      const target = parseInt(el.dataset.count, 10);
+      const t0 = performance.now();
+      const dur = 1300;
+      const tick = (t) => {
+        const p = Math.min(1, (t - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased);
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.5 });
+  nums.forEach((el) => cObs.observe(el));
+})();
+</script>
+
+</body>
+</html>

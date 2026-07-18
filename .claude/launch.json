@@ -2,6 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "ivy-landing",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd '/Users/adamlahham/Desktop/IVY AI/ivy-landing' && exec npx -y serve -l 4173 ."],
+      "port": 4173
+    },
+    {
       "name": "reclaim-integrative",
       "runtimeExecutable": "bash",
       "runtimeArgs": ["-c", "cd /Users/adamlahham/Developer/reclaim-integrative-homepage/reclaim-integrative && npm run dev"],
@@ -9,10 +15,40 @@
       "autoPort": true
     },
     {
+      "name": "voir",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/adamlahham/Developer/voir && exec python3 -m http.server 8741"],
+      "port": 8741
+    },
+    {
       "name": "jarvis-os",
       "runtimeExecutable": "bash",
       "runtimeArgs": ["-c", "cd '/Users/adamlahham/Desktop/IVY AI/jarvis-os' && npm run dev"],
       "port": 5273
+    },
+    {
+      "name": "shark-says",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd '/Users/adamlahham/Desktop/IVY AI/shark-says' && exec npm start"],
+      "port": 5610
+    },
+    {
+      "name": "fairview166",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/adamlahham/Developer/fairview166 && exec python3 -m http.server 5640"],
+      "port": 5640
+    },
+    {
+      "name": "voir-sim",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/adamlahham/Developer/voir/sim && exec npm run dev"],
+      "port": 3311
+    },
+    {
+      "name": "gore-group-demo",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["/Users/adamlahham/Desktop/IVY AI/gore-group-demo/.preview-server.js"],
+      "port": 5710
     }
   ]
 }
